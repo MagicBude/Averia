@@ -349,3 +349,19 @@ Provider / 人工文件 → Averia Import JSON → Stage → 审核 → Apply �
 自动匹配必须是可解释且确定性的。V0.2 明确禁止模糊相似度自动合并。
 
 已有实体的非空字段不会因为新来源出现不同值而自动覆盖；这类情况必须进入后续 Observation / Field Resolution 或人工审核机制。
+
+
+## Provider 原始来源规则
+
+从外部数据源进入 Averia 的数据必须先转换为统一导入 JSON，再进入 V0.2 Pipeline。Provider 本身不属于事实源。
+
+对于可程序化获取的页面，至少保留：
+
+- `source_record_id`：来源站内稳定记录标识；
+- `source_url`：实际解析的来源页面；
+- `fetched_at`：抓取时间；
+- 原始页面快照；
+- 原始页面 SHA-256；
+- Provider / Parser 版本。
+
+来源字段缺失、不完整或表达精度不足时，应保持空值或原始精度，不得通过猜测补全。不同来源出现冲突时，先保留来源证据，后续再通过字段级溯源机制解决。

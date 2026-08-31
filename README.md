@@ -58,8 +58,9 @@ Averia/
 │  ├─ json/
 │  └─ xlsx/
 ├─ schemas/                     # CSV 数据契约
-├─ scripts/                     # 校验与导出脚本
-├─ tests/                       # 基础测试
+├─ scripts/                     # 校验、导出、导入与 Provider 脚本
+├─ imports/                     # 统一导入格式示例（正式批次保存在 var/）
+├─ tests/                       # 基础测试与 Provider Fixture
 ├─ docs/                        # 项目文档
 ├─ AGENTS.md                    # AI / Agent 协作规范
 └─ DATA_STANDARD.md             # 核心数据标准
@@ -119,6 +120,8 @@ exports/xlsx/averia.xlsx
 | `pnpm import:prepare -- --file <file> --batch <id>` | 准备安全导入批次，不修改正式 CSV |
 | `pnpm import:report -- --batch <id>` | 查看导入审核报告 |
 | `pnpm import:apply -- --batch <id>` | 备份、写入并校验已审核批次 |
+| `pnpm provider:javdatabase -- --code <番号>` | 抓取并解析一个 JAVDatabase 作品页，不写正式 CSV |
+| `pnpm provider:javdatabase -- --idol <slug>` | 抓取并解析一个 JAVDatabase 女优页，不写正式 CSV |
 | `pnpm test` | 运行 Node.js 基础测试 |
 | `pnpm check` | 运行数据校验、质量检查和测试 |
 
@@ -146,11 +149,29 @@ CSV → JSON / XLSX
 
 已经加入统一导入 JSON、精确实体匹配、Stage 审核、备份/回滚、正式 CSV 指纹保护以及数据质量报告。具体外部站点 Provider 在后续版本逐步接入。
 
-### 阶段 3：数据库
+### 阶段 3：真实数据源 Provider（V0.3）
+
+已经加入第一个 **JAVDatabase 单页 Provider**。它只负责：
+
+```text
+JAVDatabase 页面 → raw.html → Parser → canonical.json → V0.2 Prepare / Report / Apply
+```
+
+Provider **绝不直接修改 `data/`**。当前刻意限制为单页抓取，不做全站遍历、并发批量请求、图片下载或任何访问限制绕过。
+
+第一次验证建议：
+
+```bash
+pnpm provider:javdatabase -- --code SDAM-179
+```
+
+然后只执行 CLI 打印的 `import:prepare` 和 `import:report`，先人工审核 Stage，再决定是否 Apply。
+
+### 阶段 4：数据库
 
 优先增加 SQLite；后续数据量和部署需求扩大时，可迁移或同步到 PostgreSQL。
 
-### 阶段 4：应用层
+### 阶段 5：应用层
 
 在稳定数据层之上建设：
 
@@ -173,12 +194,13 @@ CSV → JSON / XLSX
 5. [`docs/IMPORT_FORMAT.md`](./docs/IMPORT_FORMAT.md) — V0.2 统一导入 JSON 格式
 6. [`docs/IMPORT_PIPELINE.md`](./docs/IMPORT_PIPELINE.md) — 安全导入、审核、备份和回滚流程
 7. [`docs/DATA_QUALITY.md`](./docs/DATA_QUALITY.md) — 数据质量检查
-8. [`docs/ROADMAP.md`](./docs/ROADMAP.md) — 项目演进路线
-9. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
+8. [`docs/JAVDATABASE_PROVIDER.md`](./docs/JAVDATABASE_PROVIDER.md) — V0.3 第一个真实 Provider
+9. [`docs/ROADMAP.md`](./docs/ROADMAP.md) — 项目演进路线
+10. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
 
 ## License
 
-V0.2 暂不声明数据内容许可证。
+V0.3 暂不声明数据内容许可证。
 
 在正式公开大量来源数据或接受第三方数据贡献前，应分别确定：
 

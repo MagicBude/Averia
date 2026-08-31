@@ -203,3 +203,15 @@ Averia Web
 8. Apply 前必须验证正式 CSV 指纹；数据变化后必须重新 Prepare。
 9. Apply 必须先备份，并在全量校验失败时恢复正式数据。
 10. `var/` 为本地运行产物，不作为权威数据提交。
+
+
+## V0.3 Provider 规则
+
+1. Provider 只负责 Fetch / Raw Snapshot / Parse / Canonical Import JSON，不得直接写 `data/`。
+2. 首个 Provider `javdatabase` 当前只允许 HTTPS 且只允许 `javdatabase.com` / `www.javdatabase.com`。
+3. 默认一次命令只抓一个作品页或女优页；增加批量能力前必须先设计请求间隔、失败重试和缓存策略。
+4. 每次网络抓取必须保存原始 HTML、最终 URL、抓取时间、Provider 版本和原始内容 SHA-256，保证 Parser 问题可复现。
+5. Parser 不得伪造精度：例如来源只有 `2002-??-??` 时，`birth_date` 必须留空，不能猜成 `2002-01-01`。
+6. 来源页发现的关联链接可以记录到 Provider 元数据，但 V0.3 不允许自动递归抓取。
+7. Provider Fixture 应保持精简，仅保留验证解析规则所需的 HTML 结构，不提交整页网页副本。
+8. 网络不可用、返回非 HTML、HTTP 错误或页面结构无法解析时必须失败退出，不得生成可 Apply 的假数据。

@@ -1,8 +1,8 @@
 {
   "name": "averia",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Averia：以 CSV 为唯一事实源，支持结构化 JAV 元数据校验、导出、数据质量检查与安全导入 Pipeline。",
+  "description": "Averia：CSV-first JAV 元数据资料库，支持校验、导出、安全导入 Pipeline 与 JAVDatabase 单页 Provider。",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -18,7 +18,8 @@
     "data:quality": "node scripts/quality-report.mjs",
     "import:prepare": "node scripts/import-prepare.mjs",
     "import:report": "node scripts/import-report.mjs",
-    "import:apply": "node scripts/import-apply.mjs"
+    "import:apply": "node scripts/import-apply.mjs",
+    "provider:javdatabase": "node scripts/provider-javdatabase.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0"
