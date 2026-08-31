@@ -1,6 +1,6 @@
 # MOODYZ Official Provider
 
-Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ；V0.4.1 增加 Node/curl 双传输兼容层。
+Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ；V0.4.1 增加 Node/curl 双传输兼容层；V0.4.2 按真实页面结构修正标题解析并保留失败快照。
 
 ## 为什么先接 MOODYZ
 
@@ -156,6 +156,24 @@ pnpm provider:moodyz -- --code MDVR-434 --transport node
 ```
 
 如果是 Windows + 代理环境直接优先 curl，则不会伪造“回退原因”。
+
+## 标题解析兼容（V0.4.2）
+
+2026-08-31 的真实 MOODYZ 作品页与女优页主标题使用 `H2`，页面中还可能存在空 `H1`。因此 Provider 不再假设“主标题一定是 H1”，而是按以下顺序解析：
+
+```text
+非空 H1
+  ↓
+非空 H2
+  ↓
+og:title
+  ↓
+<title>
+```
+
+同时会排除 `プロフィール`、`WORKS`、`RECOMMEND` 等通用区块标题。`meta.json` 的 `title_source` 会记录本次实际使用了 `h1`、`h2`、`og:title` 或 `title`。
+
+如果页面抓取成功但 Parser 因结构变化失败，V0.4.2 会先保存 `raw.html`，并写入 `parse_status: "failed"` 的 `meta.json`。这样可以直接使用保存的原始页面离线修 Parser，不必再次请求来源站。
 
 ## 输出目录
 

@@ -14,9 +14,18 @@ function compactTimestamp(iso) {
   return iso.replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
 }
 
+function recordPartFromUrl(value) {
+  try {
+    const pieces = new URL(value).pathname.split("/").filter(Boolean);
+    return safePart(pieces.at(-1) || "record");
+  } catch {
+    return "record";
+  }
+}
+
 const args = parseArgs(process.argv.slice(2));
 if (args.help) {
-  console.log(`Averia MOODYZ Official Provider V0.4.1\n\n用法：\n  pnpm provider:moodyz -- --code MDVR-434\n  pnpm provider:moodyz -- --actress-id 855540\n  pnpm provider:moodyz -- --url https://moodyz.com/works/detail/MDVR434\n  pnpm provider:moodyz -- --code MDVR-434 --proxy http://127.0.0.1:7790\n  pnpm provider:moodyz -- --code MDVR-434 --transport curl\n  pnpm provider:moodyz -- --file <本地HTML> --url <原始URL>\n\n说明：\n  - MOODYZ 官方日文站被视为该厂商作品/女优字段的权威来源。\n  - 代理优先级沿用 Averia：--proxy → 环境变量 → Windows 系统代理 → 直连。\n  - 网络传输默认 auto；Windows + 代理下优先系统 curl，其它环境 Node fetch 失败时自动回退 curl。\n  - 可用 --transport auto|node|curl 手动指定传输方式。\n  - 默认一次只抓一个作品页或女优页，不递归批量抓取。\n  - Provider 只生成 raw.html / canonical.json / meta.json，不修改正式 CSV。\n  - 使用 --file 时不发起网络请求，适合离线调试 Parser。`);
+  console.log(`Averia MOODYZ Official Provider V0.4.2\n\n用法：\n  pnpm provider:moodyz -- --code MDVR-434\n  pnpm provider:moodyz -- --actress-id 855540\n  pnpm provider:moodyz -- --url https://moodyz.com/works/detail/MDVR434\n  pnpm provider:moodyz -- --code MDVR-434 --proxy http://127.0.0.1:7790\n  pnpm provider:moodyz -- --code MDVR-434 --transport curl\n  pnpm provider:moodyz -- --file <本地HTML> --url <原始URL>\n\n说明：\n  - MOODYZ 官方日文站被视为该厂商作品/女优字段的权威来源。\n  - 代理优先级沿用 Averia：--proxy → 环境变量 → Windows 系统代理 → 直连。\n  - 网络传输默认 auto；Windows + 代理下优先系统 curl，其它环境 Node fetch 失败时自动回退 curl。\n  - 可用 --transport auto|node|curl 手动指定传输方式。\n  - 默认一次只抓一个作品页或女优页，不递归批量抓取。\n  - Provider 只生成 raw.html / canonical.json / meta.json，不修改正式 CSV。\n  - 使用 --file 时不发起网络请求，适合离线调试 Parser。`);
   process.exit(0);
 }
 
@@ -61,8 +70,9 @@ try {
     transportFallbackFrom = fetched.fallbackFrom || "";
   }
 
-  const parsed = parseMoodyzPage(html, finalUrl, fetchedAt);
-  const recordPart = safePart(parsed.meta.dvd_id || parsed.meta.source_record_id);
+  // 先落原始快照，再进入 Parser。这样真实页面结构发生变化时，
+  // 即使解析失败也能保留现场，后续可用 --file 离线复现，而不必重新请求来源站。
+  const recordPart = recordPartFromUrl(finalUrl);
   const defaultDir = path.join(ROOT, "var", "providers", "moodyz", `${compactTimestamp(fetchedAt)}-${recordPart}`);
   const outDir = args.out ? path.resolve(args.out) : defaultDir;
   fs.mkdirSync(outDir, { recursive: true });
@@ -70,19 +80,41 @@ try {
   const rawPath = path.join(outDir, "raw.html");
   const canonicalPath = path.join(outDir, "canonical.json");
   const metaPath = path.join(outDir, "meta.json");
-  fs.writeFileSync(rawPath, html, "utf8");
-  fs.writeFileSync(canonicalPath, `${JSON.stringify(parsed.canonical, null, 2)}\n`, "utf8");
-  fs.writeFileSync(metaPath, `${JSON.stringify({
-    ...parsed.meta,
+  const rawSha256 = crypto.createHash("sha256").update(html).digest("hex");
+  const baseMeta = {
     fetched_at: fetchedAt,
     fetch_mode: mode,
     requested_url: requestedUrl,
     final_url: finalUrl,
-    raw_sha256: crypto.createHash("sha256").update(html).digest("hex"),
+    raw_sha256: rawSha256,
     network_mode: network.mode,
     proxy_used: network.proxyUsed,
     network_transport: transport,
     transport_fallback_from: transportFallbackFrom || undefined,
+  };
+
+  fs.writeFileSync(rawPath, html, "utf8");
+
+  let parsed;
+  try {
+    parsed = parseMoodyzPage(html, finalUrl, fetchedAt);
+  } catch (parseError) {
+    fs.writeFileSync(metaPath, `${JSON.stringify({
+      ...baseMeta,
+      provider_version: 3,
+      parse_status: "failed",
+      parse_error: parseError.message,
+    }, null, 2)}\n`, "utf8");
+    const rawRel = path.relative(ROOT, rawPath) || ".";
+    const metaRel = path.relative(ROOT, metaPath) || ".";
+    throw new Error(`${parseError.message}；原始快照已保留：${rawRel}；失败元数据：${metaRel}`);
+  }
+
+  fs.writeFileSync(canonicalPath, `${JSON.stringify(parsed.canonical, null, 2)}\n`, "utf8");
+  fs.writeFileSync(metaPath, `${JSON.stringify({
+    ...parsed.meta,
+    ...baseMeta,
+    parse_status: "success",
   }, null, 2)}\n`, "utf8");
 
   const rel = (file) => path.relative(ROOT, file) || ".";

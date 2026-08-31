@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const MOODYZ_SOURCE = "moodyz-official";
-export const MOODYZ_PROVIDER_VERSION = 2;
+export const MOODYZ_PROVIDER_VERSION = 3;
 const ALLOWED_HOSTS = new Set(["moodyz.com", "www.moodyz.com"]);
 const BASE_URL = "https://moodyz.com/";
 
@@ -114,14 +114,39 @@ function firstMetaContent(html, targetName) {
   return "";
 }
 
-function firstH1(html) {
-  const match = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(String(html ?? ""));
+function headingCandidates(html) {
+  const result = [];
+  for (const match of String(html ?? "").matchAll(/<h([1-3])\b[^>]*>([\s\S]*?)<\/h\1>/gi)) {
+    const text = stripTags(match[2]);
+    if (text) result.push({ level: Number(match[1]), text });
+  }
+  return result;
+}
+
+function documentTitle(html) {
+  const match = /<title\b[^>]*>([\s\S]*?)<\/title>/i.exec(String(html ?? ""));
   return match ? stripTags(match[1]) : "";
 }
 
-function firstH2(html) {
-  const match = /<h2\b[^>]*>([\s\S]*?)<\/h2>/i.exec(String(html ?? ""));
-  return match ? stripTags(match[1]) : "";
+function cleanSiteTitle(value) {
+  return String(value ?? "")
+    .replace(/\s*[|｜]\s*人気知名度NO\.1！[\s\S]*$/i, "")
+    .replace(/\s*[|｜]\s*MOODYZ(?:\s*\([^)]*\))?.*$/i, "")
+    .trim();
+}
+
+function pagePrimaryHeading(html, excluded = []) {
+  const excludedSet = new Set(excluded.map((value) => String(value).trim()));
+  const headings = headingCandidates(html);
+  const h1 = headings.find((item) => item.level === 1 && !excludedSet.has(item.text));
+  if (h1) return { text: h1.text, source: "h1" };
+  const h2 = headings.find((item) => item.level === 2 && !excludedSet.has(item.text));
+  if (h2) return { text: h2.text, source: "h2" };
+  const ogTitle = cleanSiteTitle(firstMetaContent(html, "og:title"));
+  if (ogTitle && !excludedSet.has(ogTitle)) return { text: ogTitle, source: "og:title" };
+  const title = cleanSiteTitle(documentTitle(html));
+  if (title && !excludedSet.has(title)) return { text: title, source: "title" };
+  return { text: "", source: "" };
 }
 
 function clean(value) {
@@ -218,14 +243,16 @@ export function buildMoodyzUrl({ url, code, actressId } = {}) {
 export function parseMoodyzWork(html, sourceUrl, fetchedAt = new Date().toISOString()) {
   const url = normalizeMoodyzUrl(sourceUrl);
   const text = htmlToAnnotatedText(html);
-  const title = firstH1(html).trim();
-  if (!title) throw new Error("无法从 MOODYZ 作品页解析日文标题：缺少 H1。");
+  const titleInfo = pagePrimaryHeading(html, ["RECOMMEND", "おすすめ作品", "プロフィール", "WORKS"]);
+  const title = titleInfo.text.trim();
+  if (!title) throw new Error("无法从 MOODYZ 作品页解析日文标题：未找到有效标题元素或页面元数据。");
 
   // 页面顶部导航也含“発売日 / シリーズ / レーベル / ジャンル”等文字，
   // 所以不能简单取整页第一次出现的位置。这里按作品详情字段的固定顺序，
   // 从标题之后依次定位元数据区，避免误读导航栏。
-  const anchor = Math.max(0, text.indexOf(title));
-  const actressPos = text.indexOf("女優", anchor + title.length);
+  const titlePos = text.indexOf(title);
+  const detailStart = titlePos >= 0 ? titlePos + title.length : 0;
+  const actressPos = text.indexOf("女優", detailStart);
   const releasePos = actressPos >= 0 ? text.indexOf("発売日", actressPos + 2) : -1;
   const seriesPos = releasePos >= 0 ? text.indexOf("シリーズ", releasePos + 3) : -1;
   const labelPos = seriesPos >= 0 ? text.indexOf("レーベル", seriesPos + 4) : -1;
@@ -315,6 +342,7 @@ export function parseMoodyzWork(html, sourceUrl, fetchedAt = new Date().toISOStr
       source_record_id: work.source_record_id,
       dvd_id: code,
       director,
+      title_source: titleInfo.source,
       source_language: "ja",
       source_role: "authoritative",
     },
@@ -324,8 +352,9 @@ export function parseMoodyzWork(html, sourceUrl, fetchedAt = new Date().toISOStr
 export function parseMoodyzActress(html, sourceUrl, fetchedAt = new Date().toISOString()) {
   const url = normalizeMoodyzUrl(sourceUrl);
   const text = htmlToAnnotatedText(html);
-  const nameJa = firstH1(html).trim();
-  if (!nameJa) throw new Error("无法从 MOODYZ 女优页解析姓名：缺少 H1。");
+  const nameInfo = pagePrimaryHeading(html, ["プロフィール", "WORKS", "商品一覧"]);
+  const nameJa = nameInfo.text.trim();
+  if (!nameJa) throw new Error("无法从 MOODYZ 女优页解析姓名：未找到有效标题元素或页面元数据。");
 
   const actressId = slugFromPath(url, "detail");
   if (!actressId) throw new Error("无法从 MOODYZ 女优页解析来源 ID。");
@@ -391,6 +420,7 @@ export function parseMoodyzActress(html, sourceUrl, fetchedAt = new Date().toISO
       source_url: url,
       source_record_id: actress.source_record_id,
       discovered_work_urls: discoveredWorks,
+      title_source: nameInfo.source,
       source_language: "ja",
       source_role: "authoritative",
     },

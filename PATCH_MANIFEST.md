@@ -1,30 +1,24 @@
-# Averia V0.4.1 Patch Manifest
+# Averia V0.4.2 Patch Manifest
 
-这是 V0.4.0 的网络兼容修复补丁，不包含 `data/`、`exports/` 或 `var/` 正式/运行数据。
-
-## 新增
-
-- `scripts/lib/http-transport.mjs`
-- `tests/http-transport.test.mjs`
-- `UPGRADE_V0.4.1.md`
+这是 V0.4.1 的 MOODYZ 真实页面 Parser 修复补丁，不包含 `data/`、`exports/` 或 `var/` 数据。
 
 ## 修改
 
-- `package.json`：版本提升到 `0.4.1`
-- `scripts/providers/moodyz/lib.mjs`：Node/curl 双 Transport
-- `scripts/provider-moodyz.mjs`：自动选择 Transport，记录网络传输元数据
-- `tests/provider-moodyz.test.mjs`：补充离线网络传输断言
-- `docs/MOODYZ_PROVIDER.md`：网络兼容说明
+- `package.json`：版本提升到 `0.4.2`
+- `scripts/providers/moodyz/lib.mjs`：兼容空 H1 / H2 / og:title / title，Provider 版本提升到 3
+- `scripts/provider-moodyz.mjs`：Parser 前保存 raw.html；失败保留 meta.json
+- `tests/provider-moodyz.test.mjs`：增加真实标题结构与失败快照回归测试
+- `tests/fixtures/moodyz/work-mdvr434.html`：改为当前真实页面的空 H1 + H2 结构
+- `tests/fixtures/moodyz/actress-855540.html`：改为当前真实页面的空 H1 + H2 结构
+- `docs/MOODYZ_PROVIDER.md`
 - `README.md`
-- `AGENTS.md`
+- `UPGRADE_V0.4.2.md`
 
-## 验证目标
+## 本地验证结果
 
 ```text
 11 个数据集校验通过
 0 个数据质量错误
-全部 Node 测试通过
-MOODYZ 离线 Provider 不修改正式 CSV
-ECONNRESET 自动回退 curl
-Windows + 动态代理可优先 curl
+0 个警告
+32 / 32 Node 测试通过
 ```
