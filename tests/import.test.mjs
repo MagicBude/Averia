@@ -40,3 +40,19 @@ test("无法解析的作品参演者会阻止批次自动应用", () => {
   assert.equal(stage.summary.error_count, 1);
   assert.equal(stage.issues[0].type, "unresolved-cast");
 });
+
+
+test("统一导入格式可以为作品建立导演实体和作品导演关系", () => {
+  const catalog = loadCatalog();
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "test-source" },
+    works: [{ code: "TST-003", title: "测试作品3", directors: [{ name: "测试导演", name_ja: "测试导演" }] }],
+  }, { catalog, batchId: "test-director", now: "2026-08-31T08:30:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(stage.append.directors.length, 1);
+  assert.equal(stage.append.directors[0].name, "测试导演");
+  assert.equal(stage.append.work_directors.length, 1);
+  assert.equal(stage.append.work_directors[0].director_id, stage.append.directors[0].id);
+});

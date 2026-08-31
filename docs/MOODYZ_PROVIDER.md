@@ -1,6 +1,6 @@
 # MOODYZ Official Provider
 
-Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ；V0.4.1 增加 Node/curl 双传输兼容层；V0.4.2 按真实页面结构修正标题解析并保留失败快照。
+Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ；V0.4.1 增加 Node/curl 双传输兼容层；V0.4.2 按真实页面结构修正标题解析并保留失败快照；V0.4.3 将官网“監督”正式映射为 Director / WorkDirector。
 
 ## 为什么先接 MOODYZ
 
@@ -200,3 +200,15 @@ V0.4 刻意限制为：
 - 不绕过验证码、登录或访问限制
 
 先把日文官方字段映射做稳，再扩展到其它官方厂商站。
+
+
+## 导演映射（V0.4.3）
+
+MOODYZ 作品页中的 `監督` 不再只写入备注，而是进入 canonical `works[].directors[]`。Prepare 会生成：
+
+```text
+directors.csv
+work_directors.csv
+```
+
+例如 `MDVR-434` 当前官方页面中的 `ジーニアス膝` 会被保存为独立导演实体，并与作品建立关系。

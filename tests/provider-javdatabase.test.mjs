@@ -76,10 +76,12 @@ test("离线 CLI 只生成 Provider 产物，不修改正式 CSV", () => {
     "data/works/work_codes.csv",
     "data/relations/work_cast.csv",
     "data/relations/work_genres.csv",
+    "data/relations/work_directors.csv",
     "data/taxonomy/makers.csv",
     "data/taxonomy/labels.csv",
     "data/taxonomy/series.csv",
     "data/taxonomy/genres.csv",
+    "data/taxonomy/directors.csv",
     "data/sources/source_records.csv",
   ];
   const before = new Map(formal.map((rel) => [rel, sha256(path.join(repoRoot, rel))]));

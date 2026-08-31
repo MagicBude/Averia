@@ -1,0 +1,42 @@
+{
+  "file": "data/relations/work_directors.csv",
+  "primaryKey": [
+    "work_id",
+    "director_id"
+  ],
+  "idFields": {
+    "work_id": "^work_[0-9]{6}$",
+    "director_id": "^director_[0-9]{6}$"
+  },
+  "required": [
+    "work_id",
+    "director_id"
+  ],
+  "integerFields": [
+    "position"
+  ],
+  "foreignKeys": [
+    {
+      "field": "work_id",
+      "dataset": "works",
+      "target": "id"
+    },
+    {
+      "field": "director_id",
+      "dataset": "directors",
+      "target": "id"
+    }
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "work_id",
+    "director_id",
+    "position"
+  ],
+  "displayNameZh": "作品导演",
+  "columnLabelsZh": {
+    "work_id": "作品ID",
+    "director_id": "导演ID",
+    "position": "排序"
+  }
+}

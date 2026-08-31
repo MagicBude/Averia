@@ -25,7 +25,7 @@ function recordPartFromUrl(value) {
 
 const args = parseArgs(process.argv.slice(2));
 if (args.help) {
-  console.log(`Averia MOODYZ Official Provider V0.4.2\n\n用法：\n  pnpm provider:moodyz -- --code MDVR-434\n  pnpm provider:moodyz -- --actress-id 855540\n  pnpm provider:moodyz -- --url https://moodyz.com/works/detail/MDVR434\n  pnpm provider:moodyz -- --code MDVR-434 --proxy http://127.0.0.1:7790\n  pnpm provider:moodyz -- --code MDVR-434 --transport curl\n  pnpm provider:moodyz -- --file <本地HTML> --url <原始URL>\n\n说明：\n  - MOODYZ 官方日文站被视为该厂商作品/女优字段的权威来源。\n  - 代理优先级沿用 Averia：--proxy → 环境变量 → Windows 系统代理 → 直连。\n  - 网络传输默认 auto；Windows + 代理下优先系统 curl，其它环境 Node fetch 失败时自动回退 curl。\n  - 可用 --transport auto|node|curl 手动指定传输方式。\n  - 默认一次只抓一个作品页或女优页，不递归批量抓取。\n  - Provider 只生成 raw.html / canonical.json / meta.json，不修改正式 CSV。\n  - 使用 --file 时不发起网络请求，适合离线调试 Parser。`);
+  console.log(`Averia MOODYZ Official Provider V0.4.3\n\n用法：\n  pnpm provider:moodyz -- --code MDVR-434\n  pnpm provider:moodyz -- --actress-id 855540\n  pnpm provider:moodyz -- --url https://moodyz.com/works/detail/MDVR434\n  pnpm provider:moodyz -- --code MDVR-434 --proxy http://127.0.0.1:7790\n  pnpm provider:moodyz -- --code MDVR-434 --transport curl\n  pnpm provider:moodyz -- --file <本地HTML> --url <原始URL>\n\n说明：\n  - MOODYZ 官方日文站被视为该厂商作品/女优字段的权威来源。\n  - 代理优先级沿用 Averia：--proxy → 环境变量 → Windows 系统代理 → 直连。\n  - 网络传输默认 auto；Windows + 代理下优先系统 curl，其它环境 Node fetch 失败时自动回退 curl。\n  - 可用 --transport auto|node|curl 手动指定传输方式。\n  - 默认一次只抓一个作品页或女优页，不递归批量抓取。\n  - Provider 只生成 raw.html / canonical.json / meta.json，不修改正式 CSV。\n  - 使用 --file 时不发起网络请求，适合离线调试 Parser。`);
   process.exit(0);
 }
 

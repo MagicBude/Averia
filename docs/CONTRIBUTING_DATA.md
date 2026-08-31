@@ -25,6 +25,7 @@ DATA_STANDARD.md
 3. 将主番号及其他番号形式写入 `work_codes.csv`。
 4. 将女优参演关系写入 `work_cast.csv`。
 5. 将作品分类写入 `work_genres.csv`。
+6. 如果来源提供导演，将导演写入 `directors.csv`，并通过 `work_directors.csv` 建立关系。
 6. 如果引用的厂商、厂牌、系列或分类尚不存在，先创建对应实体。
 7. 增加数据来源记录。
 8. 执行校验和导出。

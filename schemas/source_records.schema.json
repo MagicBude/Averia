@@ -22,7 +22,8 @@
       "maker",
       "label",
       "series",
-      "genre"
+      "genre",
+      "director"
     ]
   },
   "schemaVersion": 1,

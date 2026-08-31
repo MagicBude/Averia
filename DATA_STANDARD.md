@@ -192,6 +192,7 @@ work_XXXXXX
 ```text
 work_cast.csv
 work_genres.csv
+work_directors.csv
 ```
 
 禁止在 `works.csv` 中设计：
@@ -301,6 +302,7 @@ CSV / JSON 中不保存图片二进制数据或 Base64 图片。
 - 实体表：按 `id` 排序
 - `work_cast.csv`：按 `work_id` → `position` → `actress_id`
 - `work_genres.csv`：按 `work_id` → `genre_id`
+- `work_directors.csv`：按 `work_id` → `position` → `director_id`
 - `source_records.csv`：按 `id`
 
 自动生成脚本必须尽量维持确定性顺序。
@@ -374,3 +376,20 @@ Provider / 人工文件 → Averia Import JSON → Stage → 审核 → Apply �
 - 当日文主源与英文补充源冲突时，不自动覆盖，进入后续字段级 Observation / Resolution。
 - FANZA / DMM Web API 作为下一阶段日文结构化主源，详见 `docs/SOURCE_STRATEGY.md`。
 
+
+
+## 17. 导演实体与作品关系（V0.4.3）
+
+导演必须作为独立 `Director` 实体保存，而不是仅写在作品备注或普通文本字段里。
+
+```text
+data/taxonomy/directors.csv
+data/relations/work_directors.csv
+```
+
+规则：
+
+- `director_id` 使用 `director_XXXXXX`。
+- 同一作品允许多个导演。
+- `position` 保存来源提供的顺序；没有明确顺序时按抓取顺序从 1 开始。
+- 导演自动匹配只使用规范化名称精确匹配，不进行模糊猜测。

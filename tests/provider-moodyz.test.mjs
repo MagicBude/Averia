@@ -48,7 +48,8 @@ test("MOODYZ 官方作品页解析为日文权威 canonical JSON", () => {
   assert.deepEqual(work.label, { name: "MOODYZ VR", name_ja: "MOODYZ VR" });
   assert.deepEqual(work.genres.map((item) => item.name), ["フェラ", "パイズリ", "騎乗位", "美少女", "メイド", "VR専用"]);
   assert.equal(work.cast[0].source_record_id, "actress:855540");
-  assert.match(work.source_notes, /ジーニアス膝/);
+  assert.deepEqual(work.directors, [{ name: "ジーニアス膝", name_ja: "ジーニアス膝", position: 1 }]);
+  assert.equal(work.source_notes, "");
   assert.equal(parsed.meta.title_source, "h2");
 });
 
@@ -95,6 +96,9 @@ test("MOODYZ 日文作品进入 Prepare 后保留 title_ja 和官方 taxonomy", 
   assert.equal(stage.append.labels.length, 1);
   assert.equal(stage.append.labels[0].name, "MOODYZ VR");
   assert.equal(stage.append.genres.length, 6);
+  assert.equal(stage.append.directors.length, 1);
+  assert.equal(stage.append.directors[0].name, "ジーニアス膝");
+  assert.equal(stage.append.work_directors.length, 1);
 });
 
 test("MOODYZ Parser 失败时仍保留 raw.html 与失败 meta.json", () => {

@@ -175,3 +175,24 @@
 | `fetched_at` | 获取时间 | 否 | UTC 时间戳 |
 | `raw_hash` | 原始数据Hash | 否 | 文本/按业务含义填写 |
 | `notes` | 备注 | 否 | 文本/按业务含义填写 |
+
+
+## 导演 `directors.csv`
+
+| 英文字段 | 中文含义 |
+| --- | --- |
+| `id` | 导演ID |
+| `name` | 名称 |
+| `name_ja` | 日文名 |
+| `website_url` | 官网URL |
+| `description` | 简介 |
+| `created_at` | 创建时间 |
+| `updated_at` | 更新时间 |
+
+## 作品导演 `work_directors.csv`
+
+| 英文字段 | 中文含义 |
+| --- | --- |
+| `work_id` | 作品ID |
+| `director_id` | 导演ID |
+| `position` | 导演排序 |

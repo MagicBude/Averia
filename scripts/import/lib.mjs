@@ -67,7 +67,7 @@ export function nextIdFactory(catalog) {
   for (const dataset of Object.values(catalog)) {
     for (const record of dataset.records) {
       for (const value of Object.values(record)) {
-        const match = /^(actress|alias|work|code|maker|label|series|genre|source)_(\d{6})$/.exec(value);
+        const match = /^(actress|alias|work|code|maker|label|series|genre|director|source)_(\d{6})$/.exec(value);
         if (!match) continue;
         maxByPrefix.set(match[1], Math.max(maxByPrefix.get(match[1]) ?? 0, Number(match[2])));
       }
@@ -136,8 +136,8 @@ function buildSimpleNameIndex(records) {
 
 function emptyAppend() {
   return {
-    actresses: [], actress_aliases: [], works: [], work_codes: [], work_cast: [], work_genres: [],
-    makers: [], labels: [], series: [], genres: [], source_records: [],
+    actresses: [], actress_aliases: [], works: [], work_codes: [], work_cast: [], work_genres: [], work_directors: [],
+    makers: [], labels: [], series: [], genres: [], directors: [], source_records: [],
   };
 }
 
@@ -186,6 +186,7 @@ export function prepareImport(document, options = {}) {
   const labelIndex = buildSimpleNameIndex(catalog.labels.records);
   const seriesIndex = buildSimpleNameIndex(catalog.series.records);
   const genreIndex = buildSimpleNameIndex(catalog.genres.records);
+  const directorIndex = buildSimpleNameIndex(catalog.directors.records);
   const batchActressBySource = new Map();
   const batchActressByName = new Map();
   const batchWorkBySource = new Map();
@@ -221,7 +222,11 @@ export function prepareImport(document, options = {}) {
     if (!input) return "";
     const obj = typeof input === "string" ? { name: input } : input;
     if (!obj.name) return "";
-    const index = kind === "maker" ? makerIndex : kind === "label" ? labelIndex : kind === "series" ? seriesIndex : genreIndex;
+    const index = kind === "maker" ? makerIndex
+      : kind === "label" ? labelIndex
+      : kind === "series" ? seriesIndex
+      : kind === "director" ? directorIndex
+      : genreIndex;
     const key = normalizeTaxonomyName(obj.name);
     let candidates = index.get(key) ?? [];
     if (kind === "label" && parent.maker_id) candidates = candidates.filter((row) => !row.maker_id || row.maker_id === parent.maker_id);
@@ -255,6 +260,8 @@ export function prepareImport(document, options = {}) {
       values.label_id = parent.label_id ?? "";
     } else if (kind === "genre") {
       values.slug = obj.slug ?? "";
+    } else if (kind === "director") {
+      // 导演实体当前只使用通用名称/官网/说明字段。
     }
     const row = compactRecord(schema.columns, values);
     append[datasetName].push(row);
@@ -452,6 +459,15 @@ export function prepareImport(document, options = {}) {
       for (const genreInput of input.genres ?? []) {
         const genreId = resolveSimpleEntity("genre", genreInput);
         if (genreId) append.work_genres.push(compactRecord(catalog.work_genres.schema.columns, { work_id: id, genre_id: genreId }));
+      }
+      for (const [directorPosition, directorInputRaw] of (input.directors ?? []).entries()) {
+        const directorInput = typeof directorInputRaw === "string" ? { name: directorInputRaw } : directorInputRaw;
+        const directorId = resolveSimpleEntity("director", directorInput);
+        if (directorId) append.work_directors.push(compactRecord(catalog.work_directors.schema.columns, {
+          work_id: id,
+          director_id: directorId,
+          position: directorInput?.position ?? directorPosition + 1,
+        }));
       }
       for (const [castPosition, castInputRaw] of (input.cast ?? []).entries()) {
         const castInput = typeof castInputRaw === "string" ? { name: castInputRaw } : castInputRaw;

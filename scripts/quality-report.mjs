@@ -54,6 +54,7 @@ const entityIds = new Map([
   ["label", new Set(catalog.labels.records.map((r) => r.id))],
   ["series", new Set(catalog.series.records.map((r) => r.id))],
   ["genre", new Set(catalog.genres.records.map((r) => r.id))],
+  ["director", new Set(catalog.directors.records.map((r) => r.id))],
 ]);
 for (const row of catalog.source_records.records) {
   if (!entityIds.get(row.entity_type)?.has(row.entity_id)) add("error", "orphan-source-record", `${row.id} 指向不存在的 ${row.entity_type}:${row.entity_id}`);

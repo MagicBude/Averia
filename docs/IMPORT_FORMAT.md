@@ -60,6 +60,7 @@ V0.2 女优自动匹配只允许：
   "label": { "name": "示例厂牌" },
   "series": { "name": "示例系列" },
   "genres": [{ "name": "示例分类", "slug": "sample" }],
+  "directors": [{ "name": "示例导演", "name_ja": "示例导演", "position": 1 }],
   "cast": [{ "source_record_id": "12345", "name": "示例女优", "position": 1 }]
 }
 ```
@@ -69,3 +70,18 @@ V0.2 女优自动匹配只允许：
 ## 已有实体的字段更新
 
 V0.2 默认不自动覆盖已有实体。来源提供了正式数据中的空字段时，只写入 `stage.json` 的 `proposals`，等待后续冲突裁决机制或人工处理。
+
+
+## directors（V0.4.3）
+
+作品可以通过 `directors` 数组携带一个或多个导演：
+
+```json
+{
+  "directors": [
+    { "name": "示例导演", "name_ja": "示例导演", "position": 1 }
+  ]
+}
+```
+
+Prepare 会把导演规范化为 `directors.csv`，并通过 `work_directors.csv` 建立作品关系。导演名只做确定性精确匹配，不做模糊自动合并。

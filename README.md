@@ -46,12 +46,14 @@ Averia/
 │  │  └─ work_codes.csv
 │  ├─ relations/                # 多对多关系
 │  │  ├─ work_cast.csv
-│  │  └─ work_genres.csv
+│  │  ├─ work_genres.csv
+│  │  └─ work_directors.csv
 │  ├─ taxonomy/                 # 厂商、厂牌、系列、分类
 │  │  ├─ makers.csv
 │  │  ├─ labels.csv
 │  │  ├─ series.csv
-│  │  └─ genres.csv
+│  │  ├─ genres.csv
+│  │  └─ directors.csv
 │  └─ sources/                  # 数据来源与溯源
 │     └─ source_records.csv
 ├─ exports/                     # 自动生成，不作为主数据维护
@@ -76,7 +78,8 @@ Averia/
                                            │   └──── 系列 Series
                                            │
                                            ├──< 番号 WorkCode
-                                           └──< 作品分类 WorkGenre >── 分类 Genre
+                                           ├──< 作品分类 WorkGenre >── 分类 Genre
+                                           └──< 作品导演 WorkDirector >── 导演 Director
 
 任意核心实体 ──< 数据来源 SourceRecord
 ```
@@ -240,3 +243,8 @@ V0.3 暂不声明数据内容许可证。
 Averia 当前的数据源策略已经从“英文聚合源先行”调整为“**日文厂商官方源优先，英文聚合源补充验证**”。
 
 V0.4 首个实现为 MOODYZ 官方 Provider；DMM/FANZA API 保留为未来可选来源，但不依赖不符合其注册规则的账户方案。详细规则见 [`docs/SOURCE_STRATEGY.md`](docs/SOURCE_STRATEGY.md)。
+
+
+## V0.4.3：导演进入正式数据模型
+
+真实 MOODYZ 数据验证发现作品页会提供 `監督`。Averia 从 V0.4.3 起新增 `directors.csv` 与 `work_directors.csv`，不再把导演信息仅保存在来源备注中。第一次真实 Apply 前完成该模型补齐，避免后续迁移历史正式数据。

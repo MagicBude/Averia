@@ -245,3 +245,10 @@ Averia Web
 4. `curl` 必须通过参数数组启动，禁止 `shell: true` 或字符串拼接执行；目标 URL 仍必须先经过 Provider 主机白名单校验。
 5. 自动回退不得绕过登录、验证码、付费墙或访问控制，只用于正常公开 HTTPS 页面在不同 HTTP/TLS 客户端之间的兼容。
 6. `meta.json` 可以记录 `network_transport` 和回退原因，但不得记录完整代理 URL、用户名、密码或其他代理凭据。
+
+
+## V0.4.3 导演建模规则
+
+- 来源站提供的 `監督 / director` 不得只塞进备注。
+- 使用 `directors.csv` 保存导演实体，使用 `work_directors.csv` 保存作品关系。
+- 不使用导演名称作为主键，不做模糊自动合并。

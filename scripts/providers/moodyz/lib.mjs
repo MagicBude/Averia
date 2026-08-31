@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const MOODYZ_SOURCE = "moodyz-official";
-export const MOODYZ_PROVIDER_VERSION = 3;
+export const MOODYZ_PROVIDER_VERSION = 4;
 const ALLOWED_HOSTS = new Set(["moodyz.com", "www.moodyz.com"]);
 const BASE_URL = "https://moodyz.com/";
 
@@ -323,9 +323,10 @@ export function parseMoodyzWork(html, sourceUrl, fetchedAt = new Date().toISOStr
     label: labelName ? { name: labelName, name_ja: labelName } : undefined,
     series: seriesName ? { name: seriesName, name_ja: seriesName } : undefined,
     genres,
+    directors: director ? [{ name: director, name_ja: director, position: 1 }] : [],
     cast,
     cover_url: firstMetaContent(html, "og:image"),
-    source_notes: director ? `MOODYZ 監督: ${director}` : "",
+    source_notes: "",
   };
 
   return {

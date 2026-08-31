@@ -3,6 +3,7 @@
   "datasets": {
     "actress_aliases": [],
     "actresses": [],
+    "directors": [],
     "genres": [],
     "labels": [],
     "makers": [],
@@ -10,6 +11,7 @@
     "source_records": [],
     "work_cast": [],
     "work_codes": [],
+    "work_directors": [],
     "work_genres": [],
     "works": []
   }

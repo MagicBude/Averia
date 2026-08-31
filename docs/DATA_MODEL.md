@@ -64,6 +64,23 @@ Actress N ── N Work
 
 不要把它们永久压平成 `works.csv` 中的一段普通文本，因为未来这些实体本身还会拥有更多属性、别名、来源和页面。
 
+## Director / WorkDirector：导演与作品导演关系
+
+导演作为独立实体维护：
+
+```text
+Work N ── N Director
+```
+
+主数据分别位于：
+
+```text
+data/taxonomy/directors.csv
+data/relations/work_directors.csv
+```
+
+这样同一导演可以关联多部作品，一个作品也可以保留多位导演及其顺序。
+
 ## Genre：分类 / 标签
 
 保存 Averia 规范化的分类词汇。

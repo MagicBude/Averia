@@ -1,24 +1,48 @@
-# Averia V0.4.2 Patch Manifest
+# Averia V0.4.3 增量包清单
 
-这是 V0.4.1 的 MOODYZ 真实页面 Parser 修复补丁，不包含 `data/`、`exports/` 或 `var/` 数据。
+本补丁在第一次真实数据 Apply 前补齐导演数据模型。
 
-## 修改
+## 新增文件
 
-- `package.json`：版本提升到 `0.4.2`
-- `scripts/providers/moodyz/lib.mjs`：兼容空 H1 / H2 / og:title / title，Provider 版本提升到 3
-- `scripts/provider-moodyz.mjs`：Parser 前保存 raw.html；失败保留 meta.json
-- `tests/provider-moodyz.test.mjs`：增加真实标题结构与失败快照回归测试
-- `tests/fixtures/moodyz/work-mdvr434.html`：改为当前真实页面的空 H1 + H2 结构
-- `tests/fixtures/moodyz/actress-855540.html`：改为当前真实页面的空 H1 + H2 结构
-- `docs/MOODYZ_PROVIDER.md`
+- `data/taxonomy/directors.csv`
+- `data/relations/work_directors.csv`
+- `schemas/directors.schema.json`
+- `schemas/work_directors.schema.json`
+- `UPGRADE_V0.4.3.md`
+
+## 修改文件
+
+- `package.json`
+- `schemas/source_records.schema.json`
+- `scripts/import/lib.mjs`
+- `scripts/providers/moodyz/lib.mjs`
+- `scripts/provider-moodyz.mjs`
+- `scripts/quality-report.mjs`
+- `tests/catalog.test.mjs`
+- `tests/import.test.mjs`
+- `tests/provider-javdatabase.test.mjs`
+- `tests/provider-moodyz.test.mjs`
 - `README.md`
-- `UPGRADE_V0.4.2.md`
+- `AGENTS.md`
+- `DATA_STANDARD.md`
+- `docs/CONTRIBUTING_DATA.md`
+- `docs/DATA_MODEL.md`
+- `docs/FIELD_DICTIONARY.md`
+- `docs/IMPORT_FORMAT.md`
+- `docs/MOODYZ_PROVIDER.md`
 
-## 本地验证结果
+## 不包含
 
-```text
-11 个数据集校验通过
-0 个数据质量错误
-0 个警告
-32 / 32 Node 测试通过
-```
+- 既有正式 CSV 数据
+- `exports/`
+- `var/`
+- GitHub Pages 页面
+- 任何代理地址、凭据或本地环境配置
+
+## 验证结果
+
+- 13 个数据集校验通过，0 行正式数据
+- 数据质量：0 error / 0 warning
+- 自动测试：33 / 33 通过
+- `MDVR-434` 离线 Provider → Prepare → Report 验证通过
+- 该批次可生成 `directors=1` 与 `work_directors=1`

@@ -4,7 +4,7 @@ import { loadCatalog, normalizeCatalogCode } from "../scripts/lib/catalog.mjs";
 
 test("所有声明的数据集都能按精确表头加载", () => {
   const catalog = loadCatalog();
-  assert.equal(Object.keys(catalog).length, 11);
+  assert.equal(Object.keys(catalog).length, 13);
 
   for (const dataset of Object.values(catalog)) {
     assert.deepEqual(dataset.headers, dataset.schema.columns);
