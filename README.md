@@ -280,3 +280,19 @@ Merge 只允许同一 `source.name`，优先使用 `source_record_id` 识别同�
 ## V0.5.1 时间戳兼容
 
 Provider 抓取时间支持 UTC ISO 8601 秒级或毫秒级格式，例如 `2026-08-31T14:36:25Z` 与 `2026-08-31T14:36:25.486Z`。
+
+## V0.6：DMM Rental Provider 与 XLSX 总览
+
+V0.6 新增 DMM/FANZA 宅配 Rental 单页 Provider，用于补充跨厂商日文参考数据：
+
+```bash
+pnpm provider:dmm-rental -- --cid 4ipzz698
+```
+
+同时 `averia.xlsx` 增加 `女优总览`、`作品总览`，并固定规范 Sheet 顺序为 `女优 → 女优别名 → 作品 → ...`。
+
+详见：
+
+- `docs/DMM_RENTAL_PROVIDER.md`
+- `exports/xlsx/README.md`
+- `UPGRADE_V0.6.0.md`

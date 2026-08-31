@@ -33,55 +33,53 @@
 - 自动代理：CLI → 环境变量 → Windows 系统代理 → Direct
 - JAVDatabase 定位调整为英文补充 / 交叉验证源
 
-## V0.4 — 日文厂商官方 Provider ✅（当前）
+## V0.4 — 日文厂商官方 Provider ✅
 
 首个实现：MOODYZ Official Provider。
 
-```text
-日文官方 HTML
-   ↓
-Raw Snapshot
-   ↓
-Provider Parser
-   ↓
-Averia canonical JSON
-   ↓
-Prepare / Report / Apply
-```
-
-当前能力：
-
-- MOODYZ 单作品页
-- MOODYZ 单女优页
+- 单作品页 / 单女优页
 - 日文标题 / 女优名 / 品番 / 発売日
-- Label / Series / Genre / 时长
-- 女优官方罗马字 / 身高 / 三围
-- 发现关联作品但不递归抓取
+- Maker / Label / Series / Genre / 时长 / 导演
+- 女优官方罗马字 / 身高 / 三围 / 头像
+- 作品封面识别
+- Node / curl 网络 fallback 与瞬时错误重试
+- 真实 MDVR-434 + 純白彩永 完整链路验证
 
-下一步：
+## V0.5 — Canonical Merge 与首次真实入库 ✅
 
-- 用真实 MOODYZ 页面执行首次 Prepare / Report
-- 根据真实 HTML 修正 Parser 边界
-- 选择第二个官方厂商站验证可复用程度
-- 调研 MGS 作为跨厂商日文发行平台补源
+- 同一来源多页面 canonical 安全合并
+- 同一 source_record_id 的半成品实体与完整实体合并
+- 非空字段冲突阻断
+- 作品页关系 + 女优页完整资料一次 Prepare
+- 首个 MOODYZ 官方作品与女优正式写入 CSV
 
-DMM/FANZA Web API 保留为未来选项，但当前因 Affiliate 注册需要日本国内收款账户而延期，不通过不合规方式绕过。
+## V0.6 — DMM Rental 日文参考源与 XLSX 总览 ✅（当前）
 
-## V0.5 — 字段级溯源与多来源冲突
+- FANZA/DMM 宅配单品 Rental 单页 Provider
+- 日文标题 / 出演者 / 監督 / Series / Maker / Label / Genre / 时长 / 封面
+- DMM CID 作为附加番号
+- 保守 CID → 标准番号推导，并支持 `--code` 显式覆盖
+- `貸出開始日` 与 `release_date` 严格区分
+- `女优总览` / `作品总览` 人类阅读 Sheet
+- 固定规范 Sheet 顺序：女优在女优别名前
+- 修复首次创建非空 Series 时 `seriess` 表名错误
+
+## V0.7 — 字段级溯源与跨来源 Resolution
 
 - Observation：保存来源对字段的原始观察值
 - Field Resolution：记录最终字段值的选择依据
-- 日文官方源、发行平台、英文补充源的字段冲突报告
+- 厂商官方源、DMM/MGS 发行平台、英文补充源的字段冲突报告
+- 跨来源同作品/同女优对齐
 - Provider 版本迁移与 Raw Snapshot 重新解析机制
 
-## V0.6 — 本地数据库
+## V0.8 — 本地数据库
 
 - SQLite 物化
 - 姓名 / 番号搜索索引
 - 从规范 CSV 导入 SQLite
 - CSV 仍保持唯一事实源
 
-## V0.7 — API
+## V0.9 — API
 
 - 女优查询
 - 作品查询

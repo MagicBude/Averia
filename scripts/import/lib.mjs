@@ -240,7 +240,13 @@ export function prepareImport(document, options = {}) {
 
     const prefix = kind;
     const id = nextId(prefix);
-    const datasetName = `${kind}s`;
+    const datasetName = {
+      maker: "makers",
+      label: "labels",
+      series: "series",
+      genre: "genres",
+      director: "directors",
+    }[kind];
     const schema = catalog[datasetName].schema;
     const values = {
       id,
