@@ -8,3 +8,6 @@ Thumbs.db
 !.env.example
 coverage/
 .tmp/
+
+# Averia 导入 Pipeline 的本地暂存、备份和质量报告
+var/

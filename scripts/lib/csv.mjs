@@ -38,7 +38,7 @@ export function parseCsv(text) {
   }
 
   if (inQuotes) {
-    throw new Error("CSV ended inside a quoted field.");
+    throw new Error("CSV 在引号字段内部意外结束。");
   }
 
   if (field.length > 0 || row.length > 0) {
@@ -64,7 +64,7 @@ export function readCsv(filePath) {
     .map((row, index) => {
       if (row.length !== headers.length) {
         throw new Error(
-          `${filePath}: row ${index + 2} has ${row.length} columns; expected ${headers.length}.`,
+          `${filePath}: 第 ${index + 2} 行有 ${row.length} 列，预期 ${headers.length} 列。`,
         );
       }
 
@@ -72,4 +72,23 @@ export function readCsv(filePath) {
     });
 
   return { headers, records };
+}
+
+
+export function stringifyCsv(headers, records) {
+  const escapeField = (value) => {
+    const text = value == null ? "" : String(value);
+    if (/[",\r\n]/.test(text)) return `"${text.replaceAll('"', '""')}"`;
+    return text;
+  };
+
+  const lines = [headers.map(escapeField).join(",")];
+  for (const record of records) {
+    lines.push(headers.map((header) => escapeField(record[header] ?? "")).join(","));
+  }
+  return `${lines.join("\n")}\n`;
+}
+
+export function writeCsv(filePath, headers, records) {
+  fs.writeFileSync(filePath, stringifyCsv(headers, records), "utf8");
 }

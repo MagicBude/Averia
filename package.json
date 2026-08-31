@@ -1,8 +1,8 @@
 {
   "name": "averia",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Averia：以 CSV 为主数据源，并自动生成 JSON/XLSX 的结构化 JAV 元数据资料库。",
+  "description": "Averia：以 CSV 为唯一事实源，支持结构化 JAV 元数据校验、导出、数据质量检查与安全导入 Pipeline。",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -14,7 +14,11 @@
     "data:export:xlsx": "node scripts/export-xlsx.mjs",
     "data:export": "pnpm data:validate && pnpm data:export:json && pnpm data:export:xlsx",
     "test": "node --test",
-    "check": "pnpm data:validate && pnpm test"
+    "check": "pnpm data:validate && pnpm data:quality -- --fail-on-error && pnpm test",
+    "data:quality": "node scripts/quality-report.mjs",
+    "import:prepare": "node scripts/import-prepare.mjs",
+    "import:report": "node scripts/import-report.mjs",
+    "import:apply": "node scripts/import-apply.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0"

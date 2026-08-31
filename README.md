@@ -85,7 +85,7 @@ Averia/
 - Node.js 20 或更高版本
 - pnpm 9 或更高版本
 
-本初始化包固定使用：
+当前项目固定使用：
 
 ```text
 pnpm 11.21.0
@@ -115,8 +115,12 @@ exports/xlsx/averia.xlsx
 | `pnpm data:export:json` | 从 CSV 生成 JSON |
 | `pnpm data:export:xlsx` | 从 CSV 生成中文 XLSX 工作簿 |
 | `pnpm data:export` | 先校验，再生成全部导出文件 |
+| `pnpm data:quality` | 生成数据质量报告 |
+| `pnpm import:prepare -- --file <file> --batch <id>` | 准备安全导入批次，不修改正式 CSV |
+| `pnpm import:report -- --batch <id>` | 查看导入审核报告 |
+| `pnpm import:apply -- --batch <id>` | 备份、写入并校验已审核批次 |
 | `pnpm test` | 运行 Node.js 基础测试 |
-| `pnpm check` | 运行数据校验和测试 |
+| `pnpm check` | 运行数据校验、质量检查和测试 |
 
 ## 唯一事实源
 
@@ -138,9 +142,9 @@ pnpm data:export
 CSV → JSON / XLSX
 ```
 
-### 阶段 2：数据处理 Pipeline
+### 阶段 2：数据质量与安全导入 Pipeline（V0.2）
 
-增加数据源适配器、标准化、去重、身份匹配、数据溯源以及冲突处理。
+已经加入统一导入 JSON、精确实体匹配、Stage 审核、备份/回滚、正式 CSV 指纹保护以及数据质量报告。具体外部站点 Provider 在后续版本逐步接入。
 
 ### 阶段 3：数据库
 
@@ -166,12 +170,15 @@ CSV → JSON / XLSX
 2. [`docs/FIELD_DICTIONARY.md`](./docs/FIELD_DICTIONARY.md) — CSV 字段中英文对照和含义
 3. [`docs/DATA_MODEL.md`](./docs/DATA_MODEL.md) — 数据实体和关系设计
 4. [`docs/CONTRIBUTING_DATA.md`](./docs/CONTRIBUTING_DATA.md) — 如何新增和修正数据
-5. [`docs/ROADMAP.md`](./docs/ROADMAP.md) — 项目演进路线
-6. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
+5. [`docs/IMPORT_FORMAT.md`](./docs/IMPORT_FORMAT.md) — V0.2 统一导入 JSON 格式
+6. [`docs/IMPORT_PIPELINE.md`](./docs/IMPORT_PIPELINE.md) — 安全导入、审核、备份和回滚流程
+7. [`docs/DATA_QUALITY.md`](./docs/DATA_QUALITY.md) — 数据质量检查
+8. [`docs/ROADMAP.md`](./docs/ROADMAP.md) — 项目演进路线
+9. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
 
 ## License
 
-V0.1 暂不声明数据内容许可证。
+V0.2 暂不声明数据内容许可证。
 
 在正式公开大量来源数据或接受第三方数据贡献前，应分别确定：
 

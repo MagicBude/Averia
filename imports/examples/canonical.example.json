@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "source": {
+    "name": "manual-example",
+    "fetched_at": "2026-08-31T08:30:00Z"
+  },
+  "actresses": [
+    {
+      "source_record_id": "actress-demo-001",
+      "primary_name": "示例女优",
+      "name_ja": "サンプル女优",
+      "aliases": [
+        {
+          "value": "Sample Actress",
+          "type": "romanized",
+          "language": "en"
+        }
+      ]
+    }
+  ],
+  "works": [
+    {
+      "source_record_id": "work-demo-001",
+      "code": "DEMO-001",
+      "title": "示例作品",
+      "release_date": "2026-08-31",
+      "duration_min": 120,
+      "maker": {
+        "name": "示例厂商"
+      },
+      "genres": [
+        {
+          "name": "示例分类",
+          "slug": "sample"
+        }
+      ],
+      "cast": [
+        {
+          "source_record_id": "actress-demo-001",
+          "role": "actress",
+          "position": 1
+        }
+      ]
+    }
+  ]
+}

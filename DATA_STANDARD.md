@@ -336,3 +336,16 @@ docs/FIELD_DICTIONARY.md
 5. 更新导出脚本。
 6. 更新测试。
 7. 更新相关文档。
+
+
+## 12. V0.2 数据导入边界
+
+外部来源不能直接写入正式 CSV。统一流程为：
+
+```text
+Provider / 人工文件 → Averia Import JSON → Stage → 审核 → Apply → Canonical CSV
+```
+
+自动匹配必须是可解释且确定性的。V0.2 明确禁止模糊相似度自动合并。
+
+已有实体的非空字段不会因为新来源出现不同值而自动覆盖；这类情况必须进入后续 Observation / Field Resolution 或人工审核机制。
