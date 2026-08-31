@@ -1,0 +1,53 @@
+{
+  "file": "data/works/work_codes.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^code_[0-9]{6}$",
+    "work_id": "^work_[0-9]{6}$",
+    "source_id": "^source_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "work_id",
+    "code",
+    "normalized_code"
+  ],
+  "booleanFields": [
+    "is_primary"
+  ],
+  "foreignKeys": [
+    {
+      "field": "work_id",
+      "dataset": "works",
+      "target": "id"
+    },
+    {
+      "field": "source_id",
+      "dataset": "source_records",
+      "target": "id",
+      "optional": true
+    }
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "work_id",
+    "code",
+    "normalized_code",
+    "code_type",
+    "is_primary",
+    "source_id"
+  ],
+  "displayNameZh": "作品番号",
+  "columnLabelsZh": {
+    "id": "番号记录ID",
+    "work_id": "作品ID",
+    "code": "番号",
+    "normalized_code": "标准化番号",
+    "code_type": "番号类型",
+    "is_primary": "是否主番号",
+    "source_id": "来源ID"
+  }
+}

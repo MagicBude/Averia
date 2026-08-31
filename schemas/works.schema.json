@@ -1,0 +1,79 @@
+{
+  "file": "data/works/works.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^work_[0-9]{6}$",
+    "maker_id": "^maker_[0-9]{6}$",
+    "label_id": "^label_[0-9]{6}$",
+    "series_id": "^series_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "primary_code",
+    "title"
+  ],
+  "dateFields": [
+    "release_date"
+  ],
+  "timestampFields": [
+    "created_at",
+    "updated_at"
+  ],
+  "integerFields": [
+    "duration_min"
+  ],
+  "foreignKeys": [
+    {
+      "field": "maker_id",
+      "dataset": "makers",
+      "target": "id",
+      "optional": true
+    },
+    {
+      "field": "label_id",
+      "dataset": "labels",
+      "target": "id",
+      "optional": true
+    },
+    {
+      "field": "series_id",
+      "dataset": "series",
+      "target": "id",
+      "optional": true
+    }
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "primary_code",
+    "title",
+    "title_ja",
+    "release_date",
+    "duration_min",
+    "maker_id",
+    "label_id",
+    "series_id",
+    "description",
+    "cover_url",
+    "created_at",
+    "updated_at"
+  ],
+  "displayNameZh": "作品",
+  "columnLabelsZh": {
+    "id": "作品ID",
+    "primary_code": "主番号",
+    "title": "标题",
+    "title_ja": "日文标题",
+    "release_date": "发行日期",
+    "duration_min": "时长(分钟)",
+    "maker_id": "厂商ID",
+    "label_id": "厂牌ID",
+    "series_id": "系列ID",
+    "description": "简介",
+    "cover_url": "封面URL",
+    "created_at": "创建时间",
+    "updated_at": "更新时间"
+  }
+}

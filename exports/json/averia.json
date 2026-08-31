@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "datasets": {
+    "actress_aliases": [],
+    "actresses": [],
+    "genres": [],
+    "labels": [],
+    "makers": [],
+    "series": [],
+    "source_records": [],
+    "work_cast": [],
+    "work_codes": [],
+    "work_genres": [],
+    "works": []
+  }
+}

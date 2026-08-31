@@ -1,0 +1,55 @@
+{
+  "file": "data/taxonomy/series.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^series_[0-9]{6}$",
+    "maker_id": "^maker_[0-9]{6}$",
+    "label_id": "^label_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "timestampFields": [
+    "created_at",
+    "updated_at"
+  ],
+  "foreignKeys": [
+    {
+      "field": "maker_id",
+      "dataset": "makers",
+      "target": "id",
+      "optional": true
+    },
+    {
+      "field": "label_id",
+      "dataset": "labels",
+      "target": "id",
+      "optional": true
+    }
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "maker_id",
+    "label_id",
+    "name",
+    "name_ja",
+    "description",
+    "created_at",
+    "updated_at"
+  ],
+  "displayNameZh": "系列",
+  "columnLabelsZh": {
+    "id": "系列ID",
+    "maker_id": "厂商ID",
+    "label_id": "厂牌ID",
+    "name": "名称",
+    "name_ja": "日文名",
+    "description": "简介",
+    "created_at": "创建时间",
+    "updated_at": "更新时间"
+  }
+}

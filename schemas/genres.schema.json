@@ -1,0 +1,38 @@
+{
+  "file": "data/taxonomy/genres.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^genre_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "name",
+    "slug"
+  ],
+  "timestampFields": [
+    "created_at",
+    "updated_at"
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "name",
+    "name_ja",
+    "slug",
+    "description",
+    "created_at",
+    "updated_at"
+  ],
+  "displayNameZh": "分类",
+  "columnLabelsZh": {
+    "id": "分类ID",
+    "name": "名称",
+    "name_ja": "日文名",
+    "slug": "Slug",
+    "description": "说明",
+    "created_at": "创建时间",
+    "updated_at": "更新时间"
+  }
+}

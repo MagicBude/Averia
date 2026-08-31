@@ -1,0 +1,82 @@
+{
+  "file": "data/actresses/actresses.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^actress_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "primary_name"
+  ],
+  "dateFields": [
+    "birth_date",
+    "debut_date",
+    "retirement_date"
+  ],
+  "timestampFields": [
+    "created_at",
+    "updated_at"
+  ],
+  "integerFields": [
+    "height_cm",
+    "bust_cm",
+    "waist_cm",
+    "hip_cm"
+  ],
+  "enumFields": {
+    "status": [
+      "active",
+      "inactive",
+      "retired",
+      "unknown"
+    ]
+  },
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "primary_name",
+    "name_ja",
+    "name_en",
+    "kana",
+    "birth_date",
+    "debut_date",
+    "retirement_date",
+    "height_cm",
+    "bust_cm",
+    "waist_cm",
+    "hip_cm",
+    "cup",
+    "blood_type",
+    "birthplace",
+    "status",
+    "profile_image_url",
+    "description",
+    "created_at",
+    "updated_at"
+  ],
+  "displayNameZh": "女优",
+  "columnLabelsZh": {
+    "id": "女优ID",
+    "primary_name": "首选姓名",
+    "name_ja": "日文名",
+    "name_en": "英文名/罗马字",
+    "kana": "假名",
+    "birth_date": "出生日期",
+    "debut_date": "出道日期",
+    "retirement_date": "引退日期",
+    "height_cm": "身高(cm)",
+    "bust_cm": "胸围(cm)",
+    "waist_cm": "腰围(cm)",
+    "hip_cm": "臀围(cm)",
+    "cup": "罩杯",
+    "blood_type": "血型",
+    "birthplace": "出生地",
+    "status": "状态",
+    "profile_image_url": "头像URL",
+    "description": "简介",
+    "created_at": "创建时间",
+    "updated_at": "更新时间"
+  }
+}

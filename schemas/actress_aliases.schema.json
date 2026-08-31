@@ -1,0 +1,57 @@
+{
+  "file": "data/actresses/actress_aliases.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^alias_[0-9]{6}$",
+    "actress_id": "^actress_[0-9]{6}$",
+    "source_id": "^source_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "actress_id",
+    "alias"
+  ],
+  "booleanFields": [
+    "is_primary"
+  ],
+  "timestampFields": [
+    "created_at"
+  ],
+  "foreignKeys": [
+    {
+      "field": "actress_id",
+      "dataset": "actresses",
+      "target": "id"
+    },
+    {
+      "field": "source_id",
+      "dataset": "source_records",
+      "target": "id",
+      "optional": true
+    }
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "actress_id",
+    "alias",
+    "alias_type",
+    "language",
+    "is_primary",
+    "source_id",
+    "created_at"
+  ],
+  "displayNameZh": "女优别名",
+  "columnLabelsZh": {
+    "id": "别名ID",
+    "actress_id": "女优ID",
+    "alias": "别名",
+    "alias_type": "别名类型",
+    "language": "语言",
+    "is_primary": "是否主要名称",
+    "source_id": "来源ID",
+    "created_at": "创建时间"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "file": "data/taxonomy/makers.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^maker_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "timestampFields": [
+    "created_at",
+    "updated_at"
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "name",
+    "name_ja",
+    "website_url",
+    "description",
+    "created_at",
+    "updated_at"
+  ],
+  "displayNameZh": "厂商",
+  "columnLabelsZh": {
+    "id": "厂商ID",
+    "name": "名称",
+    "name_ja": "日文名",
+    "website_url": "官网URL",
+    "description": "简介",
+    "created_at": "创建时间",
+    "updated_at": "更新时间"
+  }
+}

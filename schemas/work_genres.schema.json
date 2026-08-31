@@ -1,0 +1,37 @@
+{
+  "file": "data/relations/work_genres.csv",
+  "primaryKey": [
+    "work_id",
+    "genre_id"
+  ],
+  "idFields": {
+    "work_id": "^work_[0-9]{6}$",
+    "genre_id": "^genre_[0-9]{6}$"
+  },
+  "required": [
+    "work_id",
+    "genre_id"
+  ],
+  "foreignKeys": [
+    {
+      "field": "work_id",
+      "dataset": "works",
+      "target": "id"
+    },
+    {
+      "field": "genre_id",
+      "dataset": "genres",
+      "target": "id"
+    }
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "work_id",
+    "genre_id"
+  ],
+  "displayNameZh": "作品分类",
+  "columnLabelsZh": {
+    "work_id": "作品ID",
+    "genre_id": "分类ID"
+  }
+}

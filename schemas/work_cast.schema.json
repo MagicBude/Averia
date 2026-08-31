@@ -1,0 +1,44 @@
+{
+  "file": "data/relations/work_cast.csv",
+  "primaryKey": [
+    "work_id",
+    "actress_id"
+  ],
+  "idFields": {
+    "work_id": "^work_[0-9]{6}$",
+    "actress_id": "^actress_[0-9]{6}$"
+  },
+  "required": [
+    "work_id",
+    "actress_id"
+  ],
+  "integerFields": [
+    "position"
+  ],
+  "foreignKeys": [
+    {
+      "field": "work_id",
+      "dataset": "works",
+      "target": "id"
+    },
+    {
+      "field": "actress_id",
+      "dataset": "actresses",
+      "target": "id"
+    }
+  ],
+  "schemaVersion": 1,
+  "columns": [
+    "work_id",
+    "actress_id",
+    "role",
+    "position"
+  ],
+  "displayNameZh": "作品参演",
+  "columnLabelsZh": {
+    "work_id": "作品ID",
+    "actress_id": "女优ID",
+    "role": "角色/身份",
+    "position": "排序"
+  }
+}
