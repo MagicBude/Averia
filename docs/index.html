@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Averia 是一个数据优先的 JAV 元数据资料项目，用于整理女优、作品、厂商、系列、分类与来源信息。" />
+  <meta name="theme-color" content="#101828" />
+  <title>Averia — JAV 元数据资料库</title>
+  <link rel="stylesheet" href="./assets/site.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Averia 首页">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-text">Averia</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#about">关于</a>
+        <a href="#scope">数据范围</a>
+        <a href="#principles">数据原则</a>
+        <a href="#roadmap">路线图</a>
+        <a class="nav-cta" href="https://github.com/MagicBude/Averia" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">STRUCTURED METADATA ARCHIVE</p>
+          <h1>让 JAV 元数据<br />变得可整理、可验证、可复用。</h1>
+          <p class="hero-copy">
+            Averia 是一个数据优先的结构化资料项目，面向女优、作品、厂商、厂牌、系列、分类与来源信息，
+            以稳定的数据模型支撑后续检索、统计、API 与 Web 应用。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#about">了解 Averia</a>
+            <a class="button secondary" href="https://github.com/MagicBude/Averia" rel="noreferrer">查看开源仓库</a>
+          </div>
+          <p class="status"><span class="status-dot" aria-hidden="true"></span> 当前处于早期开发阶段</p>
+        </div>
+
+        <aside class="data-card" aria-label="Averia 数据流">
+          <div class="data-card-head">
+            <span>AVERIA / DATA FLOW</span>
+            <span class="live">ACTIVE</span>
+          </div>
+          <ol class="flow-list">
+            <li><span>01</span><div><strong>数据来源</strong><small>官方日文源、补充源与人工核验</small></div></li>
+            <li><span>02</span><div><strong>原始记录</strong><small>保留来源、时间与可追溯信息</small></div></li>
+            <li><span>03</span><div><strong>标准化</strong><small>统一实体、番号与关联关系</small></div></li>
+            <li><span>04</span><div><strong>审核与校验</strong><small>冲突阻断、质量检查与人工确认</small></div></li>
+            <li><span>05</span><div><strong>结构化输出</strong><small>CSV · JSON · XLSX · Future API</small></div></li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container split">
+        <div>
+          <p class="section-kicker">ABOUT</p>
+          <h2>Averia 是什么？</h2>
+        </div>
+        <div class="section-copy">
+          <p>
+            Averia 的核心不是“先做一个网站”，而是先建立一套长期可维护的数据底座。
+            项目当前以 CSV 作为主数据格式，并自动生成 JSON 与 XLSX；未来可在此基础上增加数据库、搜索、API 与网站界面。
+          </p>
+          <p>
+            项目强调稳定 ID、多来源溯源、明确的数据语言与安全导入流程，让每条数据尽可能做到“知道来自哪里、为什么采用、如何复查”。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scope" class="section section-muted">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">DATA SCOPE</p>
+          <h2>数据范围</h2>
+          <p>从基础实体开始，逐步建立可关联的元数据网络。</p>
+        </div>
+        <div class="cards">
+          <article class="card"><span class="card-no">01</span><h3>女优</h3><p>名称、日文名、别名、基础资料、来源记录以及作品关联。</p></article>
+          <article class="card"><span class="card-no">02</span><h3>作品</h3><p>番号、日文标题、发行日期、时长、封面引用与来源信息。</p></article>
+          <article class="card"><span class="card-no">03</span><h3>组织与系列</h3><p>厂商、厂牌、系列以及作品之间的结构化关系。</p></article>
+          <article class="card"><span class="card-no">04</span><h3>分类与关联</h3><p>分类标签、出演关系及后续可扩展的多对多数据结构。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="principles" class="section">
+      <div class="container">
+        <div class="section-heading narrow">
+          <p class="section-kicker">PRINCIPLES</p>
+          <h2>数据原则</h2>
+        </div>
+        <div class="principles">
+          <div class="principle"><span>JP</span><div><h3>日文原始数据优先</h3><p>作品标题、女优名称、厂商、系列与分类等语言相关字段，优先采用日本官方或日文原始来源。</p></div></div>
+          <div class="principle"><span>SR</span><div><h3>来源可追溯</h3><p>保存来源记录与采集信息，避免无法解释某个字段最初来自哪里。</p></div></div>
+          <div class="principle"><span>QA</span><div><h3>先审核，再写入</h3><p>外部 Provider 不直接修改正式数据；先标准化、生成报告并校验，再决定是否应用。</p></div></div>
+          <div class="principle"><span>ID</span><div><h3>稳定内部 ID</h3><p>姓名和番号都是属性，不作为长期依赖的唯一内部主键，方便改名、别名与多番号场景。</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap" class="section section-dark">
+      <div class="container">
+        <div class="section-heading light">
+          <p class="section-kicker">ROADMAP</p>
+          <h2>从资料库到产品</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item active"><span>现在</span><h3>结构化数据层</h3><p>CSV / JSON / XLSX、数据契约、校验与导入 Pipeline。</p></div>
+          <div class="timeline-item"><span>下一阶段</span><h3>多来源 Provider</h3><p>以日文官方源为主，聚合源作为补充与交叉验证。</p></div>
+          <div class="timeline-item"><span>后续</span><h3>数据库与 API</h3><p>SQLite / PostgreSQL、搜索索引、统一查询接口。</p></div>
+          <div class="timeline-item"><span>未来</span><h3>Averia Web</h3><p>女优、作品、厂商、系列检索与关联浏览界面。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section notice-section">
+      <div class="container notice">
+        <div>
+          <p class="section-kicker">NOTICE</p>
+          <h2>项目说明</h2>
+        </div>
+        <div>
+          <p>Averia 当前是开发中的元数据整理项目，不提供影片播放、下载或托管服务。</p>
+          <p>项目可能涉及成人作品的文字元数据，仅面向达到所在地法定年龄的用户。外部数据及商标归其各自权利方所有。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-wrap">
+      <div><strong>Averia</strong><span>Structured JAV Metadata Archive</span></div>
+      <div class="footer-links">
+        <a href="https://github.com/MagicBude/Averia" rel="noreferrer">GitHub</a>
+        <a href="mailto:averia.project@users.noreply.github.com">Contact</a>
+      </div>
+      <p>© 2026 Averia Project. Development preview.</p>
+    </div>
+  </footer>
+</body>
+</html>
