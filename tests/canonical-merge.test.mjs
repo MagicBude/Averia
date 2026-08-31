@@ -6,9 +6,9 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { mergeCanonicalDocuments } from "../scripts/canonical/merge.mjs";
-import { loadCatalog } from "../scripts/lib/catalog.mjs";
 import { prepareImport } from "../scripts/import/lib.mjs";
 import { parseMoodyzActress, parseMoodyzWork } from "../scripts/providers/moodyz/lib.mjs";
+import { loadEmptyCatalog } from "./helpers/catalog.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
@@ -44,7 +44,7 @@ test("同一 MOODYZ source_record_id 会把作品页半成品女优与女优页�
 test("合并后的 MOODYZ canonical 一次 Prepare 即可建立完整女优、作品与关系", () => {
   const { work, actress } = moodyzPair();
   const merged = mergeCanonicalDocuments([work, actress], { now: NOW });
-  const stage = prepareImport(merged, { catalog: loadCatalog(), batchId: "merged-test", now: NOW, fingerprint: "test" });
+  const stage = prepareImport(merged, { catalog: loadEmptyCatalog(), batchId: "merged-test", now: NOW, fingerprint: "test" });
   assert.equal(stage.summary.error_count, 0);
   assert.equal(stage.append.actresses.length, 1);
   assert.equal(stage.append.actress_aliases.length, 1);

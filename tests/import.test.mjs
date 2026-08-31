@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { loadCatalog } from "../scripts/lib/catalog.mjs";
 import { normalizeName, prepareImport, recordHash } from "../scripts/import/lib.mjs";
+import { loadEmptyCatalog } from "./helpers/catalog.mjs";
 
 test("女优姓名标准化只做确定性精确规则", () => {
   assert.equal(normalizeName("  Ａ B　C  "), "abc");
@@ -13,7 +13,7 @@ test("原始记录 Hash 不受对象字段顺序影响", () => {
 });
 
 test("统一导入格式可以为全新女优和作品生成可审核 Stage", () => {
-  const catalog = loadCatalog();
+  const catalog = loadEmptyCatalog();
   const stage = prepareImport({
     schema_version: 1,
     source: { name: "test-source", fetched_at: "2026-08-31T08:30:00Z" },
@@ -30,7 +30,7 @@ test("统一导入格式可以为全新女优和作品生成可审核 Stage", ()
 });
 
 test("无法解析的作品参演者会阻止批次自动应用", () => {
-  const catalog = loadCatalog();
+  const catalog = loadEmptyCatalog();
   const stage = prepareImport({
     schema_version: 1,
     source: { name: "test-source" },
@@ -43,7 +43,7 @@ test("无法解析的作品参演者会阻止批次自动应用", () => {
 
 
 test("统一导入格式可以为作品建立导演实体和作品导演关系", () => {
-  const catalog = loadCatalog();
+  const catalog = loadEmptyCatalog();
   const stage = prepareImport({
     schema_version: 1,
     source: { name: "test-source" },

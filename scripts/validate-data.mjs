@@ -1,5 +1,6 @@
 import path from "node:path";
 import { loadCatalog, normalizeCatalogCode, ROOT } from "./lib/catalog.mjs";
+import { isValidUtcTimestamp } from "./lib/time.mjs";
 
 const catalog = loadCatalog();
 const errors = [];
@@ -18,11 +19,6 @@ function validDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00Z`);
   return !Number.isNaN(date.valueOf()) && date.toISOString().slice(0, 10) === value;
-}
-
-function validTimestamp(value) {
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(value)) return false;
-  return !Number.isNaN(new Date(value).valueOf());
 }
 
 for (const [datasetName, dataset] of Object.entries(catalog)) {
@@ -78,8 +74,8 @@ for (const [datasetName, dataset] of Object.entries(catalog)) {
 
     for (const field of schema.timestampFields ?? []) {
       const value = record[field];
-      if (value && !validTimestamp(value)) {
-        pushError(datasetName, rowNumber, field, "必须使用 YYYY-MM-DDTHH:mm:ssZ 格式", value);
+      if (value && !isValidUtcTimestamp(value)) {
+        pushError(datasetName, rowNumber, field, "必须使用 UTC ISO 8601 格式 YYYY-MM-DDTHH:mm:ssZ 或 YYYY-MM-DDTHH:mm:ss.SSSZ", value);
       }
     }
 

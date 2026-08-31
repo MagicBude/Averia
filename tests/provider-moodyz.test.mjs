@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { buildMoodyzUrl, classifyMoodyzUrl, fetchMoodyzHtml, parseMoodyzActress, parseMoodyzWork, selectMoodyzImage } from "../scripts/providers/moodyz/lib.mjs";
 import { loadCatalog } from "../scripts/lib/catalog.mjs";
 import { prepareImport } from "../scripts/import/lib.mjs";
+import { loadEmptyCatalog } from "./helpers/catalog.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
@@ -105,7 +106,7 @@ test("MOODYZ 标题解析可在空 H1 时使用 H2，并可回退到 og:title", 
 
 test("MOODYZ 日文作品进入 Prepare 后保留 title_ja 和官方 taxonomy", () => {
   const parsed = parseMoodyzWork(fixture("work-mdvr434.html"), "https://moodyz.com/works/detail/MDVR434", NOW);
-  const stage = prepareImport(parsed.canonical, { batchId: "moodyz-test", now: NOW, catalog: loadCatalog(), fingerprint: "test" });
+  const stage = prepareImport(parsed.canonical, { batchId: "moodyz-test", now: NOW, catalog: loadEmptyCatalog(), fingerprint: "test" });
   assert.equal(stage.summary.error_count, 0);
   assert.equal(stage.append.works.length, 1);
   assert.equal(stage.append.works[0].title_ja, parsed.canonical.works[0].title_ja);
