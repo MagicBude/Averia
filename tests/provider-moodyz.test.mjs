@@ -6,7 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { buildMoodyzUrl, classifyMoodyzUrl, parseMoodyzActress, parseMoodyzWork, selectMoodyzImage } from "../scripts/providers/moodyz/lib.mjs";
+import { buildMoodyzUrl, classifyMoodyzUrl, fetchMoodyzHtml, parseMoodyzActress, parseMoodyzWork, selectMoodyzImage } from "../scripts/providers/moodyz/lib.mjs";
 import { loadCatalog } from "../scripts/lib/catalog.mjs";
 import { prepareImport } from "../scripts/import/lib.mjs";
 
@@ -162,3 +162,35 @@ test("MOODYZ 离线 CLI 只生成 Provider 产物，不修改正式 CSV", () => 
   assert.equal(meta.source_role, "authoritative");
   assert.deepEqual(dataHashes(), before);
 });
+
+test("MOODYZ 临时 HTTP 502 会自动重试后恢复", async () => {
+  let calls = 0;
+  const result = await fetchMoodyzHtml("https://moodyz.com/works/detail/MDVR434", {
+    preferCurl: true,
+    maxAttempts: 3,
+    retryDelayMs: 0,
+    curlImpl: async () => {
+      calls += 1;
+      if (calls === 1) {
+        return {
+          text: "Bad Gateway",
+          finalUrl: "https://moodyz.com/works/detail/MDVR434",
+          status: 502,
+          contentType: "text/html",
+          transport: "curl",
+        };
+      }
+      return {
+        text: "<html><body><h2>作品</h2></body></html>",
+        finalUrl: "https://moodyz.com/works/detail/MDVR434",
+        status: 200,
+        contentType: "text/html; charset=UTF-8",
+        transport: "curl",
+      };
+    },
+  });
+  assert.equal(result.status, 200);
+  assert.equal(result.attempts, 2);
+  assert.equal(calls, 2);
+});
+

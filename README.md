@@ -253,3 +253,7 @@ V0.4 首个实现为 MOODYZ 官方 Provider；DMM/FANZA API 保留为未来可�
 ## V0.4.4：MOODYZ 业务图片识别
 
 真实数据审核发现 MOODYZ 页面的 `og:image` 可能指向站点 Logo。V0.4.4 改为从页面业务图片中优先识别作品 `/content/` 图片和女优 `/actress_main/` 图片，避免 Logo 污染 `cover_url` / `profile_image_url`。
+
+## V0.4.5：临时 HTTP 网关错误自动重试
+
+MOODYZ/CDN/代理链路偶发返回 `408 / 429 / 500 / 502 / 503 / 504` 时，Provider 不再第一次失败就退出。网络层默认最多尝试 3 次，并按 `750ms → 1500ms` 指数退避后重试；`404` 等永久错误不会重试。成功输出和 `meta.json` 会记录实际网络尝试次数。

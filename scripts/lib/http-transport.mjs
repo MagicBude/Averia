@@ -14,6 +14,17 @@ const RETRYABLE_CODES = new Set([
   "UND_ERR_SOCKET",
 ]);
 
+export const RETRYABLE_HTTP_STATUS = new Set([408, 429, 500, 502, 503, 504]);
+
+export function shouldRetryHttpStatus(status) {
+  return RETRYABLE_HTTP_STATUS.has(Number(status));
+}
+
+function defaultSleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+
 export function networkErrorCode(error) {
   let current = error;
   for (let i = 0; i < 6 && current; i += 1) {
@@ -117,7 +128,7 @@ async function fetchTextViaNode(url, options = {}) {
   };
 }
 
-export async function fetchTextWithFallback(url, options = {}) {
+async function fetchTextOnceWithFallback(url, options = {}) {
   const mode = String(options.transport ?? "auto").toLowerCase();
   if (!new Set(["auto", "node", "curl"]).has(mode)) {
     throw new Error(`未知网络传输模式：${mode}；仅支持 auto / node / curl。`);
@@ -161,3 +172,27 @@ export async function fetchTextWithFallback(url, options = {}) {
     }
   }
 }
+
+export async function fetchTextWithFallback(url, options = {}) {
+  const maxAttemptsRaw = Number(options.maxAttempts ?? 3);
+  const maxAttempts = Number.isFinite(maxAttemptsRaw) ? Math.min(6, Math.max(1, Math.trunc(maxAttemptsRaw))) : 3;
+  const baseDelayRaw = Number(options.retryDelayMs ?? 750);
+  const baseDelayMs = Number.isFinite(baseDelayRaw) ? Math.max(0, baseDelayRaw) : 750;
+  const sleepImpl = options.sleepImpl ?? defaultSleep;
+
+  let lastResult;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const result = await fetchTextOnceWithFallback(url, options);
+    lastResult = result;
+
+    if (!shouldRetryHttpStatus(result.status) || attempt >= maxAttempts) {
+      return { ...result, attempts: attempt };
+    }
+
+    const delayMs = Math.round(baseDelayMs * (2 ** (attempt - 1)));
+    if (delayMs > 0) await sleepImpl(delayMs);
+  }
+
+  return { ...lastResult, attempts: maxAttempts };
+}
+

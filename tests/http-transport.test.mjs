@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import fs from "node:fs";
-import { fetchTextViaCurl, fetchTextWithFallback, networkErrorCode, shouldFallbackToCurl } from "../scripts/lib/http-transport.mjs";
+import { fetchTextViaCurl, fetchTextWithFallback, networkErrorCode, shouldFallbackToCurl, shouldRetryHttpStatus } from "../scripts/lib/http-transport.mjs";
 
 function okResult(transport, text = "ok") {
   return { text, finalUrl: "https://moodyz.com/works/detail/MDVR434", status: 200, contentType: "text/html; charset=UTF-8", transport };
@@ -77,3 +77,59 @@ test("curl transport 会显式传入动态代理并读取响应正文", () => {
   assert.equal(result.text, "<html>MOODYZ</html>");
   assert.deepEqual(capturedArgs.slice(capturedArgs.indexOf("--proxy"), capturedArgs.indexOf("--proxy") + 2), ["--proxy", "http://127.0.0.1:7790/"]);
 });
+
+test("HTTP 502 会自动重试并在下一次 200 时恢复", async () => {
+  let calls = 0;
+  const sleeps = [];
+  const result = await fetchTextWithFallback("https://moodyz.com/works/detail/MDVR434", {
+    preferCurl: true,
+    maxAttempts: 3,
+    retryDelayMs: 10,
+    sleepImpl: async (ms) => { sleeps.push(ms); },
+    curlImpl: async () => {
+      calls += 1;
+      if (calls === 1) return { ...okResult("curl", "bad gateway"), status: 502 };
+      return okResult("curl", "MOODYZ");
+    },
+    nodeImpl: async () => { throw new Error("不应调用 Node"); },
+  });
+  assert.equal(result.status, 200);
+  assert.equal(result.text, "MOODYZ");
+  assert.equal(result.attempts, 2);
+  assert.equal(calls, 2);
+  assert.deepEqual(sleeps, [10]);
+});
+
+test("持续 HTTP 502 最多尝试 3 次并返回最后一次结果", async () => {
+  let calls = 0;
+  const result = await fetchTextWithFallback("https://moodyz.com/works/detail/MDVR434", {
+    preferCurl: true,
+    maxAttempts: 3,
+    retryDelayMs: 0,
+    curlImpl: async () => {
+      calls += 1;
+      return { ...okResult("curl", "bad gateway"), status: 502 };
+    },
+  });
+  assert.equal(result.status, 502);
+  assert.equal(result.attempts, 3);
+  assert.equal(calls, 3);
+});
+
+test("HTTP 404 不重试，避免对永久错误制造额外请求", async () => {
+  let calls = 0;
+  const result = await fetchTextWithFallback("https://moodyz.com/works/detail/UNKNOWN", {
+    preferCurl: true,
+    maxAttempts: 3,
+    retryDelayMs: 0,
+    curlImpl: async () => {
+      calls += 1;
+      return { ...okResult("curl", "not found"), status: 404 };
+    },
+  });
+  assert.equal(shouldRetryHttpStatus(404), false);
+  assert.equal(result.status, 404);
+  assert.equal(result.attempts, 1);
+  assert.equal(calls, 1);
+});
+
