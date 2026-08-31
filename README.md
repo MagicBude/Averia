@@ -289,6 +289,14 @@ V0.6 新增 DMM/FANZA 宅配 Rental 单页 Provider，用于补充跨厂商日�
 pnpm provider:dmm-rental -- --cid 4ipzz698
 ```
 
+真实 DMM 在线请求若返回 FANZA 年龄确认页，Averia 不会替用户自动声明年龄。确认本人已满 18 岁后，可显式执行：
+
+```bash
+pnpm provider:dmm-rental -- --cid 4ipzz698 --code IPZZ-698 --adult-confirmed
+```
+
+V0.6.1 会使用 DMM 页面自身提供的 `declared=yes` 链接与临时 Cookie 会话回到原详情页；Cookie 不落库、不写日志、不提交 Git。验证码、登录、地区限制和付费访问控制仍不会绕过。
+
 同时 `averia.xlsx` 增加 `女优总览`、`作品总览`，并固定规范 Sheet 顺序为 `女优 → 女优别名 → 作品 → ...`。
 
 详见：

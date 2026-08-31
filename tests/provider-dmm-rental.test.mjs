@@ -9,7 +9,10 @@ import { fileURLToPath } from "node:url";
 import {
   buildDmmRentalUrl,
   deriveCatalogCodeFromDmmCid,
+  extractDmmAgeDeclarationUrl,
   extractDmmCid,
+  fetchDmmRentalHtml,
+  isDmmAgeGate,
   parseDmmRentalWork,
   selectDmmRentalCover,
 } from "../scripts/providers/dmm-rental/lib.mjs";
@@ -20,7 +23,9 @@ import { loadEmptyCatalog } from "./helpers/catalog.mjs";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
 const fixturePath = path.join(here, "fixtures", "dmm-rental", "work-4ipzz698.html");
+const ageGateFixturePath = path.join(here, "fixtures", "dmm-rental", "age-gate-4ipzz698.html");
 const fixture = () => fs.readFileSync(fixturePath, "utf8");
+const ageGateFixture = () => fs.readFileSync(ageGateFixturePath, "utf8");
 const URL = "https://www.dmm.co.jp/rental/ppr/-/detail/=/cid=4ipzz698/";
 const NOW = "2026-08-31T15:20:00Z";
 
@@ -39,6 +44,93 @@ test("DMM Rental URL 与 CID/番号保守推导保持确定性", () => {
   assert.equal(deriveCatalogCodeFromDmmCid("1sdam00179"), "SDAM-179");
   assert.equal(deriveCatalogCodeFromDmmCid("h_123abc"), "");
   assert.throws(() => buildDmmRentalUrl({ url: "https://example.com/rental/ppr/-/detail/=/cid=4ipzz698/" }), /不允许访问的主机/);
+});
+
+test("DMM 年龄确认页可以识别 declared=yes 官方链接，并校验 rurl 指向原详情页", () => {
+  assert.equal(isDmmAgeGate(ageGateFixture()), true);
+  const declaration = extractDmmAgeDeclarationUrl(ageGateFixture(), URL);
+  assert.match(declaration, /\/age_check\/=\/declared=yes\//);
+  assert.match(declaration, /rurl=/);
+
+  const tampered = ageGateFixture().replace("4ipzz698", "1sdam00179");
+  assert.equal(extractDmmAgeDeclarationUrl(tampered, URL), "");
+});
+
+test("DMM 在线抓取检测到年龄确认时不会替用户自动声明年龄", async () => {
+  let calls = 0;
+  const result = await fetchDmmRentalHtml(URL, {
+    transport: "curl",
+    retryDelayMs: 0,
+    curlImpl: async () => {
+      calls += 1;
+      return {
+        text: ageGateFixture(),
+        finalUrl: "https://www.dmm.co.jp/age_check/",
+        status: 200,
+        contentType: "text/html; charset=UTF-8",
+        transport: "curl",
+      };
+    },
+  });
+  assert.equal(calls, 1);
+  assert.equal(result.ageGateDetected, true);
+  assert.equal(result.ageGateDeclared, false);
+  assert.equal(result.ageGateRequired, true);
+  assert.equal(result.html, ageGateFixture());
+});
+
+test("显式 --adult-confirmed 语义下使用临时 curl Cookie 会话完成 DMM 官方年龄声明", async () => {
+  const calls = [];
+  const result = await fetchDmmRentalHtml(URL, {
+    transport: "curl",
+    adultConfirmed: true,
+    retryDelayMs: 0,
+    curlImpl: async (url, options) => {
+      calls.push({ url, cookieJar: options.cookieJar || "" });
+      if (calls.length === 1) {
+        return {
+          text: ageGateFixture(),
+          finalUrl: "https://www.dmm.co.jp/age_check/",
+          status: 200,
+          contentType: "text/html; charset=UTF-8",
+          transport: "curl",
+        };
+      }
+      return {
+        text: fixture(),
+        finalUrl: URL,
+        status: 200,
+        contentType: "text/html; charset=EUC-JP",
+        transport: "curl",
+      };
+    },
+  });
+
+  assert.equal(calls.length, 2);
+  assert.match(calls[1].url, /\/age_check\/=\/declared=yes\//);
+  assert.match(calls[1].cookieJar, /cookies\.txt$/);
+  assert.equal(result.ageGateDetected, true);
+  assert.equal(result.ageGateDeclared, true);
+  assert.equal(result.ageGateRequired, false);
+  assert.equal(result.finalUrl, URL);
+  assert.equal(result.html, fixture());
+});
+
+test("显式 node 模式不会在年龄确认流程中偷偷切换为 curl Cookie 会话", async () => {
+  await assert.rejects(
+    fetchDmmRentalHtml(URL, {
+      transport: "node",
+      adultConfirmed: true,
+      nodeImpl: async () => ({
+        text: ageGateFixture(),
+        finalUrl: "https://www.dmm.co.jp/age_check/",
+        status: 200,
+        contentType: "text/html; charset=UTF-8",
+        transport: "node-fetch",
+      }),
+    }),
+    /需要 Cookie.*auto \/ curl/,
+  );
 });
 
 test("DMM Rental 详情页解析为日文参考 canonical，并区分貸出開始日与发行日", () => {

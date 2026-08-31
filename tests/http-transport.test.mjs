@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { fetchTextViaCurl, fetchTextWithFallback, networkErrorCode, shouldFallbackToCurl, shouldRetryHttpStatus, shouldRetryNetworkError } from "../scripts/lib/http-transport.mjs";
 
 function okResult(transport, text = "ok") {
@@ -76,6 +78,30 @@ test("curl transport 会显式传入动态代理并读取响应正文", () => {
   assert.equal(result.transport, "curl");
   assert.equal(result.text, "<html>MOODYZ</html>");
   assert.deepEqual(capturedArgs.slice(capturedArgs.indexOf("--proxy"), capturedArgs.indexOf("--proxy") + 2), ["--proxy", "http://127.0.0.1:7790/"]);
+});
+
+test("curl transport 可使用调用方提供的临时 Cookie Jar 跟随会话重定向", () => {
+  let capturedArgs = [];
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "averia-cookie-test-"));
+  const cookieJar = path.join(tmp, "cookies.txt");
+  try {
+    const result = fetchTextViaCurl("https://www.dmm.co.jp/age_check/=/declared=yes/?rurl=x", {
+      cookieJar,
+      platform: "win32",
+      spawn: (_command, args) => {
+        capturedArgs = args;
+        const outputIndex = args.indexOf("--output");
+        fs.writeFileSync(args[outputIndex + 1], "<html>detail</html>", "utf8");
+        return { status: 0, stdout: "200\nhttps://www.dmm.co.jp/rental/ppr/-/detail/=/cid=4ipzz698/\ntext/html\n", stderr: "" };
+      },
+    });
+    assert.equal(result.status, 200);
+    assert.equal(fs.existsSync(cookieJar), true);
+    assert.deepEqual(capturedArgs.slice(capturedArgs.indexOf("--cookie"), capturedArgs.indexOf("--cookie") + 2), ["--cookie", cookieJar]);
+    assert.deepEqual(capturedArgs.slice(capturedArgs.indexOf("--cookie-jar"), capturedArgs.indexOf("--cookie-jar") + 2), ["--cookie-jar", cookieJar]);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("HTTP 502 会自动重试并在下一次 200 时恢复", async () => {

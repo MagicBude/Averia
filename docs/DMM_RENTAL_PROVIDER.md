@@ -1,6 +1,6 @@
 # DMM Rental Provider
 
-V0.6.0 新增 `dmm-rental` Provider，用于**按需读取单个公开 FANZA/DMM 宅配单品 Rental 详情页**，并转换为 Averia canonical JSON。
+V0.6.0 新增 `dmm-rental` Provider，用于**按需读取单个公开 FANZA/DMM 宅配单品 Rental 详情页**，并转换为 Averia canonical JSON。V0.6.1 根据真实线上返回补充年龄确认会话处理。
 
 ## 定位
 
@@ -42,6 +42,17 @@ pnpm provider:dmm-rental -- --cid 4ipzz698
 ```bash
 pnpm provider:dmm-rental -- --cid 4ipzz698 --code IPZZ-698
 ```
+
+如果在线请求返回 FANZA 年龄确认页，并且你本人确认已满 18 岁，可以显式加入：
+
+```bash
+pnpm provider:dmm-rental -- \
+  --cid 4ipzz698 \
+  --code IPZZ-698 \
+  --adult-confirmed
+```
+
+`--adult-confirmed` 是用户的明确声明。Averia **不会默认替用户声明年龄**。
 
 指定完整详情页：
 
@@ -98,12 +109,22 @@ DMM 原始 CID 同时作为 `dmm-content-id` 写入 `work_codes`。
 
 Provider 与其它来源共用 Averia 网络层：自动代理、curl/Node fallback、瞬时错误重试。
 
+真实 DMM 请求可能先返回 `年齢認証 - FANZA`。V0.6.1 的处理规则是：
+
+1. 首次检测到年龄确认页时保存失败现场；
+2. 未传 `--adult-confirmed` 时停止，并提示用户明确选择；
+3. 只有显式传入 `--adult-confirmed` 时，才访问 DMM 页面自身提供的 `declared=yes` URL；
+4. 使用临时 curl Cookie Jar 跟随 DMM 自己的重定向回原详情页；
+5. Cookie 文件只存在于系统临时目录，流程结束即删除，不进入 Git、日志或 `meta.json`；
+6. 如果年龄声明后仍未回到原详情页，立即停止，不继续尝试其它方式。
+
 同时坚持：
 
 - 单页按需抓取；
 - 不递归扫描全站；
-- 不绕过年龄确认、验证码、登录或付费访问控制；
+- 年龄确认必须由用户显式 `--adult-confirmed`；
+- 不绕过验证码、登录、地区限制或付费访问控制；
 - 原始 HTML 先落盘，Parser 失败仍保留现场；
 - Provider 永远不直接写正式 CSV。
 
-如果在线请求只得到年龄确认/访问页，可在浏览器正常打开公开详情页后保存 HTML，再通过 `--file` 做离线解析。
+如果在线会话仍无法得到详情页，可在浏览器正常打开公开详情页后保存 HTML，再通过 `--file` 做离线解析。

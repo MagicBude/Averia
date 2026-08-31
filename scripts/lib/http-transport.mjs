@@ -105,6 +105,14 @@ export function fetchTextViaCurl(url, options = {}) {
   }
 
   if (options.proxyUrl) args.push("--proxy", String(options.proxyUrl));
+
+  // 某些公开站点会通过普通 Set-Cookie + Redirect 维护一次会话状态。
+  // cookieJar 由调用方显式提供，Averia 不会把 Cookie 内容写入日志或元数据。
+  if (options.cookieJar) {
+    const cookieJar = String(options.cookieJar);
+    if (!fs.existsSync(cookieJar)) fs.writeFileSync(cookieJar, "", "utf8");
+    args.push("--cookie", cookieJar, "--cookie-jar", cookieJar);
+  }
   args.push(String(url));
 
   try {

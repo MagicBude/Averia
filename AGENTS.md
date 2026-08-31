@@ -286,3 +286,5 @@ MOODYZ Provider 对 TLS 握手失败、ECONNRESET、连接超时等瞬时网络�
 - DMM/FANZA HTML Provider 只允许公开单页按需抓取，来源角色为 `reference`；厂商官方 `authoritative` 字段优先。
 - `貸出開始日` 与作品 `release_date` 语义不同，禁止自动等同。
 - XLSX 规范 Sheet 顺序必须显式维护，`女优` 必须位于 `女优别名` 之前；总览 Sheet 只能作为派生视图，不能反向成为事实源。
+- DMM/FANZA 年龄确认页不得静默自动通过。只有用户显式传入 `--adult-confirmed` 时，Provider 才可访问页面自身提供的 `declared=yes` URL，并且 Cookie 只能保存在临时会话中，不得写入日志、meta、CSV 或 Git。
+- `--adult-confirmed` 仅适用于公开年龄确认，不得扩展为验证码、登录、地区限制或付费访问控制的绕过机制。

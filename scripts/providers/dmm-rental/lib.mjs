@@ -1,8 +1,11 @@
 import crypto from "node:crypto";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const DMM_RENTAL_SOURCE = "dmm-rental";
-export const DMM_RENTAL_PROVIDER_VERSION = 1;
+export const DMM_RENTAL_PROVIDER_VERSION = 2;
 const ALLOWED_HOSTS = new Set(["www.dmm.co.jp", "dmm.co.jp"]);
 const BASE_URL = "https://www.dmm.co.jp/rental/ppr/-/detail/=/cid=";
 
@@ -272,6 +275,44 @@ function looksLikeAgeGate(html) {
   return /年齢認証|18歳未満|18歳以上ですか|成人向け/.test(text) && !/貸出開始日|収録時間|品番/.test(text);
 }
 
+export function isDmmAgeGate(html) {
+  return looksLikeAgeGate(html);
+}
+
+function normalizedComparableDetailUrl(input) {
+  const normalized = normalizeDmmRentalUrl(input);
+  const url = new URL(normalized);
+  url.search = "";
+  url.hash = "";
+  return url.href.replace(/\/$/, "");
+}
+
+export function extractDmmAgeDeclarationUrl(html, requestedUrl) {
+  const requested = normalizeDmmRentalUrl(requestedUrl);
+  const expected = normalizedComparableDetailUrl(requested);
+
+  for (const match of String(html ?? "").matchAll(/<a\b([^>]*)>/gi)) {
+    const attrs = parseAttributes(match[1]);
+    const href = String(attrs.href ?? "").trim();
+    if (!href || !/\/age_check\/=\/declared=yes\//i.test(href)) continue;
+
+    let url;
+    try { url = new URL(href, "https://www.dmm.co.jp/"); } catch { continue; }
+    if (url.protocol !== "https:" || !ALLOWED_HOSTS.has(url.hostname.toLowerCase())) continue;
+    if (!/^\/age_check\/=\/declared=yes\/?$/i.test(url.pathname)) continue;
+
+    const rurl = url.searchParams.get("rurl") ?? "";
+    if (!rurl) continue;
+    try {
+      if (normalizedComparableDetailUrl(rurl) !== expected) continue;
+    } catch {
+      continue;
+    }
+    return url.href;
+  }
+  return "";
+}
+
 function normalizeHostUrl(input) {
   const url = new URL(input);
   if (url.protocol !== "https:") throw new Error("DMM Rental Provider 只允许 HTTPS URL。");
@@ -295,17 +336,98 @@ export function buildDmmRentalUrl({ url = "", cid = "" } = {}) {
 }
 
 export async function fetchDmmRentalHtml(url, options = {}) {
-  const fetched = await fetchTextWithFallback(normalizeDmmRentalUrl(url), {
+  const requestedUrl = normalizeDmmRentalUrl(url);
+  const requestOptions = {
     ...options,
     headers: {
       accept: "text/html,application/xhtml+xml",
       "accept-language": "ja-JP,ja;q=0.9,en;q=0.5",
-      "user-agent": options.userAgent || "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/152 Safari/537.36 Averia/0.6",
+      "user-agent": options.userAgent || "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/152 Safari/537.36 Averia/0.6.1",
       ...(options.headers ?? {}),
     },
-  });
+  };
+  const fetched = await fetchTextWithFallback(requestedUrl, requestOptions);
   if (fetched.status >= 400) throw new Error(`DMM Rental 请求失败：HTTP ${fetched.status}`);
-  return { ...fetched, html: fetched.text };
+  if (!looksLikeAgeGate(fetched.text)) {
+    return {
+      ...fetched,
+      html: fetched.text,
+      ageGateDetected: false,
+      ageGateDeclared: false,
+      ageGateHtml: "",
+    };
+  }
+
+  const declarationUrl = extractDmmAgeDeclarationUrl(fetched.text, requestedUrl);
+  if (!declarationUrl) {
+    return {
+      ...fetched,
+      html: fetched.text,
+      ageGateDetected: true,
+      ageGateDeclared: false,
+      ageGateRequired: true,
+      ageGateHtml: fetched.text,
+      ageDeclarationUrl: "",
+    };
+  }
+
+  // 不替用户自动声明年龄。只有调用方明确传入 adultConfirmed=true 时，
+  // 才访问 DMM 自己提供的 declared=yes URL，并用临时 Cookie Jar 跟随重定向。
+  if (!options.adultConfirmed) {
+    return {
+      ...fetched,
+      html: fetched.text,
+      ageGateDetected: true,
+      ageGateDeclared: false,
+      ageGateRequired: true,
+      ageGateHtml: fetched.text,
+      ageDeclarationUrl: declarationUrl,
+    };
+  }
+
+  if (String(options.transport ?? "auto").toLowerCase() === "node") {
+    const error = new Error("DMM 年龄确认会话需要 Cookie；显式 --transport node 不支持该流程，请使用 auto / curl，或在浏览器保存详情页后用 --file。");
+    error.code = "DMM_AGE_GATE_REQUIRES_COOKIE_SESSION";
+    throw error;
+  }
+
+  const sessionDir = fs.mkdtempSync(path.join(options.tmpRoot ?? os.tmpdir(), "averia-dmm-age-"));
+  const cookieJar = path.join(sessionDir, "cookies.txt");
+  try {
+    const declared = await fetchTextWithFallback(declarationUrl, {
+      ...requestOptions,
+      // 年龄声明这一步需要一个真正维护 Cookie 的会话。curl 的 Cookie Jar
+      // 只存在临时目录，流程结束立即删除，不写日志、不进入 meta.json。
+      transport: "curl",
+      preferCurl: true,
+      cookieJar,
+    });
+    if (declared.status >= 400) throw new Error(`DMM 年龄确认后请求失败：HTTP ${declared.status}`);
+
+    const stillAgeGate = looksLikeAgeGate(declared.text);
+    const finalMatchesRequested = (() => {
+      try { return normalizedComparableDetailUrl(declared.finalUrl) === normalizedComparableDetailUrl(requestedUrl); } catch { return false; }
+    })();
+    if (stillAgeGate || !finalMatchesRequested) {
+      const error = new Error("DMM 年龄确认完成后仍未返回目标 Rental 详情页；Averia 不继续尝试其它绕过方式，请改用浏览器保存公开详情页后通过 --file 解析。");
+      error.code = "DMM_AGE_GATE_NOT_RESOLVED";
+      throw error;
+    }
+
+    return {
+      ...declared,
+      html: declared.text,
+      attempts: Number(fetched.attempts ?? 1) + Number(declared.attempts ?? 1),
+      ageGateDetected: true,
+      ageGateDeclared: true,
+      ageGateRequired: false,
+      ageGateHtml: fetched.text,
+      ageDeclarationUrl: declarationUrl,
+      fallbackFrom: declared.fallbackFrom || fetched.fallbackFrom || "",
+    };
+  } finally {
+    fs.rmSync(sessionDir, { recursive: true, force: true });
+  }
 }
 
 export function parseDmmRentalWork(html, sourceUrl, fetchedAt = new Date().toISOString(), options = {}) {
