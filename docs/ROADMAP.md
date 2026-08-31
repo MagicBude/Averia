@@ -24,58 +24,64 @@
 - 已有实体字段只生成补全建议，不自动覆盖
 - 重复番号、姓名冲突、来源悬空等数据质量报告
 
-## V0.3 — 第一个真实数据源 Provider ✅（当前）
+## V0.3 — 英文补充 Provider 与网络层 ✅
 
-数据链路：
+- JAVDatabase 单作品 / 单女优 Provider
+- Raw HTML + SHA-256
+- Content ID 附加番号
+- Provider Fixture / 离线模式
+- 自动代理：CLI → 环境变量 → Windows 系统代理 → Direct
+- JAVDatabase 定位调整为英文补充 / 交叉验证源
+
+## V0.4 — 日文厂商官方 Provider ✅（当前）
+
+首个实现：MOODYZ Official Provider。
 
 ```text
-Fetch
-  ↓
-Raw HTML Snapshot
-  ↓
+日文官方 HTML
+   ↓
+Raw Snapshot
+   ↓
 Provider Parser
-  ↓
-Averia Import JSON
-  ↓
-V0.2 Prepare / Report / Apply
-  ↓
-Canonical CSV
+   ↓
+Averia canonical JSON
+   ↓
+Prepare / Report / Apply
 ```
 
-当前完成：
+当前能力：
 
-- JAVDatabase 单作品页抓取与解析
-- JAVDatabase 单女优页抓取与解析
-- 原始 HTML 快照与 SHA-256
-- 统一导入 JSON 输出
-- Content ID 附加番号
-- Provider Fixture 自动测试
-- 离线 HTML Parser 模式
-- URL 主机与页面类型白名单
+- MOODYZ 单作品页
+- MOODYZ 单女优页
+- 日文标题 / 女优名 / 品番 / 発売日
+- Label / Series / Genre / 时长
+- 女优官方罗马字 / 身高 / 三围
+- 发现关联作品但不递归抓取
 
-下一步验证：
+下一步：
 
-- 小规模真实数据审核与首次 Apply
-- 根据真实数据修正字段映射
-- 再设计 Provider 批次队列、请求间隔、缓存与失败重试
+- 用真实 MOODYZ 页面执行首次 Prepare / Report
+- 根据真实 HTML 修正 Parser 边界
+- 选择第二个官方厂商站验证可复用程度
+- 调研 MGS 作为跨厂商日文发行平台补源
 
-V0.3 不做全站遍历，先以单页方式稳定字段映射和数据模型。
+DMM/FANZA Web API 保留为未来选项，但当前因 Affiliate 注册需要日本国内收款账户而延期，不通过不合规方式绕过。
 
-## V0.4 — 字段级溯源与多来源冲突
+## V0.5 — 字段级溯源与多来源冲突
 
 - Observation：保存来源对字段的原始观察值
 - Field Resolution：记录最终字段值的选择依据
-- 多来源冲突报告
-- Provider 版本迁移与重新解析机制
+- 日文官方源、发行平台、英文补充源的字段冲突报告
+- Provider 版本迁移与 Raw Snapshot 重新解析机制
 
-## V0.5 — 本地数据库
+## V0.6 — 本地数据库
 
 - SQLite 物化
 - 姓名 / 番号搜索索引
 - 从规范 CSV 导入 SQLite
 - CSV 仍保持唯一事实源
 
-## V0.6 — API
+## V0.7 — API
 
 - 女优查询
 - 作品查询
@@ -92,13 +98,3 @@ V0.3 不做全站遍历，先以单页方式稳定字段映射和数据模型。
 - 实体关系跳转
 - 数据集统计
 - Averia 品牌界面
-
-## V0.4 — FANZA / DMM Web API 日文主源
-
-- 接入 DMM Web API（FANZA site）作为日文结构化 Provider。
-- 使用环境变量管理 API ID / Affiliate ID，严禁凭据入库。
-- 保存原始 API JSON 与 SHA-256。
-- 映射日文作品标题、女优、メーカー、シリーズ、ジャンル。
-- 同一番号与 JAVDatabase 生成来源差异报告。
-- 仍然经过 Prepare / Report / Apply，不直接写正式 CSV。
-

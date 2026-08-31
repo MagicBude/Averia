@@ -1,29 +1,45 @@
-# Averia V0.3.2 Patch Manifest
+# Averia V0.4.0 Patch Manifest
 
-本补丁不包含 `data/`，不会覆盖正式 CSV。
+主题：**首个日文厂商官方 Provider — MOODYZ**
 
 ## 新增
 
-- `scripts/lib/network-proxy.mjs`
-- `tests/network-proxy.test.mjs`
-- `docs/SOURCE_STRATEGY.md`
-- `UPGRADE_V0.3.2.md`
+- `scripts/provider-moodyz.mjs`
+- `scripts/providers/moodyz/lib.mjs`
+- `tests/provider-moodyz.test.mjs`
+- `tests/fixtures/moodyz/work-mdvr434.html`
+- `tests/fixtures/moodyz/actress-855540.html`
+- `docs/MOODYZ_PROVIDER.md`
+- `UPGRADE_V0.4.md`
 
-## 更新
+## 修改
 
-- `scripts/provider-javdatabase.mjs`
-- `scripts/providers/javdatabase/lib.mjs`
-- `tests/provider-javdatabase.test.mjs`
-- `docs/JAVDATABASE_PROVIDER.md`
-- `docs/ROADMAP.md`
+- `package.json`
 - `README.md`
 - `AGENTS.md`
-- `DATA_STANDARD.md`
-- `package.json`
+- `docs/SOURCE_STRATEGY.md`
+- `docs/ROADMAP.md`
 
-## 验证
+## 不包含
 
-- Node tests: 19 / 19 passed
-- 数据集校验：11 / 11 passed
-- 数据质量：0 error / 0 warning
-- 离线 Provider：成功生成 raw/canonical/meta，未修改正式 CSV
+本补丁**不包含任何 `data/` 正式 CSV**，也不包含：
+
+- `exports/`
+- `var/`
+- GitHub Pages 的 `docs/index.html`
+- GitHub Pages 的 `docs/assets/`
+- API 密钥 / Cookie / 代理端口等私密配置
+
+因此覆盖到现有仓库时不会修改已经积累的正式数据，也不会覆盖现有 Pages 首页。
+
+## 回归结果
+
+在 V0.3.2 基线 + V0.4 变更上执行：
+
+```text
+数据校验：11 个数据集通过
+数据质量：0 error / 0 warning
+自动测试：24 / 24 通过
+```
+
+其中 V0.4 新增 5 个 MOODYZ Provider 测试。

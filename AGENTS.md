@@ -225,3 +225,13 @@ Averia Web
 - API 密钥、Affiliate ID、代理凭据等秘密禁止写入仓库、日志、`meta.json` 或测试 fixture。
 - 详细规则见 `docs/SOURCE_STRATEGY.md`。
 
+
+## V0.4 日文官方 Provider 规则
+
+1. 对厂商自己的作品，厂商官方日文页面属于高优先级来源；`title_ja`、`name_ja`、品番、発売日等核心字段优先保留原始日文值。
+2. V0.4 首个官方 Provider 为 `moodyz-official`，canonical source 必须标记 `language: ja`、`role: authoritative`。
+3. “权威来源”不等于允许无审核覆盖：对已有正式实体的非空字段仍然只生成 proposal，必须人工处理冲突。
+4. 官方女优页里的罗马字姓名可以作为 `name_en` / alias 保存，但不得反向覆盖日文 `primary_name` / `name_ja`。
+5. 女优页发现的作品链接只记录，不允许自动递归抓取；批量能力必须另行设计节流、缓存、失败重试和恢复机制。
+6. 不因为多个厂商官网页面“看起来很像”就未经验证共用 Parser；每新增站点必须用真实页面结构确认并增加独立 Fixture / 回归测试。
+7. DMM/FANZA API 资格若需要当前无法满足的合法注册条件，应延期接入，不得通过虚假、借名或不符合服务规则的账户绕过。

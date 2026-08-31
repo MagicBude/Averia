@@ -122,6 +122,8 @@ exports/xlsx/averia.xlsx
 | `pnpm import:apply -- --batch <id>` | 备份、写入并校验已审核批次 |
 | `pnpm provider:javdatabase -- --code <番号>` | 抓取并解析一个 JAVDatabase 作品页，不写正式 CSV |
 | `pnpm provider:javdatabase -- --idol <slug>` | 抓取并解析一个 JAVDatabase 女优页，不写正式 CSV |
+| `pnpm provider:moodyz -- --code <番号>` | 抓取并解析一个 MOODYZ 官方日文作品页，不写正式 CSV |
+| `pnpm provider:moodyz -- --actress-id <ID>` | 抓取并解析一个 MOODYZ 官方女优页，不写正式 CSV |
 | `pnpm test` | 运行 Node.js 基础测试 |
 | `pnpm check` | 运行数据校验、质量检查和测试 |
 
@@ -167,11 +169,29 @@ pnpm provider:javdatabase -- --code SDAM-179
 
 然后只执行 CLI 打印的 `import:prepare` 和 `import:report`，先人工审核 Stage，再决定是否 Apply。
 
-### 阶段 4：数据库
+### 阶段 4：日文官方主数据源（V0.4）
+
+已经加入 **MOODYZ Official Provider**，作为第一个日文厂商官方来源：
+
+```text
+MOODYZ 官方页 → raw.html → canonical.json → Prepare / Report / Apply
+```
+
+作品页优先保留日文标题、品番、発売日、女优、Label、Series、Genre 和收录时间；女优页保留日文姓名、官方罗马字、身高和三围。JAVDatabase 继续作为英文补充和交叉验证源。
+
+第一次验证建议：
+
+```bash
+pnpm provider:moodyz -- --code MDVR-434
+```
+
+当前仍只允许单页抓取，不递归遍历、不批量并发。
+
+### 阶段 5：数据库
 
 优先增加 SQLite；后续数据量和部署需求扩大时，可迁移或同步到 PostgreSQL。
 
-### 阶段 5：应用层
+### 阶段 6：应用层
 
 在稳定数据层之上建设：
 
@@ -194,9 +214,11 @@ pnpm provider:javdatabase -- --code SDAM-179
 5. [`docs/IMPORT_FORMAT.md`](./docs/IMPORT_FORMAT.md) — V0.2 统一导入 JSON 格式
 6. [`docs/IMPORT_PIPELINE.md`](./docs/IMPORT_PIPELINE.md) — 安全导入、审核、备份和回滚流程
 7. [`docs/DATA_QUALITY.md`](./docs/DATA_QUALITY.md) — 数据质量检查
-8. [`docs/JAVDATABASE_PROVIDER.md`](./docs/JAVDATABASE_PROVIDER.md) — V0.3 第一个真实 Provider
-9. [`docs/ROADMAP.md`](./docs/ROADMAP.md) — 项目演进路线
-10. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
+8. [`docs/JAVDATABASE_PROVIDER.md`](./docs/JAVDATABASE_PROVIDER.md) — V0.3 英文补充 Provider
+9. [`docs/MOODYZ_PROVIDER.md`](./docs/MOODYZ_PROVIDER.md) — V0.4 首个日文厂商官方 Provider
+10. [`docs/SOURCE_STRATEGY.md`](./docs/SOURCE_STRATEGY.md) — 多来源语言与权威性策略
+11. [`docs/ROADMAP.md`](./docs/ROADMAP.md) — 项目演进路线
+12. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
 
 ## License
 
@@ -209,9 +231,8 @@ V0.3 暂不声明数据内容许可证。
 - 图片等媒体资源的存储和使用策略
 - 外部数据源的访问与引用规则
 
-## V0.3.2：网络代理与数据源策略
+## V0.4：日文官方主数据源
 
-JAVDatabase Provider 现在支持自动读取 Windows 系统代理。网络优先级为：`--proxy` → `HTTP_PROXY/HTTPS_PROXY` → Windows 系统代理 → 直连，因此本机代理端口变化时不需要修改 Averia 代码。
+Averia 当前的数据源策略已经从“英文聚合源先行”调整为“**日文厂商官方源优先，英文聚合源补充验证**”。
 
-同时，Averia 的数据源定位调整为：**FANZA / DMM Web API 作为下一阶段的日文结构化主源，JAVDatabase 作为英文补充与交叉验证源**。详细规则见 [`docs/SOURCE_STRATEGY.md`](docs/SOURCE_STRATEGY.md)。
-
+V0.4 首个实现为 MOODYZ 官方 Provider；DMM/FANZA API 保留为未来可选来源，但不依赖不符合其注册规则的账户方案。详细规则见 [`docs/SOURCE_STRATEGY.md`](docs/SOURCE_STRATEGY.md)。
