@@ -1,4 +1,14 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "maker_000001",
+      "name": "MOODYZ",
+      "name_ja": "MOODYZ",
+      "website_url": "https://moodyz.com/",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    }
+  ]
 }

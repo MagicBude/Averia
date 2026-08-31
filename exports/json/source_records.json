@@ -1,4 +1,27 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "source_000001",
+      "entity_type": "actress",
+      "entity_id": "actress_000001",
+      "source_name": "moodyz-official",
+      "source_record_id": "actress:855540",
+      "source_url": "https://moodyz.com/actress/detail/855540",
+      "fetched_at": "2026-08-31T14:36:25.486Z",
+      "raw_hash": "67b1d54b62410488d86504162e2f850667d6a93d70ef172bcd908fcd1372add9",
+      "notes": null
+    },
+    {
+      "id": "source_000002",
+      "entity_type": "work",
+      "entity_id": "work_000001",
+      "source_name": "moodyz-official",
+      "source_record_id": "work:MDVR434",
+      "source_url": "https://moodyz.com/works/detail/MDVR434",
+      "fetched_at": "2026-08-31T14:18:50.058Z",
+      "raw_hash": "a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71",
+      "notes": null
+    }
+  ]
 }

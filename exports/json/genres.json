@@ -1,4 +1,59 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "genre_000001",
+      "name": "フェラ",
+      "name_ja": "フェラ",
+      "slug": "moodyz-113",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "genre_000002",
+      "name": "パイズリ",
+      "name_ja": "パイズリ",
+      "slug": "moodyz-126",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "genre_000003",
+      "name": "騎乗位",
+      "name_ja": "騎乗位",
+      "slug": "moodyz-431",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "genre_000004",
+      "name": "美少女",
+      "name_ja": "美少女",
+      "slug": "moodyz-330",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "genre_000005",
+      "name": "メイド",
+      "name_ja": "メイド",
+      "slug": "moodyz-9069",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "genre_000006",
+      "name": "VR専用",
+      "name_ja": "VR専用",
+      "slug": "moodyz-487",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    }
+  ]
 }

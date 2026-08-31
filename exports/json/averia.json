@@ -1,18 +1,225 @@
 {
   "schemaVersion": 1,
   "datasets": {
-    "actress_aliases": [],
-    "actresses": [],
-    "directors": [],
-    "genres": [],
-    "labels": [],
-    "makers": [],
+    "actress_aliases": [
+      {
+        "id": "alias_000001",
+        "actress_id": "actress_000001",
+        "alias": "MASHIRO SANA",
+        "alias_type": "romanized",
+        "language": "en",
+        "is_primary": false,
+        "source_id": null,
+        "created_at": "2026-08-31T14:50:24Z"
+      }
+    ],
+    "actresses": [
+      {
+        "id": "actress_000001",
+        "primary_name": "純白彩永",
+        "name_ja": "純白彩永",
+        "name_en": "MASHIRO SANA",
+        "kana": null,
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": 165,
+        "bust_cm": 93,
+        "waist_cm": 57,
+        "hip_cm": 86,
+        "cup": "H",
+        "blood_type": null,
+        "birthplace": null,
+        "status": "unknown",
+        "profile_image_url": "https://cdn.up-timely.com/image/30/actress_main/855540/5bI7FHVpxa4YKxD7OSjdJUJZvpLPGEaJWAcJBx3L.jpg",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      }
+    ],
+    "directors": [
+      {
+        "id": "director_000001",
+        "name": "ジーニアス膝",
+        "name_ja": "ジーニアス膝",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      }
+    ],
+    "genres": [
+      {
+        "id": "genre_000001",
+        "name": "フェラ",
+        "name_ja": "フェラ",
+        "slug": "moodyz-113",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "genre_000002",
+        "name": "パイズリ",
+        "name_ja": "パイズリ",
+        "slug": "moodyz-126",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "genre_000003",
+        "name": "騎乗位",
+        "name_ja": "騎乗位",
+        "slug": "moodyz-431",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "genre_000004",
+        "name": "美少女",
+        "name_ja": "美少女",
+        "slug": "moodyz-330",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "genre_000005",
+        "name": "メイド",
+        "name_ja": "メイド",
+        "slug": "moodyz-9069",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "genre_000006",
+        "name": "VR専用",
+        "name_ja": "VR専用",
+        "slug": "moodyz-487",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      }
+    ],
+    "labels": [
+      {
+        "id": "label_000001",
+        "maker_id": "maker_000001",
+        "name": "MOODYZ VR",
+        "name_ja": "MOODYZ VR",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      }
+    ],
+    "makers": [
+      {
+        "id": "maker_000001",
+        "name": "MOODYZ",
+        "name_ja": "MOODYZ",
+        "website_url": "https://moodyz.com/",
+        "description": null,
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      }
+    ],
     "series": [],
-    "source_records": [],
-    "work_cast": [],
-    "work_codes": [],
-    "work_directors": [],
-    "work_genres": [],
-    "works": []
+    "source_records": [
+      {
+        "id": "source_000001",
+        "entity_type": "actress",
+        "entity_id": "actress_000001",
+        "source_name": "moodyz-official",
+        "source_record_id": "actress:855540",
+        "source_url": "https://moodyz.com/actress/detail/855540",
+        "fetched_at": "2026-08-31T14:36:25.486Z",
+        "raw_hash": "67b1d54b62410488d86504162e2f850667d6a93d70ef172bcd908fcd1372add9",
+        "notes": null
+      },
+      {
+        "id": "source_000002",
+        "entity_type": "work",
+        "entity_id": "work_000001",
+        "source_name": "moodyz-official",
+        "source_record_id": "work:MDVR434",
+        "source_url": "https://moodyz.com/works/detail/MDVR434",
+        "fetched_at": "2026-08-31T14:18:50.058Z",
+        "raw_hash": "a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71",
+        "notes": null
+      }
+    ],
+    "work_cast": [
+      {
+        "work_id": "work_000001",
+        "actress_id": "actress_000001",
+        "role": "actress",
+        "position": 1
+      }
+    ],
+    "work_codes": [
+      {
+        "id": "code_000001",
+        "work_id": "work_000001",
+        "code": "MDVR-434",
+        "normalized_code": "MDVR434",
+        "code_type": "catalog",
+        "is_primary": true,
+        "source_id": "source_000002"
+      }
+    ],
+    "work_directors": [
+      {
+        "work_id": "work_000001",
+        "director_id": "director_000001",
+        "position": 1
+      }
+    ],
+    "work_genres": [
+      {
+        "work_id": "work_000001",
+        "genre_id": "genre_000001"
+      },
+      {
+        "work_id": "work_000001",
+        "genre_id": "genre_000002"
+      },
+      {
+        "work_id": "work_000001",
+        "genre_id": "genre_000003"
+      },
+      {
+        "work_id": "work_000001",
+        "genre_id": "genre_000004"
+      },
+      {
+        "work_id": "work_000001",
+        "genre_id": "genre_000005"
+      },
+      {
+        "work_id": "work_000001",
+        "genre_id": "genre_000006"
+      }
+    ],
+    "works": [
+      {
+        "id": "work_000001",
+        "primary_code": "MDVR-434",
+        "title": "ご奉仕したいのに自分もイッちゃう激カワ敏感メイドと献身的な即尺フェラチオ&癒しのH カップ包みパイズリでハメまくる最高の休日",
+        "title_ja": "ご奉仕したいのに自分もイッちゃう激カワ敏感メイドと献身的な即尺フェラチオ&癒しのH カップ包みパイズリでハメまくる最高の休日",
+        "release_date": "2026-08-11",
+        "duration_min": 90,
+        "maker_id": "maker_000001",
+        "label_id": "label_000001",
+        "series_id": null,
+        "description": null,
+        "cover_url": "https://cdn.up-timely.com/image/30/content/85956/Dfso5IUKMuwfziBdfYsGiA5k9Y8Ukm7rKsayuHbz.jpg",
+        "created_at": "2026-08-31T14:50:24Z",
+        "updated_at": "2026-08-31T14:50:24Z"
+      }
+    ]
   }
 }

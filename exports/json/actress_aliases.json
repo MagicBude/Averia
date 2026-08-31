@@ -1,4 +1,15 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "alias_000001",
+      "actress_id": "actress_000001",
+      "alias": "MASHIRO SANA",
+      "alias_type": "romanized",
+      "language": "en",
+      "is_primary": false,
+      "source_id": null,
+      "created_at": "2026-08-31T14:50:24Z"
+    }
+  ]
 }

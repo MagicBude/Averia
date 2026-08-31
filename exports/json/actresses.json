@@ -1,4 +1,27 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "actress_000001",
+      "primary_name": "純白彩永",
+      "name_ja": "純白彩永",
+      "name_en": "MASHIRO SANA",
+      "kana": null,
+      "birth_date": null,
+      "debut_date": null,
+      "retirement_date": null,
+      "height_cm": 165,
+      "bust_cm": 93,
+      "waist_cm": 57,
+      "hip_cm": 86,
+      "cup": "H",
+      "blood_type": null,
+      "birthplace": null,
+      "status": "unknown",
+      "profile_image_url": "https://cdn.up-timely.com/image/30/actress_main/855540/5bI7FHVpxa4YKxD7OSjdJUJZvpLPGEaJWAcJBx3L.jpg",
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    }
+  ]
 }

@@ -1,4 +1,14 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "code_000001",
+      "work_id": "work_000001",
+      "code": "MDVR-434",
+      "normalized_code": "MDVR434",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000002"
+    }
+  ]
 }

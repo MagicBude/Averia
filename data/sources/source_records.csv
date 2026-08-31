@@ -1,1 +1,3 @@
 id,entity_type,entity_id,source_name,source_record_id,source_url,fetched_at,raw_hash,notes
+source_000001,actress,actress_000001,moodyz-official,actress:855540,https://moodyz.com/actress/detail/855540,2026-08-31T14:36:25.486Z,67b1d54b62410488d86504162e2f850667d6a93d70ef172bcd908fcd1372add9,
+source_000002,work,work_000001,moodyz-official,work:MDVR434,https://moodyz.com/works/detail/MDVR434,2026-08-31T14:18:50.058Z,a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71,

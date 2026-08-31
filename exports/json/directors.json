@@ -1,4 +1,14 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "director_000001",
+      "name": "ジーニアス膝",
+      "name_ja": "ジーニアス膝",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    }
+  ]
 }

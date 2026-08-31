@@ -1,4 +1,15 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "label_000001",
+      "maker_id": "maker_000001",
+      "name": "MOODYZ VR",
+      "name_ja": "MOODYZ VR",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-08-31T14:50:24Z",
+      "updated_at": "2026-08-31T14:50:24Z"
+    }
+  ]
 }
