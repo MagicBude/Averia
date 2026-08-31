@@ -1,6 +1,6 @@
 {
   "name": "averia",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Averia：CSV-first JAV 元数据资料库，支持校验、导出、安全导入 Pipeline 与 JAVDatabase 单页 Provider。",
   "type": "module",

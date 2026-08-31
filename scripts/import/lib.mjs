@@ -427,6 +427,28 @@ export function prepareImport(document, options = {}) {
       append.work_codes.push(compactRecord(catalog.work_codes.schema.columns, {
         id: nextId("code"), work_id: id, code, normalized_code: normalizeCatalogCode(code), code_type: "catalog", is_primary: "true", source_id: sourceId,
       }));
+      for (const extraCodeInput of input.codes ?? []) {
+        const extra = typeof extraCodeInput === "string" ? { code: extraCodeInput } : extraCodeInput ?? {};
+        const extraCode = String(extra.code ?? "").trim();
+        const normalizedExtra = normalizeCatalogCode(extraCode);
+        if (!extraCode || !normalizedExtra || normalizedExtra === normalizeCatalogCode(code)) continue;
+        const owners = codeIndex.get(normalizedExtra);
+        if (owners?.size && !owners.has(id)) {
+          addIssue("error", "duplicate-alternate-work-code", `作品“${code}”的附加番号“${extraCode}”已经属于其他作品。`, { work_code: code, alternate_code: extraCode, candidates: [...owners] });
+          continue;
+        }
+        append.work_codes.push(compactRecord(catalog.work_codes.schema.columns, {
+          id: nextId("code"),
+          work_id: id,
+          code: extraCode,
+          normalized_code: normalizedExtra,
+          code_type: extra.type ?? "alternate",
+          is_primary: String(extra.is_primary ?? false),
+          source_id: sourceId,
+        }));
+        if (!codeIndex.has(normalizedExtra)) codeIndex.set(normalizedExtra, new Set());
+        codeIndex.get(normalizedExtra).add(id);
+      }
       for (const genreInput of input.genres ?? []) {
         const genreId = resolveSimpleEntity("genre", genreInput);
         if (genreId) append.work_genres.push(compactRecord(catalog.work_genres.schema.columns, { work_id: id, genre_id: genreId }));

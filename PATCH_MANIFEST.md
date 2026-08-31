@@ -1,14 +1,10 @@
-# Averia V0.3.0 增量包清单
+# V0.3.1 补丁清单
 
-本包只增加/覆盖 V0.3 Provider 相关代码与文档，**不包含 `data/`、`exports/` 或 `var/`**，不会覆盖现有正式数据。
+本补丁只包含修复 V0.3.0 发布包遗漏所需文件：
 
-主要内容：
+- `scripts/import/lib.mjs`：补齐 `works[].codes[] → work_codes` 映射；
+- `package.json`：版本更新为 `0.3.1`；
+- `UPGRADE_V0.3.1.md`：修复说明；
+- `PATCH_MANIFEST.md`：补丁文件清单。
 
-- JAVDatabase 单作品页 / 单女优页 Provider；
-- HTTPS + 主机 + 页面类型白名单；
-- 原始 HTML、canonical JSON、Provider meta 与 SHA-256；
-- 离线 HTML Parser 调试模式；
-- 作品 Maker / Series / Genres / Cast / Content ID 映射；
-- 女优基础资料、不完整日期保真、作品链接发现；
-- Provider Fixture 与集成测试；
-- V0.3 中文文档与路线图更新。
+不包含 `data/`，不会覆盖正式 CSV 数据。
