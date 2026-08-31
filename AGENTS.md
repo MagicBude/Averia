@@ -272,3 +272,11 @@ Averia Web
 ## V0.4.7 网络稳定性
 
 MOODYZ Provider 对 TLS 握手失败、ECONNRESET、连接超时等瞬时网络错误与 408/429/5xx 一样执行有限次数指数退避重试；不得通过写死本机代理端口规避网络问题。
+
+## Canonical Merge 规则（V0.5.0）
+
+- 同一来源的多个单页 Provider 产物需要组合时，优先执行 `pnpm canonical:merge`，不要分别 Apply。
+- V0.5.0 只允许合并相同 `source.name`；跨来源冲突裁决不属于本阶段。
+- `source_record_id` 是跨页面合并的首选稳定键。
+- 仅允许“空值 <- 非空值”的自动补全；两个非空值冲突必须阻断并人工检查。
+- Merge 结果仍只是 canonical 输入，必须继续经过 Prepare / Report / Apply 安全链路。

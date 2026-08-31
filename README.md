@@ -262,3 +262,16 @@ MOODYZ/CDN/代理链路偶发返回 `408 / 429 / 500 / 502 / 503 / 504` 时，Pr
 ## V0.4.7 网络稳定性
 
 MOODYZ Provider 对 TLS 握手失败、ECONNRESET、连接超时等瞬时网络错误与 408/429/5xx 一样执行有限次数指数退避重试；不得通过写死本机代理端口规避网络问题。
+
+## Canonical Merge（V0.5.0）
+
+当同一来源需要分别抓作品页与女优详情页时，先把 Provider 产物合并，再进入 Prepare：
+
+```bash
+pnpm canonical:merge -- \
+  --file "<作品 canonical.json>" \
+  --file "<女优 canonical.json>" \
+  --out "var/canonical/merged/<名称>.json"
+```
+
+Merge 只允许同一 `source.name`，优先使用 `source_record_id` 识别同一实体。空字段可由更完整记录补全；两个非空值冲突时会直接终止，避免权威数据被静默覆盖。Merge 不会修改输入文件，也不会写正式 CSV。

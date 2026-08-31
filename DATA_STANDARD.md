@@ -398,3 +398,14 @@ data/relations/work_directors.csv
 ## 18. 业务图片 URL 规则（V0.4.4）
 
 `cover_url` 与 `profile_image_url` 必须指向对应作品/女优的业务图片，不得写入站点 Logo、导航图标、默认品牌图等页面装饰资源。Provider 需要对图片候选进行来源与路径判断；若无法确定业务图片，宁可留空，也不要保存明显错误的站点资源。
+
+## Canonical 多页面合并
+
+同一 Provider 的作品页、女优页等独立抓取结果允许在进入 Stage 前合并。V0.5.0 的规则是：
+
+1. 仅合并相同 `source.name`。
+2. 同一 `source_record_id` 视为同一来源实体。
+3. 空字段可以由更完整页面补齐。
+4. 两个非空值不一致时禁止自动覆盖并终止合并。
+5. 数组字段按稳定键去重，例如女优别名、作品 Genre、导演、Cast 和附加番号。
+6. 合并产物不能绕过 `import:prepare` 和人工 Report 审核。
