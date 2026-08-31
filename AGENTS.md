@@ -252,3 +252,11 @@ Averia Web
 - 来源站提供的 `監督 / director` 不得只塞进备注。
 - 使用 `directors.csv` 保存导演实体，使用 `work_directors.csv` 保存作品关系。
 - 不使用导演名称作为主键，不做模糊自动合并。
+
+
+## V0.4.4 图片字段规则
+
+- 不得因为存在 `og:image` 就直接把它作为作品封面或女优头像。
+- 厂商站点的 Logo、`site_design` 等 UI 资源不能进入业务图片字段。
+- Provider 应优先选择与业务实体路径/容器匹配的图片，并记录图片选择来源。
+- Averia 当前只保存图片 URL，不在 Provider 阶段下载图片文件。

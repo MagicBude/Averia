@@ -6,7 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { buildMoodyzUrl, classifyMoodyzUrl, parseMoodyzActress, parseMoodyzWork } from "../scripts/providers/moodyz/lib.mjs";
+import { buildMoodyzUrl, classifyMoodyzUrl, parseMoodyzActress, parseMoodyzWork, selectMoodyzImage } from "../scripts/providers/moodyz/lib.mjs";
 import { loadCatalog } from "../scripts/lib/catalog.mjs";
 import { prepareImport } from "../scripts/import/lib.mjs";
 
@@ -50,6 +50,8 @@ test("MOODYZ 官方作品页解析为日文权威 canonical JSON", () => {
   assert.equal(work.cast[0].source_record_id, "actress:855540");
   assert.deepEqual(work.directors, [{ name: "ジーニアス膝", name_ja: "ジーニアス膝", position: 1 }]);
   assert.equal(work.source_notes, "");
+  assert.equal(work.cover_url, "https://cdn.up-timely.com/image/30/content/85956/Dfso5IUKMuwfziBdfYsGiA5k9Y8Ukm7rKsayuHbz.jpg");
+  assert.equal(parsed.meta.cover_source, "img:src");
   assert.equal(parsed.meta.title_source, "h2");
 });
 
@@ -64,11 +66,27 @@ test("MOODYZ 女优页解析日文名、罗马字、身高和三围", () => {
   assert.equal(actress.waist_cm, 57);
   assert.equal(actress.hip_cm, 86);
   assert.equal(actress.cup, "H");
+  assert.equal(actress.profile_image_url, "https://cdn.up-timely.com/image/30/actress_main/855540/5bI7FHVpxa4YKxD7OSjdJUJZvpLPGEaJWAcJBx3L.jpg");
+  assert.equal(parsed.meta.profile_image_source, "img:data-src");
   assert.equal(parsed.meta.title_source, "h2");
   assert.deepEqual(parsed.meta.discovered_work_urls, [
     "https://moodyz.com/works/detail/MDVR434",
     "https://moodyz.com/works/detail/MIDV999",
   ]);
+});
+
+
+
+test("MOODYZ 图片解析不会把站点 Logo 当作品封面或女优头像", () => {
+  const workHtml = fixture("work-mdvr434.html");
+  const workImage = selectMoodyzImage(workHtml, "https://moodyz.com/works/detail/MDVR434", "work");
+  assert.match(workImage.url, /\/content\/85956\//);
+  assert.doesNotMatch(workImage.url, /site_design|logo_image/i);
+
+  const actressHtml = fixture("actress-855540.html");
+  const actressImage = selectMoodyzImage(actressHtml, "https://moodyz.com/actress/detail/855540", "actress");
+  assert.match(actressImage.url, /\/actress_main\/855540\//);
+  assert.doesNotMatch(actressImage.url, /site_design|logo_image/i);
 });
 
 test("MOODYZ 标题解析可在空 H1 时使用 H2，并可回退到 og:title", () => {

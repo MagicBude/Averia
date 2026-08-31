@@ -248,3 +248,8 @@ V0.4 首个实现为 MOODYZ 官方 Provider；DMM/FANZA API 保留为未来可�
 ## V0.4.3：导演进入正式数据模型
 
 真实 MOODYZ 数据验证发现作品页会提供 `監督`。Averia 从 V0.4.3 起新增 `directors.csv` 与 `work_directors.csv`，不再把导演信息仅保存在来源备注中。第一次真实 Apply 前完成该模型补齐，避免后续迁移历史正式数据。
+
+
+## V0.4.4：MOODYZ 业务图片识别
+
+真实数据审核发现 MOODYZ 页面的 `og:image` 可能指向站点 Logo。V0.4.4 改为从页面业务图片中优先识别作品 `/content/` 图片和女优 `/actress_main/` 图片，避免 Logo 污染 `cover_url` / `profile_image_url`。

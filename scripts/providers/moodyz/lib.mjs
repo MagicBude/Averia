@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const MOODYZ_SOURCE = "moodyz-official";
-export const MOODYZ_PROVIDER_VERSION = 4;
+export const MOODYZ_PROVIDER_VERSION = 5;
 const ALLOWED_HOSTS = new Set(["moodyz.com", "www.moodyz.com"]);
 const BASE_URL = "https://moodyz.com/";
 
@@ -112,6 +112,60 @@ function firstMetaContent(html, targetName) {
     if (key === targetName.toLowerCase() && attrs.content) return attrs.content.trim();
   }
   return "";
+}
+
+
+function absoluteImageUrl(value, baseUrl) {
+  const raw = String(value ?? "").trim();
+  if (!raw) return "";
+  try { return new URL(raw, baseUrl).href; } catch { return ""; }
+}
+
+function imageCandidates(html, baseUrl) {
+  const candidates = [];
+  for (const match of String(html ?? "").matchAll(/<img\b([^>]*)>/gi)) {
+    const attrs = parseAttributes(match[1]);
+    for (const key of ["src", "data-src", "data-original", "data-lazy-src"]) {
+      const url = absoluteImageUrl(attrs[key], baseUrl);
+      if (url) candidates.push({ url, source: `img:${key}` });
+    }
+    const srcset = attrs.srcset || attrs["data-srcset"] || "";
+    if (srcset) {
+      for (const item of srcset.split(",")) {
+        const url = absoluteImageUrl(item.trim().split(/\s+/)[0], baseUrl);
+        if (url) candidates.push({ url, source: "img:srcset" });
+      }
+    }
+  }
+
+  const ogImage = absoluteImageUrl(firstMetaContent(html, "og:image"), baseUrl);
+  if (ogImage) candidates.push({ url: ogImage, source: "og:image" });
+  return candidates;
+}
+
+function imageScore(url, kind) {
+  const value = String(url ?? "").toLowerCase();
+  let score = 0;
+  if (/\.(?:jpe?g|webp|png)(?:$|\?)/i.test(value)) score += 10;
+  if (value.includes("/site_design/") || value.includes("logo_image") || /(?:^|[\/_-])logo(?:[\/_-]|\.)/.test(value)) score -= 200;
+  if (kind === "work") {
+    if (value.includes("/content/")) score += 150;
+    if (value.includes("/works/")) score += 60;
+  } else if (kind === "actress") {
+    if (value.includes("/actress_main/")) score += 180;
+    if (value.includes("/actress/")) score += 80;
+  }
+  return score;
+}
+
+export function selectMoodyzImage(html, baseUrl, kind) {
+  const candidates = imageCandidates(html, baseUrl);
+  const ranked = candidates
+    .map((item, index) => ({ ...item, score: imageScore(item.url, kind), index }))
+    .sort((a, b) => b.score - a.score || a.index - b.index);
+  const best = ranked[0];
+  if (!best || best.score <= 0) return { url: "", source: "" };
+  return { url: best.url, source: best.source };
 }
 
 function headingCandidates(html) {
@@ -310,6 +364,7 @@ export function parseMoodyzWork(html, sourceUrl, fetchedAt = new Date().toISOStr
   }
 
   const workId = slugFromPath(url, "detail") || code.replace(/[^A-Z0-9]/g, "");
+  const cover = selectMoodyzImage(html, url, "work");
   const work = {
     source_record_id: `work:${workId}`,
     source_url: url,
@@ -325,7 +380,7 @@ export function parseMoodyzWork(html, sourceUrl, fetchedAt = new Date().toISOStr
     genres,
     directors: director ? [{ name: director, name_ja: director, position: 1 }] : [],
     cast,
-    cover_url: firstMetaContent(html, "og:image"),
+    cover_url: cover.url,
     source_notes: "",
   };
 
@@ -344,6 +399,7 @@ export function parseMoodyzWork(html, sourceUrl, fetchedAt = new Date().toISOStr
       dvd_id: code,
       director,
       title_source: titleInfo.source,
+      cover_source: cover.source,
       source_language: "ja",
       source_role: "authoritative",
     },
@@ -383,6 +439,7 @@ export function parseMoodyzActress(html, sourceUrl, fetchedAt = new Date().toISO
     hip = Number.parseInt(m[4], 10);
   }
 
+  const profileImage = selectMoodyzImage(html, url, "actress");
   const actress = {
     source_record_id: `actress:${actressId}`,
     source_url: url,
@@ -396,7 +453,7 @@ export function parseMoodyzActress(html, sourceUrl, fetchedAt = new Date().toISO
     hip_cm: hip,
     cup,
     status: "unknown",
-    profile_image_url: firstMetaContent(html, "og:image"),
+    profile_image_url: profileImage.url,
     aliases: nameEn ? [{ value: nameEn, type: "romanized", language: "en" }] : [],
   };
 
@@ -422,6 +479,7 @@ export function parseMoodyzActress(html, sourceUrl, fetchedAt = new Date().toISO
       source_record_id: actress.source_record_id,
       discovered_work_urls: discoveredWorks,
       title_source: nameInfo.source,
+      profile_image_source: profileImage.source,
       source_language: "ja",
       source_role: "authoritative",
     },
@@ -439,7 +497,7 @@ export async function fetchMoodyzHtml(sourceUrl, options = {}) {
   const headers = {
     accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
     "accept-language": "ja-JP,ja;q=0.9,en;q=0.5",
-    "user-agent": options.userAgent ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Averia/0.4.1",
+    "user-agent": options.userAgent ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Averia/0.4.4",
   };
 
   let fetched;

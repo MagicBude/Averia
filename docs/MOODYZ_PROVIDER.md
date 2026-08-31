@@ -1,6 +1,6 @@
 # MOODYZ Official Provider
 
-Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ；V0.4.1 增加 Node/curl 双传输兼容层；V0.4.2 按真实页面结构修正标题解析并保留失败快照；V0.4.3 将官网“監督”正式映射为 Director / WorkDirector。
+Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ；V0.4.1 增加 Node/curl 双传输兼容层；V0.4.2 按真实页面结构修正标题解析并保留失败快照；V0.4.3 将官网“監督”正式映射为 Director / WorkDirector；V0.4.4 修正真实页面封面/头像选择，避免把站点 Logo 当业务图片。
 
 ## 为什么先接 MOODYZ
 
@@ -212,3 +212,14 @@ work_directors.csv
 ```
 
 例如 `MDVR-434` 当前官方页面中的 `ジーニアス膝` 会被保存为独立导演实体，并与作品建立关系。
+
+
+## 图片选择（V0.4.4）
+
+真实 MOODYZ 页面中的 `og:image` 可能是站点 Logo，而不是作品封面或女优头像。因此 Provider 不再无条件信任 `og:image`。
+
+作品图片优先选择页面 `<img>` 中 URL 路径包含 `/content/` 的内容图片；女优页优先选择 `/actress_main/`。`site_design`、`logo_image` 等站点资源会被降权并排除。只有没有更可信的业务图片时才考虑其它候选。
+
+`meta.json` 会分别记录 `cover_source` 或 `profile_image_source`，便于以后定位图片字段来自 `img:src`、`img:data-src`、`og:image` 等哪个页面位置。
+
+Provider 仍然只保存图片 URL，不下载图片文件。
