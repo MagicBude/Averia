@@ -23,6 +23,8 @@ test("JAVDatabase URL 构造与类型判断只允许受支持的单页", () => {
 test("JAVDatabase 作品页可以解析为 Averia 统一导入 JSON", () => {
   const parsed = parseJavdatabaseWork(fixture("movie-sdam-179.html"), "https://www.javdatabase.com/movies/sdam-179/", NOW);
   assert.equal(parsed.canonical.source.name, "javdatabase");
+  assert.equal(parsed.canonical.source.language, "en");
+  assert.equal(parsed.canonical.source.role, "supplemental");
   assert.equal(parsed.canonical.works.length, 1);
   assert.equal(parsed.canonical.actresses.length, 1);
   const work = parsed.canonical.works[0];

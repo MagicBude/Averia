@@ -208,3 +208,10 @@ V0.3 暂不声明数据内容许可证。
 - 数据集许可证
 - 图片等媒体资源的存储和使用策略
 - 外部数据源的访问与引用规则
+
+## V0.3.2：网络代理与数据源策略
+
+JAVDatabase Provider 现在支持自动读取 Windows 系统代理。网络优先级为：`--proxy` → `HTTP_PROXY/HTTPS_PROXY` → Windows 系统代理 → 直连，因此本机代理端口变化时不需要修改 Averia 代码。
+
+同时，Averia 的数据源定位调整为：**FANZA / DMM Web API 作为下一阶段的日文结构化主源，JAVDatabase 作为英文补充与交叉验证源**。详细规则见 [`docs/SOURCE_STRATEGY.md`](docs/SOURCE_STRATEGY.md)。
+

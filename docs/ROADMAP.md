@@ -92,3 +92,13 @@ V0.3 不做全站遍历，先以单页方式稳定字段映射和数据模型。
 - 实体关系跳转
 - 数据集统计
 - Averia 品牌界面
+
+## V0.4 — FANZA / DMM Web API 日文主源
+
+- 接入 DMM Web API（FANZA site）作为日文结构化 Provider。
+- 使用环境变量管理 API ID / Affiliate ID，严禁凭据入库。
+- 保存原始 API JSON 与 SHA-256。
+- 映射日文作品标题、女优、メーカー、シリーズ、ジャンル。
+- 同一番号与 JAVDatabase 生成来源差异报告。
+- 仍然经过 Prepare / Report / Apply，不直接写正式 CSV。
+

@@ -164,3 +164,8 @@ pnpm import:report -- --batch <batch>
 ```
 
 先检查 `report.md`，**不要急着 Apply**。确认作品、女优、厂商、分类和附加 Content ID 都正确后，再执行 Apply。
+
+## 数据源角色（V0.3.2 起）
+
+JAVDatabase 是英文资料源，Averia 将其定位为**补充/交叉验证 Provider**。英文标题与英文分类不得覆盖日文主数据。作品日文标题、女优日文名等核心字段优先从 FANZA / DMM Web API 或厂商官方日文源取得。
+

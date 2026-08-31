@@ -365,3 +365,12 @@ Provider / 人工文件 → Averia Import JSON → Stage → 审核 → Apply �
 - Provider / Parser 版本。
 
 来源字段缺失、不完整或表达精度不足时，应保持空值或原始精度，不得通过猜测补全。不同来源出现冲突时，先保留来源证据，后续再通过字段级溯源机制解决。
+
+## 数据源语言规范（V0.3.2 起）
+
+- `title_ja`：仅保存日文原始/权威标题；英文翻译不得写入。
+- `name_ja`：保存女优日文标准名；英文/罗马字进入 `name_en` 或 aliases。
+- Provider 必须明确来源语言和角色；例如 JAVDatabase canonical source 使用 `language=en`、`role=supplemental`。
+- 当日文主源与英文补充源冲突时，不自动覆盖，进入后续字段级 Observation / Resolution。
+- FANZA / DMM Web API 作为下一阶段日文结构化主源，详见 `docs/SOURCE_STRATEGY.md`。
+

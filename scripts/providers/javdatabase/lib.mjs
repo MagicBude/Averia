@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 
 export const JAVDATABASE_SOURCE = "javdatabase";
-export const JAVDATABASE_PROVIDER_VERSION = 1;
+export const JAVDATABASE_PROVIDER_VERSION = 2;
 const ALLOWED_HOSTS = new Set(["javdatabase.com", "www.javdatabase.com"]);
 
 function decodeHtmlEntities(value) {
@@ -313,7 +313,7 @@ export function parseJavdatabaseActress(html, sourceUrl, fetchedAt = new Date().
     .filter((value, index, all) => all.indexOf(value) === index);
 
   return {
-    canonical: { schema_version: 1, source: { name: JAVDATABASE_SOURCE, fetched_at: fetchedAt }, actresses: [actress], works: [] },
+    canonical: { schema_version: 1, source: { name: JAVDATABASE_SOURCE, fetched_at: fetchedAt, language: "en", role: "supplemental" }, actresses: [actress], works: [] },
     meta: { provider_version: JAVDATABASE_PROVIDER_VERSION, page_type: "actress", source_url: url, source_record_id: actress.source_record_id, discovered_work_urls: discoveredWorks },
   };
 }
@@ -381,7 +381,7 @@ export function parseJavdatabaseWork(html, sourceUrl, fetchedAt = new Date().toI
   };
 
   return {
-    canonical: { schema_version: 1, source: { name: JAVDATABASE_SOURCE, fetched_at: fetchedAt }, actresses, works: [work] },
+    canonical: { schema_version: 1, source: { name: JAVDATABASE_SOURCE, fetched_at: fetchedAt, language: "en", role: "supplemental" }, actresses, works: [work] },
     meta: { provider_version: JAVDATABASE_PROVIDER_VERSION, page_type: "work", source_url: url, source_record_id: work.source_record_id, dvd_id: code, content_id: contentId, director: directorName },
   };
 }
