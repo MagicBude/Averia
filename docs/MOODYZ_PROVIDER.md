@@ -1,6 +1,6 @@
 # MOODYZ Official Provider
 
-Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ。
+Averia V0.4 引入第一个**日文厂商官方 Provider**：MOODYZ；V0.4.1 增加 Node/curl 双传输兼容层。
 
 ## 为什么先接 MOODYZ
 
@@ -113,6 +113,49 @@ Direct
 ```
 
 代理地址不会写死在代码中；`meta.json` 也不会保存代理 URL 或凭据。
+
+## 网络传输兼容（V0.4.1）
+
+代理解决“从哪里出网”，Transport 解决“用哪个 HTTP/TLS 客户端发请求”。两者分开处理。
+
+```text
+transport=auto（默认）
+   ├─ Windows + 已启用代理 → 优先系统 curl
+   └─ 其它环境 → Node fetch
+                    ↓ ECONNRESET / timeout / TLS 兼容错误
+                   curl fallback
+```
+
+这是因为部分站点在同一个代理下会接受 Windows `curl` 的 TLS 连接，却在 Node/Undici 完成 TLS 握手前重置连接。该回退只处理正常公开 HTTPS 页面的客户端兼容，不用于绕过访问控制。
+
+通常直接运行即可：
+
+```bash
+pnpm provider:moodyz -- --code MDVR-434
+```
+
+必要时可以诊断：
+
+```bash
+# 强制 curl
+pnpm provider:moodyz -- --code MDVR-434 --transport curl
+
+# 强制 Node fetch（用于复现 Node 网络问题）
+pnpm provider:moodyz -- --code MDVR-434 --transport node
+```
+
+支持的值只有：`auto`、`node`、`curl`。
+
+`meta.json` 会额外记录：
+
+```json
+{
+  "network_transport": "curl",
+  "transport_fallback_from": "node-fetch:ECONNRESET"
+}
+```
+
+如果是 Windows + 代理环境直接优先 curl，则不会伪造“回退原因”。
 
 ## 输出目录
 

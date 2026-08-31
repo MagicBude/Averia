@@ -97,6 +97,7 @@ test("MOODYZ 离线 CLI 只生成 Provider 产物，不修改正式 CSV", () => 
   assert.ok(fs.existsSync(path.join(out, "meta.json")));
   const meta = JSON.parse(fs.readFileSync(path.join(out, "meta.json"), "utf8"));
   assert.equal(meta.network_mode, "offline-file");
+  assert.equal(meta.network_transport, "offline-file");
   assert.equal(meta.source_language, "ja");
   assert.equal(meta.source_role, "authoritative");
   assert.deepEqual(dataHashes(), before);

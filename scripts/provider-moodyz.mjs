@@ -16,7 +16,7 @@ function compactTimestamp(iso) {
 
 const args = parseArgs(process.argv.slice(2));
 if (args.help) {
-  console.log(`Averia MOODYZ Official Provider V0.4\n\n用法：\n  pnpm provider:moodyz -- --code MDVR-434\n  pnpm provider:moodyz -- --actress-id 855540\n  pnpm provider:moodyz -- --url https://moodyz.com/works/detail/MDVR434\n  pnpm provider:moodyz -- --code MDVR-434 --proxy http://127.0.0.1:7790\n  pnpm provider:moodyz -- --file <本地HTML> --url <原始URL>\n\n说明：\n  - MOODYZ 官方日文站被视为该厂商作品/女优字段的权威来源。\n  - 代理优先级沿用 Averia：--proxy → 环境变量 → Windows 系统代理 → 直连。\n  - 默认一次只抓一个作品页或女优页，不递归批量抓取。\n  - Provider 只生成 raw.html / canonical.json / meta.json，不修改正式 CSV。\n  - 使用 --file 时不发起网络请求，适合离线调试 Parser。`);
+  console.log(`Averia MOODYZ Official Provider V0.4.1\n\n用法：\n  pnpm provider:moodyz -- --code MDVR-434\n  pnpm provider:moodyz -- --actress-id 855540\n  pnpm provider:moodyz -- --url https://moodyz.com/works/detail/MDVR434\n  pnpm provider:moodyz -- --code MDVR-434 --proxy http://127.0.0.1:7790\n  pnpm provider:moodyz -- --code MDVR-434 --transport curl\n  pnpm provider:moodyz -- --file <本地HTML> --url <原始URL>\n\n说明：\n  - MOODYZ 官方日文站被视为该厂商作品/女优字段的权威来源。\n  - 代理优先级沿用 Averia：--proxy → 环境变量 → Windows 系统代理 → 直连。\n  - 网络传输默认 auto；Windows + 代理下优先系统 curl，其它环境 Node fetch 失败时自动回退 curl。\n  - 可用 --transport auto|node|curl 手动指定传输方式。\n  - 默认一次只抓一个作品页或女优页，不递归批量抓取。\n  - Provider 只生成 raw.html / canonical.json / meta.json，不修改正式 CSV。\n  - 使用 --file 时不发起网络请求，适合离线调试 Parser。`);
   process.exit(0);
 }
 
@@ -39,14 +39,26 @@ try {
   let html;
   let finalUrl = requestedUrl;
   let mode = "network";
+  let transport = "offline-file";
+  let transportFallbackFrom = "";
 
   if (args.file) {
     html = fs.readFileSync(path.resolve(args.file), "utf8");
     mode = "file";
   } else {
-    const fetched = await fetchMoodyzHtml(requestedUrl, { timeoutMs: args.timeout ? Number(args.timeout) : undefined });
+    const transportMode = String(args.transport ?? "auto").toLowerCase();
+    const proxyUrl = networkConfig.httpsProxy || networkConfig.httpProxy || "";
+    const preferCurl = transportMode === "auto" && process.platform === "win32" && networkConfig.proxyUsed;
+    const fetched = await fetchMoodyzHtml(requestedUrl, {
+      timeoutMs: args.timeout ? Number(args.timeout) : undefined,
+      proxyUrl,
+      transport: transportMode,
+      preferCurl,
+    });
     html = fetched.html;
     finalUrl = fetched.finalUrl;
+    transport = fetched.transport;
+    transportFallbackFrom = fetched.fallbackFrom || "";
   }
 
   const parsed = parseMoodyzPage(html, finalUrl, fetchedAt);
@@ -69,6 +81,8 @@ try {
     raw_sha256: crypto.createHash("sha256").update(html).digest("hex"),
     network_mode: network.mode,
     proxy_used: network.proxyUsed,
+    network_transport: transport,
+    transport_fallback_from: transportFallbackFrom || undefined,
   }, null, 2)}\n`, "utf8");
 
   const rel = (file) => path.relative(ROOT, file) || ".";
@@ -76,6 +90,7 @@ try {
   console.log(`MOODYZ Official Provider 解析成功：${parsed.meta.page_type === "work" ? "作品" : "女优"}`);
   console.log(`数据语言：日文；来源角色：权威厂商源`);
   console.log(`网络模式：${network.label}${network.displayProxy ? `（${network.displayProxy}）` : ""}`);
+  console.log(`网络传输：${transport}${transportFallbackFrom ? `（回退自 ${transportFallbackFrom}）` : ""}`);
   console.log(`来源：${finalUrl}`);
   console.log(`原始快照：${rel(rawPath)}`);
   console.log(`统一导入 JSON：${rel(canonicalPath)}`);

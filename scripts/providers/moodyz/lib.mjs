@@ -1,7 +1,8 @@
 import crypto from "node:crypto";
+import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const MOODYZ_SOURCE = "moodyz-official";
-export const MOODYZ_PROVIDER_VERSION = 1;
+export const MOODYZ_PROVIDER_VERSION = 2;
 const ALLOWED_HOSTS = new Set(["moodyz.com", "www.moodyz.com"]);
 const BASE_URL = "https://moodyz.com/";
 
@@ -403,26 +404,43 @@ export function parseMoodyzPage(html, sourceUrl, fetchedAt = new Date().toISOStr
 
 export async function fetchMoodyzHtml(sourceUrl, options = {}) {
   const url = normalizeMoodyzUrl(sourceUrl);
-  const timeoutMs = Number(options.timeoutMs ?? 15000);
-  let response;
+  const timeoutMs = Number(options.timeoutMs ?? 20000);
+  const headers = {
+    accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
+    "accept-language": "ja-JP,ja;q=0.9,en;q=0.5",
+    "user-agent": options.userAgent ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Averia/0.4.1",
+  };
+
+  let fetched;
   try {
-    response = await fetch(url, {
-      redirect: "follow",
-      signal: AbortSignal.timeout(timeoutMs),
-      headers: {
-        accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
-        "accept-language": "ja-JP,ja;q=0.9,en;q=0.5",
-        "user-agent": options.userAgent ?? "Averia/0.4 metadata-provider (+https://github.com/MagicBude/Averia)",
-      },
+    fetched = await fetchTextWithFallback(url, {
+      timeoutMs,
+      headers,
+      userAgent: headers["user-agent"],
+      proxyUrl: options.proxyUrl ?? "",
+      transport: options.transport ?? "auto",
+      preferCurl: Boolean(options.preferCurl),
+      fetchImpl: options.fetchImpl,
+      nodeImpl: options.nodeImpl,
+      curlImpl: options.curlImpl,
+      spawn: options.spawn,
+      platform: options.platform,
+      tmpRoot: options.tmpRoot,
     });
   } catch (error) {
-    const cause = error?.cause?.code || error?.name || "NETWORK";
-    throw new Error(`MOODYZ 网络请求失败（${cause}）：请检查当前网络、代理或来源站访问状态；Provider 未写入正式数据。`);
+    throw new Error(`MOODYZ 网络请求失败：${error.message}；Provider 未写入正式数据。`);
   }
 
-  const finalUrl = normalizeMoodyzUrl(response.url || url);
-  if (!response.ok) throw new Error(`MOODYZ 请求失败：HTTP ${response.status} ${response.statusText}`);
-  const contentType = response.headers.get("content-type") ?? "";
+  const finalUrl = normalizeMoodyzUrl(fetched.finalUrl || url);
+  if (fetched.status < 200 || fetched.status >= 300) throw new Error(`MOODYZ 请求失败：HTTP ${fetched.status}`);
+  const contentType = fetched.contentType ?? "";
   if (contentType && !contentType.toLowerCase().includes("text/html")) throw new Error(`返回内容不是 HTML：${contentType}`);
-  return { html: await response.text(), finalUrl, status: response.status, contentType };
+  return {
+    html: fetched.text,
+    finalUrl,
+    status: fetched.status,
+    contentType,
+    transport: fetched.transport,
+    fallbackFrom: fetched.fallbackFrom ?? "",
+  };
 }

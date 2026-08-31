@@ -1,45 +1,30 @@
-# Averia V0.4.0 Patch Manifest
+# Averia V0.4.1 Patch Manifest
 
-主题：**首个日文厂商官方 Provider — MOODYZ**
+这是 V0.4.0 的网络兼容修复补丁，不包含 `data/`、`exports/` 或 `var/` 正式/运行数据。
 
 ## 新增
 
-- `scripts/provider-moodyz.mjs`
-- `scripts/providers/moodyz/lib.mjs`
-- `tests/provider-moodyz.test.mjs`
-- `tests/fixtures/moodyz/work-mdvr434.html`
-- `tests/fixtures/moodyz/actress-855540.html`
-- `docs/MOODYZ_PROVIDER.md`
-- `UPGRADE_V0.4.md`
+- `scripts/lib/http-transport.mjs`
+- `tests/http-transport.test.mjs`
+- `UPGRADE_V0.4.1.md`
 
 ## 修改
 
-- `package.json`
+- `package.json`：版本提升到 `0.4.1`
+- `scripts/providers/moodyz/lib.mjs`：Node/curl 双 Transport
+- `scripts/provider-moodyz.mjs`：自动选择 Transport，记录网络传输元数据
+- `tests/provider-moodyz.test.mjs`：补充离线网络传输断言
+- `docs/MOODYZ_PROVIDER.md`：网络兼容说明
 - `README.md`
 - `AGENTS.md`
-- `docs/SOURCE_STRATEGY.md`
-- `docs/ROADMAP.md`
 
-## 不包含
-
-本补丁**不包含任何 `data/` 正式 CSV**，也不包含：
-
-- `exports/`
-- `var/`
-- GitHub Pages 的 `docs/index.html`
-- GitHub Pages 的 `docs/assets/`
-- API 密钥 / Cookie / 代理端口等私密配置
-
-因此覆盖到现有仓库时不会修改已经积累的正式数据，也不会覆盖现有 Pages 首页。
-
-## 回归结果
-
-在 V0.3.2 基线 + V0.4 变更上执行：
+## 验证目标
 
 ```text
-数据校验：11 个数据集通过
-数据质量：0 error / 0 warning
-自动测试：24 / 24 通过
+11 个数据集校验通过
+0 个数据质量错误
+全部 Node 测试通过
+MOODYZ 离线 Provider 不修改正式 CSV
+ECONNRESET 自动回退 curl
+Windows + 动态代理可优先 curl
 ```
-
-其中 V0.4 新增 5 个 MOODYZ Provider 测试。

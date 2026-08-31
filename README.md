@@ -185,6 +185,8 @@ MOODYZ 官方页 → raw.html → canonical.json → Prepare / Report / Apply
 pnpm provider:moodyz -- --code MDVR-434
 ```
 
+V0.4.1 增加网络传输兼容层：默认 `auto`，Windows + 代理环境下优先使用系统 `curl`；其它环境若 Node `fetch()` 出现 `ECONNRESET`、连接超时或 TLS 类错误，会自动回退到 `curl`。代理地址仍然动态读取，不写死在仓库中。
+
 当前仍只允许单页抓取，不递归遍历、不批量并发。
 
 ### 阶段 5：数据库
