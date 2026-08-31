@@ -8,11 +8,19 @@ const RETRYABLE_CODES = new Set([
   "ECONNREFUSED",
   "ETIMEDOUT",
   "EPIPE",
+  "EAI_AGAIN",
+  "ENETUNREACH",
+  "EHOSTUNREACH",
   "UND_ERR_CONNECT_TIMEOUT",
   "UND_ERR_HEADERS_TIMEOUT",
   "UND_ERR_BODY_TIMEOUT",
   "UND_ERR_SOCKET",
+  "AVERIA_TRANSIENT_NETWORK",
 ]);
+
+// curl/libcurl 常见的瞬时网络错误。Windows Schannel 在代理链路抖动时
+// 经常返回 35（TLS handshake），用户真实环境已验证重试后可以恢复。
+const RETRYABLE_CURL_EXITS = new Set([5, 6, 7, 18, 28, 35, 52, 55, 56, 92]);
 
 export const RETRYABLE_HTTP_STATUS = new Set([408, 429, 500, 502, 503, 504]);
 
@@ -35,10 +43,25 @@ export function networkErrorCode(error) {
   return "NETWORK";
 }
 
+export function shouldRetryNetworkError(error) {
+  let current = error;
+  for (let i = 0; i < 8 && current; i += 1) {
+    const code = String(current.code ?? current.name ?? "").trim();
+    if (RETRYABLE_CODES.has(code)) return true;
+    const curlMatch = /^CURL_EXIT_(\d+)$/.exec(code);
+    if (curlMatch && RETRYABLE_CURL_EXITS.has(Number(curlMatch[1]))) return true;
+    if (/^(?:ERR_SSL_|UNABLE_TO_VERIFY_|CERT_|DEPTH_ZERO_)/i.test(code)) return true;
+    current = current.cause;
+  }
+
+  const message = String(error?.message ?? "");
+  const exitMatch = /curl 请求失败（exit (\d+)）/.exec(message);
+  if (exitMatch && RETRYABLE_CURL_EXITS.has(Number(exitMatch[1]))) return true;
+  return /ECONNRESET|ETIMEDOUT|CONNECT_TIMEOUT|TLS|SSL\/TLS|handshake/i.test(message);
+}
+
 export function shouldFallbackToCurl(error) {
-  const code = networkErrorCode(error);
-  if (RETRYABLE_CODES.has(code)) return true;
-  return /^(?:ERR_SSL_|UNABLE_TO_VERIFY_|CERT_|DEPTH_ZERO_)/i.test(code);
+  return shouldRetryNetworkError(error);
 }
 
 function curlCommand(platform = process.platform) {
@@ -97,7 +120,9 @@ export function fetchTextViaCurl(url, options = {}) {
     }
     if ((result.status ?? 1) !== 0) {
       const detail = String(result.stderr ?? "").trim();
-      throw new Error(`curl 请求失败（exit ${result.status}）${detail ? `：${detail}` : ""}`);
+      const error = new Error(`curl 请求失败（exit ${result.status}）${detail ? `：${detail}` : ""}`);
+      error.code = `CURL_EXIT_${result.status}`;
+      throw error;
     }
 
     const lines = String(result.stdout ?? "").split(/\r?\n/);
@@ -155,7 +180,11 @@ async function fetchTextOnceWithFallback(url, options = {}) {
         const result = await nodeImpl(url, options);
         return { ...result, fallbackFrom: `curl:${networkErrorCode(curlError)}` };
       } catch (nodeError) {
-        throw new Error(`网络请求失败：curl 与 Node fetch 均失败（curl: ${curlError.message}; node: ${networkErrorCode(nodeError)}）。`);
+        const error = new Error(`网络请求失败：curl 与 Node fetch 均失败（curl: ${curlError.message}; node: ${networkErrorCode(nodeError)}）。`);
+        if (shouldRetryNetworkError(curlError) || shouldRetryNetworkError(nodeError)) error.code = "AVERIA_TRANSIENT_NETWORK";
+        error.cause = nodeError;
+        error.curlError = curlError;
+        throw error;
       }
     }
   }
@@ -168,7 +197,11 @@ async function fetchTextOnceWithFallback(url, options = {}) {
       const result = await curlImpl(url, curlOptions);
       return { ...result, fallbackFrom: `node-fetch:${networkErrorCode(nodeError)}` };
     } catch (curlError) {
-      throw new Error(`网络请求失败：Node fetch ${networkErrorCode(nodeError)}，curl 回退也失败（${curlError.message}）。`);
+      const error = new Error(`网络请求失败：Node fetch ${networkErrorCode(nodeError)}，curl 回退也失败（${curlError.message}）。`);
+      if (shouldRetryNetworkError(nodeError) || shouldRetryNetworkError(curlError)) error.code = "AVERIA_TRANSIENT_NETWORK";
+      error.cause = nodeError;
+      error.curlError = curlError;
+      throw error;
     }
   }
 }
@@ -182,14 +215,42 @@ export async function fetchTextWithFallback(url, options = {}) {
 
   let lastResult;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const result = await fetchTextOnceWithFallback(url, options);
-    lastResult = result;
+    let result;
+    try {
+      result = await fetchTextOnceWithFallback(url, options);
+      lastResult = result;
+    } catch (error) {
+      error.attempts = attempt;
+      if (!shouldRetryNetworkError(error) || attempt >= maxAttempts) throw error;
+
+      const delayMs = Math.round(baseDelayMs * (2 ** (attempt - 1)));
+      options.onRetry?.({
+        attempt,
+        nextAttempt: attempt + 1,
+        maxAttempts,
+        kind: "network",
+        code: networkErrorCode(error),
+        message: error.message,
+        delayMs,
+      });
+      if (delayMs > 0) await sleepImpl(delayMs);
+      continue;
+    }
 
     if (!shouldRetryHttpStatus(result.status) || attempt >= maxAttempts) {
       return { ...result, attempts: attempt };
     }
 
     const delayMs = Math.round(baseDelayMs * (2 ** (attempt - 1)));
+    options.onRetry?.({
+      attempt,
+      nextAttempt: attempt + 1,
+      maxAttempts,
+      kind: "http",
+      status: result.status,
+      transport: result.transport,
+      delayMs,
+    });
     if (delayMs > 0) await sleepImpl(delayMs);
   }
 

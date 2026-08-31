@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import fs from "node:fs";
-import { fetchTextViaCurl, fetchTextWithFallback, networkErrorCode, shouldFallbackToCurl, shouldRetryHttpStatus } from "../scripts/lib/http-transport.mjs";
+import { fetchTextViaCurl, fetchTextWithFallback, networkErrorCode, shouldFallbackToCurl, shouldRetryHttpStatus, shouldRetryNetworkError } from "../scripts/lib/http-transport.mjs";
 
 function okResult(transport, text = "ok") {
   return { text, finalUrl: "https://moodyz.com/works/detail/MDVR434", status: 200, contentType: "text/html; charset=UTF-8", transport };
@@ -133,3 +133,81 @@ test("HTTP 404 不重试，避免对永久错误制造额外请求", async () =>
   assert.equal(calls, 1);
 });
 
+
+
+test("curl exit 35 会被识别为可重试 TLS 网络错误", () => {
+  const error = Object.assign(new Error("curl 请求失败（exit 35）：schannel handshake failed"), { code: "CURL_EXIT_35" });
+  assert.equal(shouldRetryNetworkError(error), true);
+});
+
+test("Windows 代理下 curl TLS 连续失败两次后第三次可以自动恢复", async () => {
+  let curlCalls = 0;
+  let nodeCalls = 0;
+  const sleeps = [];
+  const retries = [];
+  const result = await fetchTextWithFallback("https://moodyz.com/actress/detail/855540", {
+    preferCurl: true,
+    maxAttempts: 3,
+    retryDelayMs: 10,
+    sleepImpl: async (ms) => { sleeps.push(ms); },
+    onRetry: (event) => { retries.push(event); },
+    curlImpl: async () => {
+      curlCalls += 1;
+      if (curlCalls <= 2) {
+        throw Object.assign(new Error("curl 请求失败（exit 35）：schannel: failed to receive handshake"), { code: "CURL_EXIT_35" });
+      }
+      return okResult("curl", "actress page");
+    },
+    nodeImpl: async () => {
+      nodeCalls += 1;
+      throw Object.assign(new Error("reset"), { code: "ECONNRESET" });
+    },
+  });
+  assert.equal(result.status, 200);
+  assert.equal(result.transport, "curl");
+  assert.equal(result.text, "actress page");
+  assert.equal(result.attempts, 3);
+  assert.equal(curlCalls, 3);
+  assert.equal(nodeCalls, 2);
+  assert.deepEqual(sleeps, [10, 20]);
+  assert.equal(retries.length, 2);
+  assert.equal(retries[0].kind, "network");
+  assert.equal(retries[0].code, "AVERIA_TRANSIENT_NETWORK");
+});
+
+test("显式 curl 模式遇到 exit 35 会重试 curl 自身，不调用 Node", async () => {
+  let curlCalls = 0;
+  let nodeCalls = 0;
+  const result = await fetchTextWithFallback("https://moodyz.com/actress/detail/855540", {
+    transport: "curl",
+    maxAttempts: 3,
+    retryDelayMs: 0,
+    curlImpl: async () => {
+      curlCalls += 1;
+      if (curlCalls < 3) throw Object.assign(new Error("tls"), { code: "CURL_EXIT_35" });
+      return okResult("curl", "ok on third");
+    },
+    nodeImpl: async () => { nodeCalls += 1; return okResult("node-fetch"); },
+  });
+  assert.equal(result.attempts, 3);
+  assert.equal(result.transport, "curl");
+  assert.equal(curlCalls, 3);
+  assert.equal(nodeCalls, 0);
+});
+
+test("非瞬时网络错误不会盲目重试", async () => {
+  let calls = 0;
+  await assert.rejects(
+    fetchTextWithFallback("https://moodyz.com/actress/detail/855540", {
+      transport: "curl",
+      maxAttempts: 3,
+      retryDelayMs: 0,
+      curlImpl: async () => {
+        calls += 1;
+        throw Object.assign(new Error("permission denied"), { code: "CURL_EXIT_3" });
+      },
+    }),
+    /permission denied/,
+  );
+  assert.equal(calls, 1);
+});

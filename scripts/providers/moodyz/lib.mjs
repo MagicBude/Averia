@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const MOODYZ_SOURCE = "moodyz-official";
-export const MOODYZ_PROVIDER_VERSION = 6;
+export const MOODYZ_PROVIDER_VERSION = 7;
 const ALLOWED_HOSTS = new Set(["moodyz.com", "www.moodyz.com"]);
 const BASE_URL = "https://moodyz.com/";
 
@@ -497,7 +497,7 @@ export async function fetchMoodyzHtml(sourceUrl, options = {}) {
   const headers = {
     accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
     "accept-language": "ja-JP,ja;q=0.9,en;q=0.5",
-    "user-agent": options.userAgent ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Averia/0.4.5",
+    "user-agent": options.userAgent ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Averia/0.4.7",
   };
 
   let fetched;
@@ -518,6 +518,7 @@ export async function fetchMoodyzHtml(sourceUrl, options = {}) {
       maxAttempts: options.maxAttempts ?? 3,
       retryDelayMs: options.retryDelayMs ?? 750,
       sleepImpl: options.sleepImpl,
+      onRetry: options.onRetry,
     });
   } catch (error) {
     throw new Error(`MOODYZ 网络请求失败：${error.message}；Provider 未写入正式数据。`);
