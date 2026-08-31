@@ -194,3 +194,23 @@ test("MOODYZ 临时 HTTP 502 会自动重试后恢复", async () => {
   assert.equal(calls, 2);
 });
 
+
+
+test("MOODYZ CLI 的 --actress-id 能正确映射到女优页", () => {
+  const before = dataHashes();
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), "averia-moodyz-actress-cli-"));
+  const result = spawnSync(process.execPath, [
+    path.join(root, "scripts", "provider-moodyz.mjs"),
+    "--file", path.join(here, "fixtures", "moodyz", "actress-855540.html"),
+    "--actress-id", "855540",
+    "--out", out,
+  ], { cwd: root, encoding: "utf8" });
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const canonical = JSON.parse(fs.readFileSync(path.join(out, "canonical.json"), "utf8"));
+  assert.equal(canonical.actresses[0].source_record_id, "actress:855540");
+  assert.equal(canonical.actresses[0].primary_name, "純白彩永");
+  const meta = JSON.parse(fs.readFileSync(path.join(out, "meta.json"), "utf8"));
+  assert.equal(meta.final_url, "https://moodyz.com/actress/detail/855540");
+  assert.deepEqual(dataHashes(), before);
+});

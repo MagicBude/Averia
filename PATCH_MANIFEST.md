@@ -1,17 +1,13 @@
-# Averia V0.4.5 Patch Manifest
+# Averia V0.4.6 Hotfix 清单
 
-本补丁只修改网络容错、MOODYZ Provider 元数据/文档与测试，不包含或覆盖 `data/`、`exports/`、`var/`。
+本补丁修复 MOODYZ `--actress-id` CLI 参数映射。
 
-## 文件
+包含：
 
 - `package.json`
-- `scripts/lib/http-transport.mjs`
-- `scripts/providers/moodyz/lib.mjs`
 - `scripts/provider-moodyz.mjs`
-- `tests/http-transport.test.mjs`
 - `tests/provider-moodyz.test.mjs`
-- `README.md`
-- `AGENTS.md`
-- `docs/MOODYZ_PROVIDER.md`
-- `UPGRADE_V0.4.5.md`
+- `UPGRADE_V0.4.6.md`
 - `PATCH_MANIFEST.md`
+
+不包含 `data/`、`exports/`、`var/`，不会覆盖正式数据。
