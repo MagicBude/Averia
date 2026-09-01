@@ -11,3 +11,6 @@ coverage/
 
 # Averia 导入 Pipeline 的本地暂存、备份和质量报告
 var/
+
+# WorkBuddy 本地代理记忆（不入库）
+.workbuddy/
