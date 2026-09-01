@@ -1,6 +1,6 @@
 # DMM Rental Provider
 
-V0.6.0 新增 `dmm-rental` Provider，用于**按需读取单个公开 FANZA/DMM 宅配单品 Rental 详情页**，并转换为 Averia canonical JSON。V0.6.1 根据真实线上返回补充年龄确认会话处理。
+V0.6.0 新增 `dmm-rental` Provider，用于**按需读取单个公开 FANZA/DMM 宅配单品 Rental 详情页**，并转换为 Averia canonical JSON。V0.6.1 根据真实线上返回补充年龄确认会话处理；V0.6.2 继续适配 DMM 年龄声明端点可能返回明文 HTTP 重定向的真实行为。
 
 ## 定位
 
@@ -114,9 +114,10 @@ Provider 与其它来源共用 Averia 网络层：自动代理、curl/Node fallb
 1. 首次检测到年龄确认页时保存失败现场；
 2. 未传 `--adult-confirmed` 时停止，并提示用户明确选择；
 3. 只有显式传入 `--adult-confirmed` 时，才访问 DMM 页面自身提供的 `declared=yes` URL；
-4. 使用临时 curl Cookie Jar 跟随 DMM 自己的重定向回原详情页；
-5. Cookie 文件只存在于系统临时目录，流程结束即删除，不进入 Git、日志或 `meta.json`；
-6. 如果年龄声明后仍未回到原详情页，立即停止，不继续尝试其它方式。
+4. 年龄声明请求**不跟随重定向**，只接收响应中的 Cookie；真实 DMM 可能返回 `Location: http://...`，Averia 不会因此放开明文 HTTP；
+5. 使用同一个临时 Cookie Jar，主动重新请求最初经过白名单校验的 HTTPS Rental 详情页；
+6. Cookie 文件只存在于系统临时目录，流程结束即删除，不进入 Git、日志或 `meta.json`；
+7. 如果年龄声明后仍未回到原详情页，立即停止，不继续尝试其它方式。
 
 同时坚持：
 

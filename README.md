@@ -295,7 +295,7 @@ pnpm provider:dmm-rental -- --cid 4ipzz698
 pnpm provider:dmm-rental -- --cid 4ipzz698 --code IPZZ-698 --adult-confirmed
 ```
 
-V0.6.1 会使用 DMM 页面自身提供的 `declared=yes` 链接与临时 Cookie 会话回到原详情页；Cookie 不落库、不写日志、不提交 Git。验证码、登录、地区限制和付费访问控制仍不会绕过。
+V0.6.2 会使用 DMM 页面自身提供的 `declared=yes` 链接建立临时 Cookie 会话。真实 DMM 可能在该步骤返回 `http://` 的重定向地址；Averia 不会放开明文 HTTP，而是**不跟随该跳转，只接收 Cookie，再主动以原始 HTTPS 详情页 URL 重新请求**。Cookie 不落库、不写日志、不提交 Git。验证码、登录、地区限制和付费访问控制仍不会绕过。
 
 同时 `averia.xlsx` 增加 `女优总览`、`作品总览`，并固定规范 Sheet 顺序为 `女优 → 女优别名 → 作品 → ...`。
 

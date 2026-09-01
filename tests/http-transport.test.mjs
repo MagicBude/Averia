@@ -80,6 +80,31 @@ test("curl transport 会显式传入动态代理并读取响应正文", () => {
   assert.deepEqual(capturedArgs.slice(capturedArgs.indexOf("--proxy"), capturedArgs.indexOf("--proxy") + 2), ["--proxy", "http://127.0.0.1:7790/"]);
 });
 
+
+test("curl transport 可关闭重定向，仅接收当前 HTTPS 响应用于安全 Cookie 握手", () => {
+  let capturedArgs = [];
+  const result = fetchTextViaCurl("https://www.dmm.co.jp/age_check/=/declared=yes/?rurl=x", {
+    followRedirects: false,
+    platform: "win32",
+    spawn: (_command, args) => {
+      capturedArgs = args;
+      const outputIndex = args.indexOf("--output");
+      fs.writeFileSync(args[outputIndex + 1], "", "utf8");
+      return {
+        status: 0,
+        stdout: "302\nhttps://www.dmm.co.jp/age_check/=/declared=yes/?rurl=x\ntext/html\n",
+        stderr: "",
+      };
+    },
+  });
+  assert.equal(result.status, 302);
+  assert.equal(capturedArgs.includes("--location"), false);
+  assert.equal(capturedArgs.includes("--max-redirs"), false);
+  assert.equal(capturedArgs.includes("--proto-redir"), false);
+  const protoIndex = capturedArgs.indexOf("--proto");
+  assert.deepEqual(capturedArgs.slice(protoIndex, protoIndex + 2), ["--proto", "=https"]);
+});
+
 test("curl transport 可使用调用方提供的临时 Cookie Jar 跟随会话重定向", () => {
   let capturedArgs = [];
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "averia-cookie-test-"));

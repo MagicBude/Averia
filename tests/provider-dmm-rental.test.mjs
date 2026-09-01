@@ -79,19 +79,34 @@ test("DMM 在线抓取检测到年龄确认时不会替用户自动声明年龄"
   assert.equal(result.html, ageGateFixture());
 });
 
-test("显式 --adult-confirmed 语义下使用临时 curl Cookie 会话完成 DMM 官方年龄声明", async () => {
+test("显式 --adult-confirmed 使用 Cookie 会话，但不跟随 DMM 返回的明文 HTTP 重定向", async () => {
   const calls = [];
   const result = await fetchDmmRentalHtml(URL, {
     transport: "curl",
     adultConfirmed: true,
     retryDelayMs: 0,
     curlImpl: async (url, options) => {
-      calls.push({ url, cookieJar: options.cookieJar || "" });
+      calls.push({
+        url,
+        cookieJar: options.cookieJar || "",
+        followRedirects: options.followRedirects !== false,
+      });
       if (calls.length === 1) {
         return {
           text: ageGateFixture(),
           finalUrl: "https://www.dmm.co.jp/age_check/",
           status: 200,
+          contentType: "text/html; charset=UTF-8",
+          transport: "curl",
+        };
+      }
+      if (calls.length === 2) {
+        // 真实 DMM 会在这里返回 302，Location 可能是 http://...。
+        // Averia 只接收 Set-Cookie，不跟随这个重定向。
+        return {
+          text: "",
+          finalUrl: calls[1].url,
+          status: 302,
           contentType: "text/html; charset=UTF-8",
           transport: "curl",
         };
@@ -106,14 +121,19 @@ test("显式 --adult-confirmed 语义下使用临时 curl Cookie 会话完成 DM
     },
   });
 
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
   assert.match(calls[1].url, /\/age_check\/=\/declared=yes\//);
   assert.match(calls[1].cookieJar, /cookies\.txt$/);
+  assert.equal(calls[1].followRedirects, false);
+  assert.equal(calls[2].url, URL);
+  assert.equal(calls[2].cookieJar, calls[1].cookieJar);
+  assert.equal(calls[2].followRedirects, true);
   assert.equal(result.ageGateDetected, true);
   assert.equal(result.ageGateDeclared, true);
   assert.equal(result.ageGateRequired, false);
   assert.equal(result.finalUrl, URL);
   assert.equal(result.html, fixture());
+  assert.equal(result.attempts, 3);
 });
 
 test("显式 node 模式不会在年龄确认流程中偷偷切换为 curl Cookie 会话", async () => {

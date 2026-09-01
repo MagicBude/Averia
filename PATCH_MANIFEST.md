@@ -1,29 +1,24 @@
-# Averia V0.6.1 Patch Manifest
+# Averia V0.6.2 Patch Manifest
 
-本补丁只包含代码、测试和文档，不包含 `data/`、`exports/` 或 `var/`，不会覆盖已经写入的真实资料。
+本补丁只修复 DMM/FANZA 年龄确认重定向兼容问题，不包含 `data/`、`exports/` 或 `var/`。
 
-## 主要变化
+## 修改文件
 
-- `package.json`：版本升级到 `0.6.1`。
-- `scripts/providers/dmm-rental/lib.mjs`：
-  - 识别真实 `年齢認証 - FANZA` 页面；
-  - 从页面中提取并校验 DMM 官方 `declared=yes` 链接；
-  - 未显式确认年龄时停止，不替用户自动声明；
-  - `--adult-confirmed` 时使用临时 curl Cookie Jar 跟随 DMM 官方重定向；
-  - 声明后仍未回到原详情页则停止，不尝试其它绕过方式。
-- `scripts/provider-dmm-rental.mjs`：
-  - 新增 `--adult-confirmed`；
-  - 成功经过年龄确认时保存 `age-gate.html`；
-  - `meta.json` 只记录 `age_gate_detected / age_gate_declared` 布尔状态，不保存 Cookie。
-- `scripts/lib/http-transport.mjs`：curl transport 支持调用方提供的临时 Cookie Jar。
-- `tests/provider-dmm-rental.test.mjs`：新增年龄确认检测、官方链接校验、显式确认和 Node 模式边界测试。
-- `tests/http-transport.test.mjs`：新增 curl Cookie Jar 回归测试。
-- `tests/fixtures/dmm-rental/age-gate-4ipzz698.html`：基于第一次真实 DMM Probe 返回结构的最小年龄确认 Fixture。
-- `docs/DMM_RENTAL_PROVIDER.md`：补充 V0.6.1 年龄确认会话说明。
-- `AGENTS.md`：固定“年龄确认必须由用户显式声明”的项目规则。
-- `README.md`：补充 `--adult-confirmed` 使用说明。
-- `UPGRADE_V0.6.1.md`：本次升级说明。
+- `package.json` — 版本更新到 `0.6.2`
+- `scripts/lib/http-transport.mjs` — 新增可关闭重定向的安全传输选项
+- `scripts/providers/dmm-rental/lib.mjs` — 年龄声明改为“只收 Cookie，再主动 HTTPS 请求详情页”
+- `scripts/provider-dmm-rental.mjs` — CLI 版本信息更新
+- `tests/http-transport.test.mjs` — 增加 no-follow HTTPS 安全回归
+- `tests/provider-dmm-rental.test.mjs` — 模拟真实 DMM 302 年龄声明流程
+- `docs/DMM_RENTAL_PROVIDER.md` — 更新真实年龄确认行为说明
+- `README.md` — 更新 V0.6.2 年龄确认策略
+- `AGENTS.md` — 固化禁止跟随明文年龄确认重定向的工程规则
+- `UPGRADE_V0.6.2.md` — 升级与验证说明
 
-## 安全边界
+## 不包含
 
-`--adult-confirmed` 只允许处理公开页面的普通年龄确认。验证码、登录、地区限制和付费访问控制仍不得绕过。
+- `data/`
+- `exports/`
+- `var/`
+- Provider 抓取产物
+- Cookie / 登录信息 / 代理凭据

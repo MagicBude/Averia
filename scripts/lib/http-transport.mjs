@@ -82,16 +82,16 @@ export function fetchTextViaCurl(url, options = {}) {
   const bodyPath = path.join(tmpDir, "body.txt");
   const headers = options.headers ?? {};
 
+  const followRedirects = options.followRedirects !== false;
   const args = [
     "--silent",
     "--show-error",
-    "--location",
-    "--max-redirs", "5",
+    ...(followRedirects ? ["--location", "--max-redirs", "5"] : []),
     "--connect-timeout", String(connectSeconds),
     "--max-time", String(totalSeconds),
     "--compressed",
     "--proto", "=https",
-    "--proto-redir", "=https",
+    ...(followRedirects ? ["--proto-redir", "=https"] : []),
     "--output", bodyPath,
     "--write-out", "%{http_code}\n%{url_effective}\n%{content_type}\n",
   ];
@@ -148,7 +148,7 @@ async function fetchTextViaNode(url, options = {}) {
   const timeoutMs = Number(options.timeoutMs ?? 15000);
   const fetchImpl = options.fetchImpl ?? fetch;
   const response = await fetchImpl(url, {
-    redirect: "follow",
+    redirect: options.followRedirects === false ? "manual" : "follow",
     signal: AbortSignal.timeout(timeoutMs),
     headers: options.headers ?? {},
   });

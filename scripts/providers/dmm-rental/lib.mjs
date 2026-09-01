@@ -5,7 +5,7 @@ import path from "node:path";
 import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const DMM_RENTAL_SOURCE = "dmm-rental";
-export const DMM_RENTAL_PROVIDER_VERSION = 2;
+export const DMM_RENTAL_PROVIDER_VERSION = 3;
 const ALLOWED_HOSTS = new Set(["www.dmm.co.jp", "dmm.co.jp"]);
 const BASE_URL = "https://www.dmm.co.jp/rental/ppr/-/detail/=/cid=";
 
@@ -342,7 +342,7 @@ export async function fetchDmmRentalHtml(url, options = {}) {
     headers: {
       accept: "text/html,application/xhtml+xml",
       "accept-language": "ja-JP,ja;q=0.9,en;q=0.5",
-      "user-agent": options.userAgent || "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/152 Safari/537.36 Averia/0.6.1",
+      "user-agent": options.userAgent || "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/152 Safari/537.36 Averia/0.6.2",
       ...(options.headers ?? {}),
     },
   };
@@ -394,19 +394,30 @@ export async function fetchDmmRentalHtml(url, options = {}) {
   const sessionDir = fs.mkdtempSync(path.join(options.tmpRoot ?? os.tmpdir(), "averia-dmm-age-"));
   const cookieJar = path.join(sessionDir, "cookies.txt");
   try {
+    // DMM 的 declared=yes 端点在真实环境中可能返回 Location: http://www.dmm.co.jp/...。
+    // Averia 不允许为了跟随该跳转而放开明文 HTTP：这里只接收声明响应并保存
+    // Set-Cookie，不跟随 Location；随后主动以 HTTPS 重新请求原始详情页。
     const declared = await fetchTextWithFallback(declarationUrl, {
       ...requestOptions,
-      // 年龄声明这一步需要一个真正维护 Cookie 的会话。curl 的 Cookie Jar
-      // 只存在临时目录，流程结束立即删除，不写日志、不进入 meta.json。
       transport: "curl",
       preferCurl: true,
       cookieJar,
+      followRedirects: false,
     });
-    if (declared.status >= 400) throw new Error(`DMM 年龄确认后请求失败：HTTP ${declared.status}`);
+    if (declared.status >= 400) throw new Error(`DMM 年龄声明请求失败：HTTP ${declared.status}`);
 
-    const stillAgeGate = looksLikeAgeGate(declared.text);
+    const detail = await fetchTextWithFallback(requestedUrl, {
+      ...requestOptions,
+      transport: "curl",
+      preferCurl: true,
+      cookieJar,
+      followRedirects: true,
+    });
+    if (detail.status >= 400) throw new Error(`DMM 年龄确认后详情页请求失败：HTTP ${detail.status}`);
+
+    const stillAgeGate = looksLikeAgeGate(detail.text);
     const finalMatchesRequested = (() => {
-      try { return normalizedComparableDetailUrl(declared.finalUrl) === normalizedComparableDetailUrl(requestedUrl); } catch { return false; }
+      try { return normalizedComparableDetailUrl(detail.finalUrl) === normalizedComparableDetailUrl(requestedUrl); } catch { return false; }
     })();
     if (stillAgeGate || !finalMatchesRequested) {
       const error = new Error("DMM 年龄确认完成后仍未返回目标 Rental 详情页；Averia 不继续尝试其它绕过方式，请改用浏览器保存公开详情页后通过 --file 解析。");
@@ -415,15 +426,15 @@ export async function fetchDmmRentalHtml(url, options = {}) {
     }
 
     return {
-      ...declared,
-      html: declared.text,
-      attempts: Number(fetched.attempts ?? 1) + Number(declared.attempts ?? 1),
+      ...detail,
+      html: detail.text,
+      attempts: Number(fetched.attempts ?? 1) + Number(declared.attempts ?? 1) + Number(detail.attempts ?? 1),
       ageGateDetected: true,
       ageGateDeclared: true,
       ageGateRequired: false,
       ageGateHtml: fetched.text,
       ageDeclarationUrl: declarationUrl,
-      fallbackFrom: declared.fallbackFrom || fetched.fallbackFrom || "",
+      fallbackFrom: detail.fallbackFrom || declared.fallbackFrom || fetched.fallbackFrom || "",
     };
   } finally {
     fs.rmSync(sessionDir, { recursive: true, force: true });
