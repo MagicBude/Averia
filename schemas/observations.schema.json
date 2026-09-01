@@ -1,0 +1,59 @@
+{
+  "file": "data/sources/observations.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^obs_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "entity_type",
+    "entity_id",
+    "source_name",
+    "field",
+    "observed_value"
+  ],
+  "timestampFields": [
+    "observed_at"
+  ],
+  "enumFields": {
+    "entity_type": [
+      "actress",
+      "work",
+      "maker",
+      "label",
+      "series",
+      "genre",
+      "director"
+    ]
+  },
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "entity_type",
+    "entity_id",
+    "source_name",
+    "source_record_id",
+    "field",
+    "observed_value",
+    "observed_language",
+    "observed_at",
+    "raw_hash",
+    "notes"
+  ],
+  "displayNameZh": "数据观察",
+  "columnLabelsZh": {
+    "id": "观察ID",
+    "entity_type": "实体类型",
+    "entity_id": "实体ID",
+    "source_name": "来源名称",
+    "source_record_id": "来源记录ID",
+    "field": "字段",
+    "observed_value": "观察值",
+    "observed_language": "观察语言",
+    "observed_at": "观察时间",
+    "raw_hash": "原始数据Hash",
+    "notes": "备注"
+  }
+}

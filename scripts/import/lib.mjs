@@ -67,7 +67,7 @@ export function nextIdFactory(catalog) {
   for (const dataset of Object.values(catalog)) {
     for (const record of dataset.records) {
       for (const value of Object.values(record)) {
-        const match = /^(actress|alias|work|code|maker|label|series|genre|director|source)_(\d{6})$/.exec(value);
+        const match = /^(actress|alias|work|code|maker|label|series|genre|director|source|obs|res|ea)_(\d{6})$/.exec(value);
         if (!match) continue;
         maxByPrefix.set(match[1], Math.max(maxByPrefix.get(match[1]) ?? 0, Number(match[2])));
       }

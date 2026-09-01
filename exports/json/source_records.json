@@ -22,28 +22,6 @@
       "fetched_at": "2026-08-31T14:18:50.058Z",
       "raw_hash": "a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71",
       "notes": null
-    },
-    {
-      "id": "source_000003",
-      "entity_type": "actress",
-      "entity_id": "actress_000002",
-      "source_name": "dmm-rental",
-      "source_record_id": "actress:1031805",
-      "source_url": "https://www.dmm.co.jp/rental/ppr/-/list/=/article=actress/id=1031805/",
-      "fetched_at": "2026-09-01T05:07:18.120Z",
-      "raw_hash": "738ec6540a9c657bfdce3d7c9115d05420761eca254e2d6580e25d760b26b031",
-      "notes": null
-    },
-    {
-      "id": "source_000004",
-      "entity_type": "work",
-      "entity_id": "work_000002",
-      "source_name": "dmm-rental",
-      "source_record_id": "work:4ipzz698",
-      "source_url": "https://www.dmm.co.jp/rental/ppr/-/detail/=/cid=4ipzz698/",
-      "fetched_at": "2026-09-01T05:07:18.120Z",
-      "raw_hash": "36d24562ebedd732f490dce8b9218b42e1883661d1d68c8fe656e00e05425653",
-      "notes": "DMM Rental 貸出開始日=2026-02-24；主番号由命令行 --code 指定；DMM 品番=4ipzz698"
     }
   ]
 }

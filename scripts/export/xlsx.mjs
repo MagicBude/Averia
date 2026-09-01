@@ -14,6 +14,14 @@ export const DATASET_SHEET_ORDER = [
   "source_records",
 ];
 
+// V0.8 多来源溯源与实体归并新增的数据集只进入 CSV / JSON，不进入 XLSX
+// （保持固定 15 个关系 Sheet 约定，见 UPGRADE_V0.8.0.md Q3）。
+export const NON_XLSX_DATASETS = [
+  "observations",
+  "field_resolutions",
+  "entity_aliases",
+];
+
 export const ACTRESS_OVERVIEW_COLUMNS = [
   ["id", "女优ID"],
   ["primary_name", "首选姓名"],

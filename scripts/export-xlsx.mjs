@@ -4,6 +4,7 @@ import { coerceForExport, loadCatalog, ROOT } from "./lib/catalog.mjs";
 import {
   ACTRESS_OVERVIEW_COLUMNS,
   DATASET_SHEET_ORDER,
+  NON_XLSX_DATASETS,
   WORK_OVERVIEW_COLUMNS,
   buildActressOverviewRows,
   buildWorkOverviewRows,
@@ -54,7 +55,7 @@ addOverviewSheet("作品总览", WORK_OVERVIEW_COLUMNS, buildWorkOverviewRows(ca
 
 const orderedNames = [
   ...DATASET_SHEET_ORDER.filter((name) => catalog[name]),
-  ...Object.keys(catalog).filter((name) => !DATASET_SHEET_ORDER.includes(name)).sort(),
+  ...Object.keys(catalog).filter((name) => !DATASET_SHEET_ORDER.includes(name) && !NON_XLSX_DATASETS.includes(name)).sort(),
 ];
 
 for (const name of orderedNames) {

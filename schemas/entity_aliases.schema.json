@@ -1,0 +1,64 @@
+{
+  "file": "data/relations/entity_aliases.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^ea_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "entity_type",
+    "entity_id",
+    "alias"
+  ],
+  "timestampFields": [
+    "created_at"
+  ],
+  "enumFields": {
+    "entity_type": [
+      "actress",
+      "work",
+      "maker",
+      "label",
+      "series",
+      "genre",
+      "director"
+    ],
+    "alias_type": [
+      "romanized",
+      "en",
+      "ja",
+      "cn",
+      "kana",
+      "external_id",
+      "alternate"
+    ]
+  },
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "entity_type",
+    "entity_id",
+    "alias",
+    "alias_type",
+    "language",
+    "source_name",
+    "source_record_id",
+    "notes",
+    "created_at"
+  ],
+  "displayNameZh": "实体别名",
+  "columnLabelsZh": {
+    "id": "别名ID",
+    "entity_type": "实体类型",
+    "entity_id": "实体ID",
+    "alias": "别名",
+    "alias_type": "别名类型",
+    "language": "语言",
+    "source_name": "来源名称",
+    "source_record_id": "来源记录ID",
+    "notes": "备注",
+    "created_at": "创建时间"
+  }
+}

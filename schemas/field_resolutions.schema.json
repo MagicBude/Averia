@@ -1,0 +1,77 @@
+{
+  "file": "data/sources/field_resolutions.csv",
+  "primaryKey": [
+    "id"
+  ],
+  "idFields": {
+    "id": "^res_[0-9]{6}$"
+  },
+  "required": [
+    "id",
+    "entity_type",
+    "entity_id",
+    "field"
+  ],
+  "timestampFields": [
+    "resolved_at"
+  ],
+  "enumFields": {
+    "entity_type": [
+      "actress",
+      "work",
+      "maker",
+      "label",
+      "series",
+      "genre",
+      "director"
+    ],
+    "resolution_method": [
+      "auto_fill",
+      "rule_priority",
+      "manual",
+      "link"
+    ],
+    "status": [
+      "auto",
+      "pending_review",
+      "manual"
+    ],
+    "confidence": [
+      "high",
+      "medium",
+      "low"
+    ]
+  },
+  "schemaVersion": 1,
+  "columns": [
+    "id",
+    "entity_type",
+    "entity_id",
+    "field",
+    "resolved_value",
+    "resolution_method",
+    "winning_source_name",
+    "winning_source_record_id",
+    "confidence",
+    "conflicting_observation_ids",
+    "status",
+    "resolved_at",
+    "notes"
+  ],
+  "displayNameZh": "字段裁决",
+  "columnLabelsZh": {
+    "id": "裁决ID",
+    "entity_type": "实体类型",
+    "entity_id": "实体ID",
+    "field": "字段",
+    "resolved_value": "采用值",
+    "resolution_method": "裁决方式",
+    "winning_source_name": "胜出来源",
+    "winning_source_record_id": "胜出来源记录ID",
+    "confidence": "置信度",
+    "conflicting_observation_ids": "冲突观察ID",
+    "status": "状态",
+    "resolved_at": "裁决时间",
+    "notes": "备注"
+  }
+}

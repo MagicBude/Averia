@@ -22,28 +22,6 @@
       "description": null,
       "created_at": "2026-08-31T14:50:24Z",
       "updated_at": "2026-08-31T14:50:24Z"
-    },
-    {
-      "id": "actress_000002",
-      "primary_name": "桃乃木かな",
-      "name_ja": "桃乃木かな",
-      "name_en": null,
-      "kana": null,
-      "birth_date": null,
-      "debut_date": null,
-      "retirement_date": null,
-      "height_cm": null,
-      "bust_cm": null,
-      "waist_cm": null,
-      "hip_cm": null,
-      "cup": null,
-      "blood_type": null,
-      "birthplace": null,
-      "status": "unknown",
-      "profile_image_url": null,
-      "description": null,
-      "created_at": "2026-09-01T05:10:29Z",
-      "updated_at": "2026-09-01T05:10:29Z"
     }
   ]
 }

@@ -1,4 +1,2 @@
 id,work_id,code,normalized_code,code_type,is_primary,source_id
 code_000001,work_000001,MDVR-434,MDVR434,catalog,true,source_000002
-code_000002,work_000002,IPZZ-698,IPZZ698,catalog,true,source_000004
-code_000003,work_000002,4ipzz698,4IPZZ698,dmm-content-id,false,source_000004

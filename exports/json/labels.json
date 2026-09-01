@@ -10,16 +10,6 @@
       "description": null,
       "created_at": "2026-08-31T14:50:24Z",
       "updated_at": "2026-08-31T14:50:24Z"
-    },
-    {
-      "id": "label_000002",
-      "maker_id": "maker_000002",
-      "name": "ティッシュ",
-      "name_ja": "ティッシュ",
-      "website_url": null,
-      "description": null,
-      "created_at": "2026-09-01T05:10:29Z",
-      "updated_at": "2026-09-01T05:10:29Z"
     }
   ]
 }

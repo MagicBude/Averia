@@ -6,12 +6,6 @@
       "actress_id": "actress_000001",
       "role": "actress",
       "position": 1
-    },
-    {
-      "work_id": "work_000002",
-      "actress_id": "actress_000002",
-      "role": "actress",
-      "position": 1
     }
   ]
 }
