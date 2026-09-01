@@ -6,6 +6,11 @@ Averia 是一个**数据优先（Data First）**的元数据项目，用于长�
 
 项目初期明确采用 **CSV 作为唯一事实源（Source of Truth）**，并由 CSV 自动生成 **JSON** 和 **XLSX**。后续可以在不推翻核心数据模型的前提下继续增加 SQLite / PostgreSQL、API、搜索服务以及 Web 网站。
 
+
+## V0.7：JavInfo API 主采集入口
+
+Averia 现在支持 `pnpm provider:javinfo -- --code <番号> [--providers fanza]`。API Key 只从 `JAVINFO_API_KEY` 环境变量读取。JavInfo 作为聚合/标准化中间层，来源会记录为 `javinfo-fanza` / `javinfo-dmm` 等；现有厂商官方 Provider 不删除，继续承担日文权威字段校验与兜底。详见 `docs/JAVINFO_PROVIDER.md`。
+
 ## 项目目标
 
 - 使用适合 Git 管理和审查的 CSV 文件维护结构化数据。

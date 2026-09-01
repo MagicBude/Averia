@@ -1,8 +1,8 @@
 {
   "name": "averia",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "private": true,
-  "description": "Averia：CSV-first JAV 元数据资料库，支持日文多源 Provider、Canonical Merge、安全导入与人类可读 XLSX 总览。",
+  "description": "Averia：CSV-first JAV 元数据资料库，以 JavInfo API 为主采集入口，保留官方 Provider 校验/兜底与安全导入链路。",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -22,7 +22,8 @@
     "import:apply": "node scripts/import-apply.mjs",
     "provider:javdatabase": "node scripts/provider-javdatabase.mjs",
     "provider:moodyz": "node scripts/provider-moodyz.mjs",
-    "provider:dmm-rental": "node scripts/provider-dmm-rental.mjs"
+    "provider:dmm-rental": "node scripts/provider-dmm-rental.mjs",
+    "provider:javinfo": "node scripts/provider-javinfo.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0"

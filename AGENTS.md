@@ -290,3 +290,11 @@ MOODYZ Provider 对 TLS 握手失败、ECONNRESET、连接超时等瞬时网络�
 - DMM `declared=yes` 若返回明文 `http://` 重定向，不得放宽 HTTPS 安全策略直接跟随；应只接收年龄声明响应中的 Cookie，然后主动以经过白名单校验的原始 HTTPS 详情页 URL 继续请求。
 - DMM 页面字段解析必须限定在有序作品详情字段簇中；不得因侧栏或导航出现同名「シリーズ / ジャンル」就使用整页第一次命中。详情区品番与请求 CID 不一致、或无法定位详情字段簇时必须失败关闭（fail closed）。
 - `--adult-confirmed` 仅适用于公开年龄确认，不得扩展为验证码、登录、地区限制或付费访问控制的绕过机制。
+
+## V0.7 JavInfo API 规则
+
+- JavInfo API 是主采集入口之一，但它是聚合/标准化中间层；`source=fanza` 必须记录为 `javinfo-fanza`，不能伪装成直接 FANZA 官方抓取。
+- API Key 只允许从 `JAVINFO_API_KEY` 环境变量读取；禁止写入代码、命令行参数、日志、meta、fixture、README 或提交。
+- FANZA/DMM 经 JavInfo 返回的日文标题与英文人名/分类属于混合语言参考数据，默认 `role=reference`；厂商官方 Provider 的 `authoritative` 日文字段仍优先。
+- `raw.json` 必须保留完整 API 响应。当前 schema 未建模的 gallery/sample 等字段不得丢弃，只是不进入正式 CSV。
+- Provider 仍遵守 Prepare → Report → Apply，不得让 API 响应直接修改正式 CSV。
