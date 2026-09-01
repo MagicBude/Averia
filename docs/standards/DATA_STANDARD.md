@@ -316,7 +316,7 @@ CSV / JSON 作为程序接口层，字段名称统一使用英文。
 中文含义见：
 
 ```text
-docs/FIELD_DICTIONARY.md
+docs/standards/FIELD_DICTIONARY.md
 ```
 
 面向人的 XLSX 导出则使用中文工作表名和中文表头。
@@ -376,7 +376,7 @@ Provider / 人工文件 → Averia Import JSON → Stage → 审核 → Apply �
 - `name_ja`：保存女优日文标准名；英文/罗马字进入 `name_en` 或 aliases。
 - Provider 必须明确来源语言和角色；例如 JAVDatabase canonical source 使用 `language=en`、`role=supplemental`。
 - 当日文主源与英文补充源冲突时，不自动覆盖，进入后续字段级 Observation / Resolution。
-- FANZA / DMM Web API 作为下一阶段日文结构化主源，详见 `docs/SOURCE_STRATEGY.md`。
+- FANZA / DMM Web API 作为下一阶段日文结构化主源，详见 `docs/strategy/SOURCE_STRATEGY.md`。
 
 
 

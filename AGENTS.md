@@ -194,7 +194,7 @@ Averia Web
 ## V0.2 导入 Pipeline 规则
 
 1. 外部 Provider **不得直接修改 `data/` 下正式 CSV**。
-2. Provider 首先转换为 `docs/IMPORT_FORMAT.md` 定义的统一 JSON。
+2. Provider 首先转换为 `docs/import/IMPORT_FORMAT.md` 定义的统一 JSON。
 3. 正式写入前必须经过 `prepare → report/review → apply`。
 4. 女优身份自动匹配只允许来源稳定 ID 或规范化后的精确唯一姓名/别名。
 5. 作品自动匹配只允许来源稳定 ID 或标准化番号精确唯一匹配。
@@ -223,7 +223,7 @@ Averia Web
 - 厂商官方站在该厂商自己的作品/女优字段上具有高优先级，但因结构分散不作为唯一全库入口。
 - 不同来源的 genre / maker / series 名称不可仅凭翻译文本直接自动合并；先保留来源，再通过后续裁决机制统一。
 - API 密钥、Affiliate ID、代理凭据等秘密禁止写入仓库、日志、`meta.json` 或测试 fixture。
-- 详细规则见 `docs/SOURCE_STRATEGY.md`。
+- 详细规则见 `docs/strategy/SOURCE_STRATEGY.md`。
 
 
 ## V0.4 日文官方 Provider 规则

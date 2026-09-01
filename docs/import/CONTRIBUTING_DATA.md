@@ -5,10 +5,10 @@
 先阅读：
 
 ```text
-DATA_STANDARD.md
+docs/standards/DATA_STANDARD.md
 ```
 
-并了解 `docs/FIELD_DICTIONARY.md` 中的字段含义。
+并了解 `docs/standards/FIELD_DICTIONARY.md` 中的字段含义。
 
 ## 新增女优
 

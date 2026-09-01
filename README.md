@@ -32,7 +32,7 @@ maker_id
 
 完整中英文字段对照见：
 
-- [`docs/FIELD_DICTIONARY.md`](./docs/FIELD_DICTIONARY.md)
+- [`docs/standards/FIELD_DICTIONARY.md`](./docs/standards/FIELD_DICTIONARY.md)
 
 ## 仓库结构
 
@@ -64,9 +64,9 @@ Averia/
 ├─ scripts/                     # 校验、导出、导入与 Provider 脚本
 ├─ imports/                     # 统一导入格式示例（正式批次保存在 var/）
 ├─ tests/                       # 基础测试与 Provider Fixture
-├─ docs/                        # 项目文档
+├─ docs/                        # 项目文档（standards/import/providers/strategy/design/deploy）
 ├─ AGENTS.md                    # AI / Agent 协作规范
-└─ DATA_STANDARD.md             # 核心数据标准
+└─ CHANGELOG.md                 # 版本演进记录
 ```
 
 ## 核心数据模型
@@ -216,19 +216,19 @@ V0.4.2 根据真实 MOODYZ 页面修正标题解析：当前作品页与女优�
 建议按以下顺序阅读：
 
 - 版本演进与变更记录：[`CHANGELOG.md`](./CHANGELOG.md)
-- 数据源策略与多来源权威性：[`docs/SOURCE_STRATEGY.md`](./docs/SOURCE_STRATEGY.md)
+- 数据源策略与多来源权威性：[`docs/strategy/SOURCE_STRATEGY.md`](./docs/strategy/SOURCE_STRATEGY.md)
 
-1. [`DATA_STANDARD.md`](./DATA_STANDARD.md) — Averia V1 核心数据规则
-2. [`docs/FIELD_DICTIONARY.md`](./docs/FIELD_DICTIONARY.md) — CSV 字段中英文对照和含义
-3. [`docs/DATA_MODEL.md`](./docs/DATA_MODEL.md) — 数据实体和关系设计
-4. [`docs/CONTRIBUTING_DATA.md`](./docs/CONTRIBUTING_DATA.md) — 如何新增和修正数据
-5. [`docs/IMPORT_FORMAT.md`](./docs/IMPORT_FORMAT.md) — V0.2 统一导入 JSON 格式
-6. [`docs/IMPORT_PIPELINE.md`](./docs/IMPORT_PIPELINE.md) — 安全导入、审核、备份和回滚流程
-7. [`docs/DATA_QUALITY.md`](./docs/DATA_QUALITY.md) — 数据质量检查
-8. [`docs/JAVDATABASE_PROVIDER.md`](./docs/JAVDATABASE_PROVIDER.md) — V0.3 英文补充 Provider
-9. [`docs/MOODYZ_PROVIDER.md`](./docs/MOODYZ_PROVIDER.md) — V0.4 首个日文厂商官方 Provider
-10. [`docs/SOURCE_STRATEGY.md`](./docs/SOURCE_STRATEGY.md) — 多来源语言与权威性策略
-11. [`docs/ROADMAP.md`](./docs/ROADMAP.md) — 项目演进路线
+1. [`docs/standards/DATA_STANDARD.md`](./docs/standards/DATA_STANDARD.md) — Averia V1 核心数据规则
+2. [`docs/standards/FIELD_DICTIONARY.md`](./docs/standards/FIELD_DICTIONARY.md) — CSV 字段中英文对照和含义
+3. [`docs/standards/DATA_MODEL.md`](./docs/standards/DATA_MODEL.md) — 数据实体和关系设计
+4. [`docs/import/CONTRIBUTING_DATA.md`](./docs/import/CONTRIBUTING_DATA.md) — 如何新增和修正数据
+5. [`docs/import/IMPORT_FORMAT.md`](./docs/import/IMPORT_FORMAT.md) — V0.2 统一导入 JSON 格式
+6. [`docs/import/IMPORT_PIPELINE.md`](./docs/import/IMPORT_PIPELINE.md) — 安全导入、审核、备份和回滚流程
+7. [`docs/import/DATA_QUALITY.md`](./docs/import/DATA_QUALITY.md) — 数据质量检查
+8. [`docs/providers/JAVDATABASE_PROVIDER.md`](./docs/providers/JAVDATABASE_PROVIDER.md) — V0.3 英文补充 Provider
+9. [`docs/providers/MOODYZ_PROVIDER.md`](./docs/providers/MOODYZ_PROVIDER.md) — V0.4 首个日文厂商官方 Provider
+10. [`docs/strategy/SOURCE_STRATEGY.md`](./docs/strategy/SOURCE_STRATEGY.md) — 多来源语言与权威性策略
+11. [`docs/strategy/ROADMAP.md`](./docs/strategy/ROADMAP.md) — 项目演进路线
 12. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
 
 ## License
@@ -246,4 +246,4 @@ V0.3 暂不声明数据内容许可证。
 
 Averia 的逐版本变更、新增 Provider、数据模型调整与安全约束（年龄确认、明文 HTTP 拒绝、代理凭据不落库、字段冲突人工裁决等）统一记录在 [`CHANGELOG.md`](./CHANGELOG.md)。
 
-当前数据源策略与多来源权威性见 [`docs/SOURCE_STRATEGY.md`](./docs/SOURCE_STRATEGY.md)。各 Provider 的使用细节见 `docs/` 下对应文档。
+当前数据源策略与多来源权威性见 [`docs/strategy/SOURCE_STRATEGY.md`](./docs/strategy/SOURCE_STRATEGY.md)。各 Provider 的使用细节见 `docs/` 下对应文档。

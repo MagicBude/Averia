@@ -4,7 +4,7 @@ Averia 的逐版本变更记录。每个版本的 **核心变更、新增 Provid
 
 约定：
 
-- 详细设计文档见 `docs/`（如 `docs/SOURCE_STRATEGY.md`、`docs/V0.8-MULTI-SOURCE-RESOLUTION.md`）。
+- 详细设计文档见 `docs/`（如 `docs/strategy/SOURCE_STRATEGY.md`、`docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md`）。
 - **CSV 始终是唯一事实源**；任何 Provider 都不得直接修改 `data/`。
 - 所有导入必须走 `import:prepare → import:report → import:apply`，apply 自带校验、备份与失败回滚。
 
@@ -39,7 +39,7 @@ Averia 的逐版本变更记录。每个版本的 **核心变更、新增 Provid
 - 定位为**主采集入口**；MOODYZ、DMM Rental、JAVDatabase 保留，用于权威字段校验、缺失补充与故障兜底。
 - Provenance：上游 `source=fanza` 在 Averia 写作 `javinfo-fanza`，明确“数据经 JavInfo 中间层获得”，不冒充 FANZA 官方直连。
 - 已知边界：JavInfo FANZA/DMM 响应可能混合日文标题与英文人名 / 分类；V0.7.0 不做自动翻译或跨语言实体猜测，留待 V0.8 归并层处理。
-- 新增：`scripts/providers/javinfo/lib.mjs`、`scripts/provider-javinfo.mjs`、`tests/provider-javinfo.test.mjs`、`tests/fixtures/javinfo/ipzz-597.json`、`docs/JAVINFO_PROVIDER.md`。
+- 新增：`scripts/providers/javinfo/lib.mjs`、`scripts/provider-javinfo.mjs`、`tests/provider-javinfo.test.mjs`、`tests/fixtures/javinfo/ipzz-597.json`、`docs/providers/JAVINFO_PROVIDER.md`。
 
 ---
 
@@ -167,7 +167,7 @@ Averia 的逐版本变更记录。每个版本的 **核心变更、新增 Provid
 
 - 自动发现 Windows 系统代理，四级网络策略：`--proxy` > `HTTP_PROXY` / `HTTPS_PROXY` > Windows 系统代理 > 直连；必要时自动重启一次 Node 子进程让其从启动阶段启用环境代理。
 - `meta.json` 仅记录 `network_mode` 与 `proxy_used`，不保存代理 URL / 端口 / 账号 / 密码。
-- 新增 `docs/SOURCE_STRATEGY.md`，将 FANZA / DMM Web API 定为下一阶段的日文结构化主源。
+- 新增 `docs/strategy/SOURCE_STRATEGY.md`，将 FANZA / DMM Web API 定为下一阶段的日文结构化主源。
 - 推荐 Node 24；Node 22 至少需 22.21 以启用内置代理能力。
 
 ---
