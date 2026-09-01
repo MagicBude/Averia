@@ -28,6 +28,8 @@ Averia 的逐版本变更记录。每个版本的 **核心变更、新增 Provid
 
 当前已落地（Phase 1）：三表 schema 与空 CSV；`scripts/import/lib.mjs` 的 `nextIdFactory` 已识别 `obs_ / res_ / ea_` 前缀；XLSX 通过 `NON_XLSX_DATASETS` 排除三新表，保持固定 15 关系 Sheet。DMM IPZZ-698 批次已回滚为仅 Stage（正式 `data/` 回到 23 行 MOODYZ 基线，Stage 留 `var/imports`）。
 
+新增源（V0.8 预置能力，跨源安全 Apply 仍待 Phase 3）：**JavLibrary Provider**（`pnpm provider:javlibrary -- --code <番号> | --url <详情页> | --file <本地HTML>`）。解析逻辑移植自 OpenAver 的 `core/scrapers/javlibrary.py`，但**不含其 Cloudflare / 年龄门绕过**（`cf_transport`）；Averia 以合规 `fetch` 抓取，被验证页拦截即 fail closed。输出 Averia 统一导入 canonical（`role=supplemental language=ja`，日文名称记 `name_ja`）。配套：`scripts/providers/javlibrary/lib.mjs`、`scripts/provider-javlibrary.mjs`、`tests/provider-javlibrary.test.mjs`、`tests/fixtures/javlibrary/work-ipzz-597.html`、`docs/providers/JAVLIBRARY_PROVIDER.md`。
+
 详细设计：**`docs/V0.8-MULTI-SOURCE-RESOLUTION.md`**。
 
 ---

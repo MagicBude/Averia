@@ -23,7 +23,8 @@
     "provider:javdatabase": "node scripts/provider-javdatabase.mjs",
     "provider:moodyz": "node scripts/provider-moodyz.mjs",
     "provider:dmm-rental": "node scripts/provider-dmm-rental.mjs",
-    "provider:javinfo": "node scripts/provider-javinfo.mjs"
+    "provider:javinfo": "node scripts/provider-javinfo.mjs",
+    "provider:javlibrary": "node scripts/provider-javlibrary.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0"
