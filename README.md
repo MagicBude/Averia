@@ -7,10 +7,6 @@ Averia 是一个**数据优先（Data First）**的元数据项目，用于长�
 项目初期明确采用 **CSV 作为唯一事实源（Source of Truth）**，并由 CSV 自动生成 **JSON** 和 **XLSX**。后续可以在不推翻核心数据模型的前提下继续增加 SQLite / PostgreSQL、API、搜索服务以及 Web 网站。
 
 
-## V0.7：JavInfo API 主采集入口
-
-Averia 现在支持 `pnpm provider:javinfo -- --code <番号> [--providers fanza]`。API Key 只从 `JAVINFO_API_KEY` 环境变量读取。JavInfo 作为聚合/标准化中间层，来源会记录为 `javinfo-fanza` / `javinfo-dmm` 等；现有厂商官方 Provider 不删除，继续承担日文权威字段校验与兜底。详见 `docs/JAVINFO_PROVIDER.md`。
-
 ## 项目目标
 
 - 使用适合 Git 管理和审查的 CSV 文件维护结构化数据。
@@ -219,6 +215,9 @@ V0.4.2 根据真实 MOODYZ 页面修正标题解析：当前作品页与女优�
 
 建议按以下顺序阅读：
 
+- 版本演进与变更记录：[`CHANGELOG.md`](./CHANGELOG.md)
+- 数据源策略与多来源权威性：[`docs/SOURCE_STRATEGY.md`](./docs/SOURCE_STRATEGY.md)
+
 1. [`DATA_STANDARD.md`](./DATA_STANDARD.md) — Averia V1 核心数据规则
 2. [`docs/FIELD_DICTIONARY.md`](./docs/FIELD_DICTIONARY.md) — CSV 字段中英文对照和含义
 3. [`docs/DATA_MODEL.md`](./docs/DATA_MODEL.md) — 数据实体和关系设计
@@ -243,74 +242,8 @@ V0.3 暂不声明数据内容许可证。
 - 图片等媒体资源的存储和使用策略
 - 外部数据源的访问与引用规则
 
-## V0.4：日文官方主数据源
+## 版本历史
 
-Averia 当前的数据源策略已经从“英文聚合源先行”调整为“**日文厂商官方源优先，英文聚合源补充验证**”。
+Averia 的逐版本变更、新增 Provider、数据模型调整与安全约束（年龄确认、明文 HTTP 拒绝、代理凭据不落库、字段冲突人工裁决等）统一记录在 [`CHANGELOG.md`](./CHANGELOG.md)。
 
-V0.4 首个实现为 MOODYZ 官方 Provider；DMM/FANZA API 保留为未来可选来源，但不依赖不符合其注册规则的账户方案。详细规则见 [`docs/SOURCE_STRATEGY.md`](docs/SOURCE_STRATEGY.md)。
-
-
-## V0.4.3：导演进入正式数据模型
-
-真实 MOODYZ 数据验证发现作品页会提供 `監督`。Averia 从 V0.4.3 起新增 `directors.csv` 与 `work_directors.csv`，不再把导演信息仅保存在来源备注中。第一次真实 Apply 前完成该模型补齐，避免后续迁移历史正式数据。
-
-
-## V0.4.4：MOODYZ 业务图片识别
-
-真实数据审核发现 MOODYZ 页面的 `og:image` 可能指向站点 Logo。V0.4.4 改为从页面业务图片中优先识别作品 `/content/` 图片和女优 `/actress_main/` 图片，避免 Logo 污染 `cover_url` / `profile_image_url`。
-
-## V0.4.5：临时 HTTP 网关错误自动重试
-
-MOODYZ/CDN/代理链路偶发返回 `408 / 429 / 500 / 502 / 503 / 504` 时，Provider 不再第一次失败就退出。网络层默认最多尝试 3 次，并按 `750ms → 1500ms` 指数退避后重试；`404` 等永久错误不会重试。成功输出和 `meta.json` 会记录实际网络尝试次数。
-
-
-## V0.4.7 网络稳定性
-
-MOODYZ Provider 对 TLS 握手失败、ECONNRESET、连接超时等瞬时网络错误与 408/429/5xx 一样执行有限次数指数退避重试；不得通过写死本机代理端口规避网络问题。
-
-## Canonical Merge（V0.5.0）
-
-当同一来源需要分别抓作品页与女优详情页时，先把 Provider 产物合并，再进入 Prepare：
-
-```bash
-pnpm canonical:merge -- \
-  --file "<作品 canonical.json>" \
-  --file "<女优 canonical.json>" \
-  --out "var/canonical/merged/<名称>.json"
-```
-
-Merge 只允许同一 `source.name`，优先使用 `source_record_id` 识别同一实体。空字段可由更完整记录补全；两个非空值冲突时会直接终止，避免权威数据被静默覆盖。Merge 不会修改输入文件，也不会写正式 CSV。
-
-
-## V0.5.1 时间戳兼容
-
-Provider 抓取时间支持 UTC ISO 8601 秒级或毫秒级格式，例如 `2026-08-31T14:36:25Z` 与 `2026-08-31T14:36:25.486Z`。
-
-## V0.6：DMM Rental Provider 与 XLSX 总览
-
-V0.6 新增 DMM/FANZA 宅配 Rental 单页 Provider，用于补充跨厂商日文参考数据：
-
-```bash
-pnpm provider:dmm-rental -- --cid 4ipzz698
-```
-
-真实 DMM 在线请求若返回 FANZA 年龄确认页，Averia 不会替用户自动声明年龄。确认本人已满 18 岁后，可显式执行：
-
-```bash
-pnpm provider:dmm-rental -- --cid 4ipzz698 --code IPZZ-698 --adult-confirmed
-```
-
-V0.6.2 会使用 DMM 页面自身提供的 `declared=yes` 链接建立临时 Cookie 会话。真实 DMM 可能在该步骤返回 `http://` 的重定向地址；Averia 不会放开明文 HTTP，而是**不跟随该跳转，只接收 Cookie，再主动以原始 HTTPS 详情页 URL 重新请求**。Cookie 不落库、不写日志、不提交 Git。验证码、登录、地区限制和付费访问控制仍不会绕过。
-
-V0.6.3 根据首个真实 DMM Rental canonical 修正字段作用域：Parser 不再对整页第一次出现的「シリーズ / ジャンル」取值，而是先锁定从「貸出開始日」到「品番」的有序作品详情字段簇，再在该局部区域解析出演者、导演、系列、厂商、厂牌和分类。这样可避免侧栏、导航、推荐女优等链接污染作品元数据；若无法定位详情字段簇或页面品番与请求 CID 不一致，会直接停止而不是猜测。
-
-同时 `averia.xlsx` 增加 `女优总览`、`作品总览`，并固定规范 Sheet 顺序为 `女优 → 女优别名 → 作品 → ...`。
-
-详见：
-
-- `docs/DMM_RENTAL_PROVIDER.md`
-- `exports/xlsx/README.md`
-- `UPGRADE_V0.6.0.md`
-- `UPGRADE_V0.6.1.md`
-- `UPGRADE_V0.6.2.md`
-- `UPGRADE_V0.6.3.md`
+当前数据源策略与多来源权威性见 [`docs/SOURCE_STRATEGY.md`](./docs/SOURCE_STRATEGY.md)。各 Provider 的使用细节见 `docs/` 下对应文档。

@@ -15,7 +15,7 @@ export const DATASET_SHEET_ORDER = [
 ];
 
 // V0.8 多来源溯源与实体归并新增的数据集只进入 CSV / JSON，不进入 XLSX
-// （保持固定 15 个关系 Sheet 约定，见 UPGRADE_V0.8.0.md Q3）。
+// （保持固定 15 个关系 Sheet 约定，见 CHANGELOG.md V0.8.0 与 docs/V0.8-MULTI-SOURCE-RESOLUTION.md）。
 export const NON_XLSX_DATASETS = [
   "observations",
   "field_resolutions",
