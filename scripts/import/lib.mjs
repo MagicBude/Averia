@@ -138,8 +138,21 @@ function emptyAppend() {
   return {
     actresses: [], actress_aliases: [], works: [], work_codes: [], work_cast: [], work_genres: [], work_directors: [],
     makers: [], labels: [], series: [], genres: [], directors: [], source_records: [],
+    observations: [], field_resolutions: [], entity_aliases: [],
   };
 }
+
+const FIELD_LANGUAGE = {
+  primary_name: "ja", name_ja: "ja", kana: "ja", name_en: "en", title_ja: "ja",
+};
+const langForField = (field) => FIELD_LANGUAGE[field] ?? "";
+const ACTRESS_OBSERVABLE_FIELDS = [
+  "primary_name", "name_ja", "name_en", "kana",
+  "birth_date", "debut_date", "retirement_date",
+  "height_cm", "bust_cm", "waist_cm", "hip_cm", "cup", "blood_type", "birthplace", "status",
+  "profile_image_url", "description",
+];
+const WORK_OBSERVABLE_FIELDS = ["title", "title_ja", "release_date", "duration_min", "description", "cover_url"];
 
 function utcNow() {
   return new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
@@ -218,6 +231,25 @@ export function prepareImport(document, options = {}) {
     return id;
   };
 
+  // 字段级观察：记录“某来源对某个实体的某个字段观察到了什么值”。
+  // append-only 溯源日志，不参与去重或覆盖判断。
+  const recordObservation = (entityType, entityId, field, observedValue, observedLanguage, sourceRecordId, notes) => {
+    if (observedValue == null || String(observedValue) === "") return;
+    append.observations.push(compactRecord(catalog.observations.schema.columns, {
+      id: nextId("obs"),
+      entity_type: entityType,
+      entity_id: entityId,
+      source_name: sourceName,
+      source_record_id: sourceRecordId ?? "",
+      field,
+      observed_value: String(observedValue),
+      observed_language: observedLanguage ?? "",
+      observed_at: fetchedAt,
+      raw_hash: "",
+      notes: notes ?? "",
+    }));
+  };
+
   const resolveSimpleEntity = (kind, input, parent = {}) => {
     if (!input) return "";
     const obj = typeof input === "string" ? { name: input } : input;
@@ -271,6 +303,8 @@ export function prepareImport(document, options = {}) {
     }
     const row = compactRecord(schema.columns, values);
     append[datasetName].push(row);
+    recordObservation(kind, id, "name", obj.name, obj.name_ja ? "ja" : "en", obj.source_record_id ?? "");
+    if (obj.name_ja) recordObservation(kind, id, "name_ja", obj.name_ja, "ja", obj.source_record_id ?? "");
     if (!index.has(key)) index.set(key, []);
     index.get(key).push(row);
     return id;
@@ -354,6 +388,9 @@ export function prepareImport(document, options = {}) {
         const key = normalizeName(name);
         if (key) batchActressByName.set(key, id);
       }
+      for (const field of ACTRESS_OBSERVABLE_FIELDS) {
+        if (input[field] != null && String(input[field]) !== "") recordObservation("actress", id, field, input[field], langForField(field), sourceRecordId);
+      }
     } else {
       matches.push({ entity_type: "actress", entity_id: id, source_record_id: sourceRecordId, reason: matchReason });
       newSource("actress", id, input);
@@ -361,6 +398,9 @@ export function prepareImport(document, options = {}) {
       if (existing) {
         for (const field of ["name_ja","name_en","kana","birth_date","debut_date","retirement_date","height_cm","bust_cm","waist_cm","hip_cm","cup","blood_type","birthplace","status","profile_image_url","description"]) {
           if (!existing[field] && input[field] != null && String(input[field]) !== "") proposals.push({ entity_type: "actress", entity_id: id, field, current: "", proposed: String(input[field]), action: "review-only" });
+        }
+        for (const field of ACTRESS_OBSERVABLE_FIELDS) {
+          if (input[field] != null && String(input[field]) !== "") recordObservation("actress", id, field, input[field], langForField(field), sourceRecordId);
         }
       }
     }
@@ -501,10 +541,18 @@ export function prepareImport(document, options = {}) {
         for (const [field, incomingField] of [["title","title"],["title_ja","title_ja"],["release_date","release_date"],["duration_min","duration_min"],["description","description"],["cover_url","cover_url"]]) {
           if (!existing[field] && input[incomingField] != null && String(input[incomingField]) !== "") proposals.push({ entity_type: "work", entity_id: id, field, current: "", proposed: String(input[incomingField]), action: "review-only" });
         }
+        for (const field of WORK_OBSERVABLE_FIELDS) {
+          if (input[field] != null && String(input[field]) !== "") recordObservation("work", id, field, input[field], langForField(field), sourceRecordId);
+        }
       }
     }
     if (sourceRecordId) batchWorkBySource.set(sourceRecordId, id);
-    if (isNew) codeIndex.set(normalizeCatalogCode(code), new Set([id]));
+    if (isNew) {
+      codeIndex.set(normalizeCatalogCode(code), new Set([id]));
+      for (const field of WORK_OBSERVABLE_FIELDS) {
+        if (input[field] != null && String(input[field]) !== "") recordObservation("work", id, field, input[field], langForField(field), sourceRecordId);
+      }
+    }
   }
 
   const errorCount = issues.filter((issue) => issue.severity === "error").length;
@@ -543,6 +591,9 @@ export function renderImportReport(stage) {
   lines.push("", "## 字段补全建议（不会自动写入）", "");
   if (!stage.proposals.length) lines.push("无。", "");
   for (const proposal of stage.proposals) lines.push(`- ${proposal.entity_type} ${proposal.entity_id}.${proposal.field}: \`${proposal.proposed}\``);
+  lines.push("", "## 数据观察（字段级溯源，append-only）", "");
+  if (!stage.append.observations.length) lines.push("无。", "");
+  for (const obs of stage.append.observations) lines.push(`- ${obs.entity_type} ${obs.entity_id}.${obs.field} ← \`${obs.observed_value}\`（${(obs.source_name ?? "")}${obs.observed_language ? ` / ${obs.observed_language}` : ""}）`);
   lines.push("", "> V0.2 默认只自动追加确定的新实体、关系和来源映射；对已有实体的字段更新只生成建议，不自动覆盖。", "");
   return lines.join("\n");
 }
