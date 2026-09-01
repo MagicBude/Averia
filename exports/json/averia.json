@@ -35,6 +35,28 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "actress_000002",
+        "primary_name": "桃乃木かな",
+        "name_ja": "桃乃木かな",
+        "name_en": null,
+        "kana": null,
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": null,
+        "bust_cm": null,
+        "waist_cm": null,
+        "hip_cm": null,
+        "cup": null,
+        "blood_type": null,
+        "birthplace": null,
+        "status": "unknown",
+        "profile_image_url": null,
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
       }
     ],
     "directors": [
@@ -46,6 +68,15 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "director_000002",
+        "name": "ZAMPA",
+        "name_ja": "ZAMPA",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
       }
     ],
     "genres": [
@@ -102,6 +133,78 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "genre_000007",
+        "name": "スレンダー",
+        "name_ja": "スレンダー",
+        "slug": "dmm-rental-b426cff04d",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      },
+      {
+        "id": "genre_000008",
+        "name": "単体作品",
+        "name_ja": "単体作品",
+        "slug": "dmm-rental-2d5a1de18a",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      },
+      {
+        "id": "genre_000009",
+        "name": "寝取り・寝取られ・NTR",
+        "name_ja": "寝取り・寝取られ・NTR",
+        "slug": "dmm-rental-7754a155e4",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      },
+      {
+        "id": "genre_000010",
+        "name": "主観",
+        "name_ja": "主観",
+        "slug": "dmm-rental-e55126756e",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      },
+      {
+        "id": "genre_000011",
+        "name": "独占レンタル",
+        "name_ja": "独占レンタル",
+        "slug": "dmm-rental-6358aed769",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      },
+      {
+        "id": "genre_000012",
+        "name": "サンプル動画",
+        "name_ja": "サンプル動画",
+        "slug": "dmm-rental-d0f68617ec",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      },
+      {
+        "id": "genre_000013",
+        "name": "セル仕様",
+        "name_ja": "セル仕様",
+        "slug": "dmm-rental-1ebda11f9e",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      },
+      {
+        "id": "genre_000014",
+        "name": "在庫強化作品",
+        "name_ja": "在庫強化作品",
+        "slug": "dmm-rental-31bc06a892",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
       }
     ],
     "labels": [
@@ -114,6 +217,16 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "label_000002",
+        "maker_id": "maker_000002",
+        "name": "ティッシュ",
+        "name_ja": "ティッシュ",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
       }
     ],
     "makers": [
@@ -125,9 +238,29 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "maker_000002",
+        "name": "アイデアポケット",
+        "name_ja": "アイデアポケット",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
       }
     ],
-    "series": [],
+    "series": [
+      {
+        "id": "series_000001",
+        "maker_id": "maker_000002",
+        "label_id": "label_000002",
+        "name": "引退作",
+        "name_ja": "引退作",
+        "description": null,
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
+      }
+    ],
     "source_records": [
       {
         "id": "source_000001",
@@ -150,12 +283,40 @@
         "fetched_at": "2026-08-31T14:18:50.058Z",
         "raw_hash": "a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71",
         "notes": null
+      },
+      {
+        "id": "source_000003",
+        "entity_type": "actress",
+        "entity_id": "actress_000002",
+        "source_name": "dmm-rental",
+        "source_record_id": "actress:1031805",
+        "source_url": "https://www.dmm.co.jp/rental/ppr/-/list/=/article=actress/id=1031805/",
+        "fetched_at": "2026-09-01T05:07:18.120Z",
+        "raw_hash": "738ec6540a9c657bfdce3d7c9115d05420761eca254e2d6580e25d760b26b031",
+        "notes": null
+      },
+      {
+        "id": "source_000004",
+        "entity_type": "work",
+        "entity_id": "work_000002",
+        "source_name": "dmm-rental",
+        "source_record_id": "work:4ipzz698",
+        "source_url": "https://www.dmm.co.jp/rental/ppr/-/detail/=/cid=4ipzz698/",
+        "fetched_at": "2026-09-01T05:07:18.120Z",
+        "raw_hash": "36d24562ebedd732f490dce8b9218b42e1883661d1d68c8fe656e00e05425653",
+        "notes": "DMM Rental 貸出開始日=2026-02-24；主番号由命令行 --code 指定；DMM 品番=4ipzz698"
       }
     ],
     "work_cast": [
       {
         "work_id": "work_000001",
         "actress_id": "actress_000001",
+        "role": "actress",
+        "position": 1
+      },
+      {
+        "work_id": "work_000002",
+        "actress_id": "actress_000002",
         "role": "actress",
         "position": 1
       }
@@ -169,12 +330,35 @@
         "code_type": "catalog",
         "is_primary": true,
         "source_id": "source_000002"
+      },
+      {
+        "id": "code_000002",
+        "work_id": "work_000002",
+        "code": "IPZZ-698",
+        "normalized_code": "IPZZ698",
+        "code_type": "catalog",
+        "is_primary": true,
+        "source_id": "source_000004"
+      },
+      {
+        "id": "code_000003",
+        "work_id": "work_000002",
+        "code": "4ipzz698",
+        "normalized_code": "4IPZZ698",
+        "code_type": "dmm-content-id",
+        "is_primary": false,
+        "source_id": "source_000004"
       }
     ],
     "work_directors": [
       {
         "work_id": "work_000001",
         "director_id": "director_000001",
+        "position": 1
+      },
+      {
+        "work_id": "work_000002",
+        "director_id": "director_000002",
         "position": 1
       }
     ],
@@ -202,6 +386,46 @@
       {
         "work_id": "work_000001",
         "genre_id": "genre_000006"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000004"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000007"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000008"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000009"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000001"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000010"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000011"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000012"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000013"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000014"
       }
     ],
     "works": [
@@ -219,6 +443,21 @@
         "cover_url": "https://cdn.up-timely.com/image/30/content/85956/Dfso5IUKMuwfziBdfYsGiA5k9Y8Ukm7rKsayuHbz.jpg",
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "work_000002",
+        "primary_code": "IPZZ-698",
+        "title": "【独占】 -FINAL IMPRESSION- アイポケレジェンド桃乃木かな、引退。",
+        "title_ja": "【独占】 -FINAL IMPRESSION- アイポケレジェンド桃乃木かな、引退。",
+        "release_date": null,
+        "duration_min": 140,
+        "maker_id": "maker_000002",
+        "label_id": "label_000002",
+        "series_id": "series_000001",
+        "description": null,
+        "cover_url": "https://pics.dmm.co.jp/mono/movie/4ipzz698/4ipzz698ps.jpg",
+        "created_at": "2026-09-01T05:10:29Z",
+        "updated_at": "2026-09-01T05:10:29Z"
       }
     ]
   }

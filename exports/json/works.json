@@ -15,6 +15,21 @@
       "cover_url": "https://cdn.up-timely.com/image/30/content/85956/Dfso5IUKMuwfziBdfYsGiA5k9Y8Ukm7rKsayuHbz.jpg",
       "created_at": "2026-08-31T14:50:24Z",
       "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "work_000002",
+      "primary_code": "IPZZ-698",
+      "title": "【独占】 -FINAL IMPRESSION- アイポケレジェンド桃乃木かな、引退。",
+      "title_ja": "【独占】 -FINAL IMPRESSION- アイポケレジェンド桃乃木かな、引退。",
+      "release_date": null,
+      "duration_min": 140,
+      "maker_id": "maker_000002",
+      "label_id": "label_000002",
+      "series_id": "series_000001",
+      "description": null,
+      "cover_url": "https://pics.dmm.co.jp/mono/movie/4ipzz698/4ipzz698ps.jpg",
+      "created_at": "2026-09-01T05:10:29Z",
+      "updated_at": "2026-09-01T05:10:29Z"
     }
   ]
 }

@@ -9,6 +9,15 @@
       "description": null,
       "created_at": "2026-08-31T14:50:24Z",
       "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "maker_000002",
+      "name": "アイデアポケット",
+      "name_ja": "アイデアポケット",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-01T05:10:29Z",
+      "updated_at": "2026-09-01T05:10:29Z"
     }
   ]
 }

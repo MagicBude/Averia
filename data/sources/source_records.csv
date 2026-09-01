@@ -1,3 +1,5 @@
 id,entity_type,entity_id,source_name,source_record_id,source_url,fetched_at,raw_hash,notes
 source_000001,actress,actress_000001,moodyz-official,actress:855540,https://moodyz.com/actress/detail/855540,2026-08-31T14:36:25.486Z,67b1d54b62410488d86504162e2f850667d6a93d70ef172bcd908fcd1372add9,
 source_000002,work,work_000001,moodyz-official,work:MDVR434,https://moodyz.com/works/detail/MDVR434,2026-08-31T14:18:50.058Z,a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71,
+source_000003,actress,actress_000002,dmm-rental,actress:1031805,https://www.dmm.co.jp/rental/ppr/-/list/=/article=actress/id=1031805/,2026-09-01T05:07:18.120Z,738ec6540a9c657bfdce3d7c9115d05420761eca254e2d6580e25d760b26b031,
+source_000004,work,work_000002,dmm-rental,work:4ipzz698,https://www.dmm.co.jp/rental/ppr/-/detail/=/cid=4ipzz698/,2026-09-01T05:07:18.120Z,36d24562ebedd732f490dce8b9218b42e1883661d1d68c8fe656e00e05425653,DMM Rental 貸出開始日=2026-02-24；主番号由命令行 --code 指定；DMM 品番=4ipzz698

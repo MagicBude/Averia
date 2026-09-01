@@ -9,6 +9,24 @@
       "code_type": "catalog",
       "is_primary": true,
       "source_id": "source_000002"
+    },
+    {
+      "id": "code_000002",
+      "work_id": "work_000002",
+      "code": "IPZZ-698",
+      "normalized_code": "IPZZ698",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000004"
+    },
+    {
+      "id": "code_000003",
+      "work_id": "work_000002",
+      "code": "4ipzz698",
+      "normalized_code": "4IPZZ698",
+      "code_type": "dmm-content-id",
+      "is_primary": false,
+      "source_id": "source_000004"
     }
   ]
 }
