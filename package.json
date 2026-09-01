@@ -1,6 +1,6 @@
 {
   "name": "averia",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": true,
   "description": "Averia：CSV-first JAV 元数据资料库，支持日文多源 Provider、Canonical Merge、安全导入与人类可读 XLSX 总览。",
   "type": "module",

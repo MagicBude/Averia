@@ -1,24 +1,25 @@
-# Averia V0.6.2 Patch Manifest
+# Averia V0.6.3 Patch Manifest
 
-本补丁只修复 DMM/FANZA 年龄确认重定向兼容问题，不包含 `data/`、`exports/` 或 `var/`。
+本补丁只包含 DMM Rental Parser 作用域修复、真实噪声回归测试与对应文档，不包含 `data/`、`exports/`、`var/`。
 
-## 修改文件
+## 文件
 
-- `package.json` — 版本更新到 `0.6.2`
-- `scripts/lib/http-transport.mjs` — 新增可关闭重定向的安全传输选项
-- `scripts/providers/dmm-rental/lib.mjs` — 年龄声明改为“只收 Cookie，再主动 HTTPS 请求详情页”
-- `scripts/provider-dmm-rental.mjs` — CLI 版本信息更新
-- `tests/http-transport.test.mjs` — 增加 no-follow HTTPS 安全回归
-- `tests/provider-dmm-rental.test.mjs` — 模拟真实 DMM 302 年龄声明流程
-- `docs/DMM_RENTAL_PROVIDER.md` — 更新真实年龄确认行为说明
-- `README.md` — 更新 V0.6.2 年龄确认策略
-- `AGENTS.md` — 固化禁止跟随明文年龄确认重定向的工程规则
-- `UPGRADE_V0.6.2.md` — 升级与验证说明
+- `package.json`
+- `scripts/providers/dmm-rental/lib.mjs`
+- `tests/provider-dmm-rental.test.mjs`
+- `tests/fixtures/dmm-rental/work-4ipzz698.html`
+- `README.md`
+- `AGENTS.md`
+- `docs/DMM_RENTAL_PROVIDER.md`
+- `UPGRADE_V0.6.3.md`
+- `PATCH_MANIFEST.md`
 
-## 不包含
+## 核心变化
 
-- `data/`
-- `exports/`
-- `var/`
-- Provider 抓取产物
-- Cookie / 登录信息 / 代理凭据
+- Provider version：4
+- 项目版本：0.6.3
+- DMM 字段仅从有序作品详情字段簇解析
+- 防止侧栏/导航/推荐项污染系列与 Genres
+- 过滤 `一覧へ` 等导航实体
+- 详情区品番必须与请求 CID 一致
+- 新增真实页面噪声回归测试

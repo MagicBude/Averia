@@ -288,4 +288,5 @@ MOODYZ Provider 对 TLS 握手失败、ECONNRESET、连接超时等瞬时网络�
 - XLSX 规范 Sheet 顺序必须显式维护，`女优` 必须位于 `女优别名` 之前；总览 Sheet 只能作为派生视图，不能反向成为事实源。
 - DMM/FANZA 年龄确认页不得静默自动通过。只有用户显式传入 `--adult-confirmed` 时，Provider 才可访问页面自身提供的 `declared=yes` URL，并且 Cookie 只能保存在临时会话中，不得写入日志、meta、CSV 或 Git。
 - DMM `declared=yes` 若返回明文 `http://` 重定向，不得放宽 HTTPS 安全策略直接跟随；应只接收年龄声明响应中的 Cookie，然后主动以经过白名单校验的原始 HTTPS 详情页 URL 继续请求。
+- DMM 页面字段解析必须限定在有序作品详情字段簇中；不得因侧栏或导航出现同名「シリーズ / ジャンル」就使用整页第一次命中。详情区品番与请求 CID 不一致、或无法定位详情字段簇时必须失败关闭（fail closed）。
 - `--adult-confirmed` 仅适用于公开年龄确认，不得扩展为验证码、登录、地区限制或付费访问控制的绕过机制。

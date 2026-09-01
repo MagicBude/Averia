@@ -11,6 +11,7 @@ import {
   deriveCatalogCodeFromDmmCid,
   extractDmmAgeDeclarationUrl,
   extractDmmCid,
+  extractDmmRentalDetailRegion,
   fetchDmmRentalHtml,
   isDmmAgeGate,
   parseDmmRentalWork,
@@ -153,6 +154,22 @@ test("显式 node 模式不会在年龄确认流程中偷偷切换为 curl Cooki
   );
 });
 
+test("DMM Rental 字段解析只读取作品详情块，不会把侧栏系列/分类/女优链接混入 canonical", () => {
+  const region = extractDmmRentalDetailRegion(fixture());
+  assert.match(region, /貸出開始日/);
+  assert.match(region, /シリーズ：<\/td><td><a[^>]+>引退作/);
+  assert.doesNotMatch(region, /新人NO\.1 STYLE|斎藤あみり|AV女優一覧へ|アニメDVD/);
+
+  const parsed = parseDmmRentalWork(fixture(), URL, NOW);
+  const work = parsed.canonical.works[0];
+  assert.equal(work.series.name, "引退作");
+  assert.deepEqual(work.genres.map((item) => item.name), [
+    "美少女", "スレンダー", "単体作品", "寝取り・寝取られ・NTR", "フェラ",
+    "主観", "独占レンタル", "サンプル動画", "セル仕様", "在庫強化作品",
+  ]);
+  assert.equal(parsed.meta.detail_scope, "ordered-field-cluster");
+});
+
 test("DMM Rental 详情页解析为日文参考 canonical，并区分貸出開始日与发行日", () => {
   const parsed = parseDmmRentalWork(fixture(), URL, NOW);
   const work = parsed.canonical.works[0];
@@ -165,14 +182,14 @@ test("DMM Rental 详情页解析为日文参考 canonical，并区分貸出開�
   assert.match(work.source_notes, /貸出開始日=2026-02-24/);
   assert.equal(work.duration_min, 140);
   assert.deepEqual(work.maker, { name: "アイデアポケット", name_ja: "アイデアポケット" });
-  assert.deepEqual(work.label, { name: "ディープス", name_ja: "ディープス" });
+  assert.deepEqual(work.label, { name: "ティッシュ", name_ja: "ティッシュ" });
   assert.deepEqual(work.series, { name: "引退作", name_ja: "引退作" });
   assert.deepEqual(work.directors, [{ name: "ZAMPA", name_ja: "ZAMPA", position: 1 }]);
   assert.equal(work.cast[0].name, "桃乃木かな");
-  assert.equal(work.cast[0].source_record_id, "actress:123456");
-  assert.deepEqual(work.genres.map((item) => item.name), ["美少女", "単体作品", "寝取り・寝取られ・NTR", "フェラ", "主観"]);
+  assert.equal(work.cast[0].source_record_id, "actress:1031805");
+  assert.deepEqual(work.genres.map((item) => item.name), ["美少女", "スレンダー", "単体作品", "寝取り・寝取られ・NTR", "フェラ", "主観", "独占レンタル", "サンプル動画", "セル仕様", "在庫強化作品"]);
   assert.deepEqual(work.codes, [{ code: "4ipzz698", type: "dmm-content-id", is_primary: false }]);
-  assert.match(work.cover_url, /pics\.dmm\.co\.jp\/mono\/movie\/adult\/ipzz698r\/ipzz698rpl\.jpg/);
+  assert.match(work.cover_url, /pics\.dmm\.co\.jp\/mono\/movie\/4ipzz698\/4ipzz698ps\.jpg/);
   assert.doesNotMatch(work.cover_url, /logo|banner|sample/i);
   assert.equal(parsed.meta.catalog_code_source, "derived-from-dmm-cid");
 });
@@ -196,14 +213,14 @@ test("DMM Rental canonical 可以进入 Prepare，并把 CID 作为附加番号"
   assert.equal(stage.append.work_cast.length, 1);
   assert.equal(stage.append.directors.length, 1);
   assert.equal(stage.append.work_directors.length, 1);
-  assert.equal(stage.append.genres.length, 5);
+  assert.equal(stage.append.genres.length, 10);
   assert.equal(stage.append.works[0].release_date, "");
   assert.equal(stage.append.source_records.find((row) => row.entity_type === "work")?.notes.includes("貸出開始日=2026-02-24"), true);
 });
 
 test("DMM Rental 封面选择不会把 Logo 或样图当主封面", () => {
   const cover = selectDmmRentalCover(fixture(), URL, "4ipzz698");
-  assert.match(cover.url, /ipzz698rpl\.jpg/);
+  assert.match(cover.url, /4ipzz698ps\.jpg/);
   assert.doesNotMatch(cover.url, /logo|banner|sample/i);
 });
 

@@ -5,7 +5,7 @@ import path from "node:path";
 import { fetchTextWithFallback } from "../../lib/http-transport.mjs";
 
 export const DMM_RENTAL_SOURCE = "dmm-rental";
-export const DMM_RENTAL_PROVIDER_VERSION = 3;
+export const DMM_RENTAL_PROVIDER_VERSION = 4;
 const ALLOWED_HOSTS = new Set(["www.dmm.co.jp", "dmm.co.jp"]);
 const BASE_URL = "https://www.dmm.co.jp/rental/ppr/-/detail/=/cid=";
 
@@ -136,6 +136,47 @@ function pageTitle(html) {
 }
 
 const FIELD_LABELS = ["貸出開始日", "収録時間", "出演者", "監督", "シリーズ", "メーカー", "レーベル", "ジャンル", "品番", "平均評価"];
+const DETAIL_REQUIRED_LABELS = ["貸出開始日", "収録時間", "出演者", "監督", "シリーズ", "メーカー", "レーベル", "ジャンル", "品番"];
+
+/**
+ * DMM 的旧版 Rental 页面会在侧栏、推荐区和导航中重复出现「シリーズ」「ジャンル」
+ * 等词。直接把整页压成文本后取第一次命中，会把导航链接误当作品字段。
+ *
+ * 这里从「貸出開始日」开始寻找一个按作品详情顺序连续出现核心标签的局部 HTML
+ * 窗口，只让字段解析器读取这个窗口。这样既保留详情行里的 <a> 链接和 source id，
+ * 又不会把侧栏、推荐女优或其它分类链接混入 canonical。
+ */
+export function extractDmmRentalDetailRegion(html) {
+  const source = String(html ?? "");
+  let searchFrom = 0;
+  while (searchFrom < source.length) {
+    const start = source.indexOf("貸出開始日", searchFrom);
+    if (start < 0) break;
+
+    let cursor = start;
+    let valid = true;
+    for (const label of DETAIL_REQUIRED_LABELS) {
+      const pos = source.indexOf(label, cursor);
+      if (pos < 0 || pos - start > 40000) {
+        valid = false;
+        break;
+      }
+      cursor = pos + label.length;
+    }
+
+    if (valid) {
+      const ratingPos = source.indexOf("平均評価", cursor);
+      const hardEnd = Math.min(source.length, start + 50000);
+      const end = ratingPos >= 0 && ratingPos < hardEnd
+        ? Math.min(source.length, ratingPos + 8000)
+        : hardEnd;
+      return source.slice(start, end);
+    }
+
+    searchFrom = start + "貸出開始日".length;
+  }
+  return "";
+}
 
 function fieldSection(text, label) {
   const start = text.indexOf(label);
@@ -257,16 +298,40 @@ function idFromLink(href, kind) {
   return "";
 }
 
+function expectedArticleForKind(kind) {
+  return ({
+    actress: "actress",
+    director: "director",
+    series: "series",
+    maker: "maker",
+    label: "label",
+    genre: "keyword",
+  })[kind] ?? "";
+}
+
+function isNavigationLikeEntityName(value) {
+  return /(?:一覧へ|トップページ|レビューを見る)$/.test(String(value ?? "").trim());
+}
+
 function entitiesFromField(section, baseUrl, kind) {
   const links = linksFromText(section, baseUrl).filter((link) => link.text);
   if (links.length) {
-    return links.map((link) => ({ name: link.text, href: link.href, id: idFromLink(link.href, kind) }));
+    const expectedArticle = expectedArticleForKind(kind);
+    const typed = expectedArticle
+      ? links.filter((link) => new RegExp(`(?:^|[=/])article=${expectedArticle}(?:[\/&?#]|$)`, "i").test(link.href))
+      : [];
+    const selected = typed.length ? typed : links;
+    return selected
+      .filter((link) => !isNavigationLikeEntityName(link.text))
+      .map((link) => ({ name: link.text, href: link.href, id: idFromLink(link.href, kind) }));
   }
-  return splitPlainNames(section).map((name) => ({ name, href: "", id: "" }));
+  return splitPlainNames(section)
+    .filter((name) => !isNavigationLikeEntityName(name))
+    .map((name) => ({ name, href: "", id: "" }));
 }
 
-function singleEntity(section, baseUrl) {
-  const entities = entitiesFromField(section, baseUrl, "generic");
+function singleEntity(section, baseUrl, kind) {
+  const entities = entitiesFromField(section, baseUrl, kind);
   return entities[0] ?? { name: "", href: "", id: "" };
 }
 
@@ -448,11 +513,18 @@ export function parseDmmRentalWork(html, sourceUrl, fetchedAt = new Date().toISO
   }
 
   const cidFromUrl = extractDmmCid(normalizedUrl);
-  const annotated = htmlToAnnotatedText(html);
+  const detailRegion = extractDmmRentalDetailRegion(html);
+  if (!detailRegion) {
+    throw new Error("无法定位 DMM Rental 作品详情字段区域；页面结构可能已变化，已停止解析以避免把导航/推荐内容写入 canonical。");
+  }
+  const annotated = htmlToAnnotatedText(detailRegion);
   const titleInfo = pageTitle(html);
   if (!titleInfo.text) throw new Error("无法从 DMM Rental 详情页解析日文标题。");
 
   const pageCid = clean(fieldSection(annotated, "品番"));
+  if (pageCid && cidFromUrl && pageCid.toLowerCase() !== cidFromUrl.toLowerCase()) {
+    throw new Error(`DMM 详情区品番“${pageCid}”与请求 CID“${cidFromUrl}”不一致；已停止解析以避免抓错作品。`);
+  }
   const cid = pageCid || cidFromUrl;
   const explicitCode = normalizeCatalogOverride(options.code ?? "");
   const derivedCode = deriveCatalogCodeFromDmmCid(cid);
@@ -465,9 +537,9 @@ export function parseDmmRentalWork(html, sourceUrl, fetchedAt = new Date().toISO
   const durationMin = intOrBlank(fieldSection(annotated, "収録時間"));
   const actressEntities = entitiesFromField(fieldSection(annotated, "出演者"), normalizedUrl, "actress");
   const directorEntities = entitiesFromField(fieldSection(annotated, "監督"), normalizedUrl, "director");
-  const seriesEntity = singleEntity(fieldSection(annotated, "シリーズ"), normalizedUrl);
-  const makerEntity = singleEntity(fieldSection(annotated, "メーカー"), normalizedUrl);
-  const labelEntity = singleEntity(fieldSection(annotated, "レーベル"), normalizedUrl);
+  const seriesEntity = singleEntity(fieldSection(annotated, "シリーズ"), normalizedUrl, "series");
+  const makerEntity = singleEntity(fieldSection(annotated, "メーカー"), normalizedUrl, "maker");
+  const labelEntity = singleEntity(fieldSection(annotated, "レーベル"), normalizedUrl, "label");
   const genreEntities = entitiesFromField(fieldSection(annotated, "ジャンル"), normalizedUrl, "genre");
   const cover = selectDmmRentalCover(html, normalizedUrl, cid);
 
@@ -538,6 +610,7 @@ export function parseDmmRentalWork(html, sourceUrl, fetchedAt = new Date().toISO
       rental_start_date: rentalStartDate,
       title_source: titleInfo.source,
       cover_source: cover.source,
+      detail_scope: "ordered-field-cluster",
     },
   };
 }
