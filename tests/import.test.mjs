@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalizeName, prepareImport, recordHash } from "../scripts/import/lib.mjs";
+import { normalizeName, prepareImport, recordHash, pendingReviewCount, applyResolutionDecision } from "../scripts/import/lib.mjs";
 import { loadEmptyCatalog } from "./helpers/catalog.mjs";
 
 test("女优姓名标准化只做确定性精确规则", () => {
@@ -228,6 +228,88 @@ test("未登记别名时行为保持不变，仍新建实体（V0.8 Phase 3 回�
   assert.equal(stage.summary.error_count, 0);
   assert.equal(stage.append.makers.length, 1, "未登记别名时应按既有行为新建");
   assert.equal(stage.append.makers[0].name, "Idea Pocket");
+});
+
+// ---------- V0.8 Phase 4：字段级裁决与冲突阻断 ----------
+
+test("既有实体空字段由单一来源补全 → auto_fill + entity_update（V0.8 Phase 4）", () => {
+  const catalog = catalogWith({
+    works: [{ id: "work_000100", primary_code: "TST-200", title: "旧标题", release_date: "", duration_min: "" }],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-5", code: "TST-200", title: "旧标题", release_date: "2024-05-20", duration_min: "120" }],
+  }, { catalog, batchId: "p4-fill", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(stage.append.works.length, 0, "应匹配既有作品");
+  assert.equal(pendingReviewCount(stage), 0, "无冲突");
+
+  const autoRows = stage.append.field_resolutions.filter((r) => r.status === "auto");
+  assert.ok(autoRows.length >= 2, "release_date 与 duration_min 均应为 auto_fill");
+  assert.ok(autoRows.every((r) => r.resolution_method === "auto_fill"));
+
+  const releaseUpdate = stage.append.entity_updates.find((u) => u.field === "release_date");
+  assert.ok(releaseUpdate, "release_date 应写入 entity_updates");
+  assert.equal(releaseUpdate.id, "work_000100");
+  assert.equal(releaseUpdate.value, "2024-05-20");
+});
+
+test("两可靠源同非空字段冲突 → pending_review 阻断，不静默覆盖（V0.8 Phase 4）", () => {
+  const catalog = catalogWith({
+    works: [{ id: "work_000101", primary_code: "TST-201", title: "T", release_date: "2024-01-01", duration_min: "120" }],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-6", code: "TST-201", title: "T", release_date: "2024-02-01", duration_min: "120" }],
+  }, { catalog, batchId: "p4-conflict", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(pendingReviewCount(stage), 1, "应产生 1 个待裁决冲突");
+  const pending = stage.append.field_resolutions.find((r) => r.status === "pending_review");
+  assert.equal(pending.entity_type, "work");
+  assert.equal(pending.field, "release_date");
+  assert.equal(pending.resolved_value, "2024-02-01", "候采用的来源值应保留在 resolved_value");
+  assert.ok(pending.notes.includes("既有值=2024-01-01"), "notes 应记录双方值");
+  assert.ok(!stage.append.entity_updates.some((u) => u.field === "release_date"), "冲突字段不得写入 entity_updates");
+});
+
+test("人工裁决 adopt → 翻转 manual 并追加 entity_update；keep → 仅翻转不写（V0.8 Phase 4）", () => {
+  const catalog = catalogWith({
+    works: [{ id: "work_000101", primary_code: "TST-201", title: "T", release_date: "2024-01-01", duration_min: "120" }],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-6", code: "TST-201", title: "T", release_date: "2024-02-01", duration_min: "120" }],
+  }, { catalog, batchId: "p4-decide", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  const adopted = applyResolutionDecision(stage, { entityType: "work", entityId: "work_000101", field: "release_date", decision: "adopt" });
+  assert.equal(adopted.append.field_resolutions[0].status, "manual");
+  assert.equal(pendingReviewCount(adopted), 0);
+  assert.ok(adopted.append.entity_updates.some((u) => u.field === "release_date" && u.value === "2024-02-01"), "adopt 应追加写回");
+
+  const kept = applyResolutionDecision(stage, { entityType: "work", entityId: "work_000101", field: "release_date", decision: "keep" });
+  assert.equal(kept.append.field_resolutions[0].status, "manual");
+  assert.equal(pendingReviewCount(kept), 0);
+  assert.ok(!kept.append.entity_updates.some((u) => u.field === "release_date"), "keep 不应追加写回");
+});
+
+test("既有值与来源值相同 → 仅记 observation，不产出裁决（V0.8 Phase 4）", () => {
+  const catalog = catalogWith({
+    works: [{ id: "work_000102", primary_code: "TST-202", title: "T", release_date: "2024-03-03", duration_min: "120" }],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-7", code: "TST-202", title: "T", release_date: "2024-03-03", duration_min: "120" }],
+  }, { catalog, batchId: "p4-same", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  assert.equal(pendingReviewCount(stage), 0);
+  assert.equal(stage.append.field_resolutions.length, 0, "同值不应产生裁决行");
+  assert.ok(stage.append.observations.some((o) => o.entity_type === "work" && o.field === "release_date" && o.observed_value === "2024-03-03"));
 });
 
 test("新建分类时 slug 有确定性兜底，来源未给 slug 也能通过校验", () => {
