@@ -82,12 +82,14 @@
 - 待做：Phase 4（field_resolutions 冲突裁决 + 审核工作台）、Phase 5（JavInfo 多源独立请求）、Phase 6（IPZZ-597 / IPZZ-698 / MDVR-434 三样本回归）、Phase 7（文档收尾）
 - 详见 `docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md` 与 CHANGELOG V0.8.0
 
-## V0.9 — 本地数据库 SQLite
+## V0.9 — 本地数据库 SQLite（派生只读层）
 
-- SQLite 物化
-- 姓名 / 番号搜索索引
-- 从规范 CSV 导入 SQLite
-- CSV 仍保持唯一事实源
+- **定位**：SQLite 是规范 CSV 的**物化 / 查询层**，不是事实源；CSV 仍保持唯一事实源（见 ADR-0001）
+- `pnpm db:sync`：把所有 `data/*.csv` 导入单文件 `data/averia.db`
+- FTS5 全文索引（番号 / 姓名 / 别名 / 标题）+ 常规索引（code / name / entity_id）
+- `pnpm db:query`：只读查询，供 V1.0 API 与 V1.1 Web 直接消费
+- 写入只走 `Prepare → Apply → CSV`；每次 `import:apply` 后自动 `db:sync` 刷新
+- 物化范围：8 个核心实体表 + 关系表 +（V0.8 完成后）observations / field_resolutions / entity_aliases
 
 ## V1.0 — API
 

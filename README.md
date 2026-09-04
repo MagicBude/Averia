@@ -64,7 +64,7 @@ Averia/
 ├─ scripts/                     # 校验、导出、导入与 Provider 脚本
 ├─ imports/                     # 统一导入格式示例（正式批次保存在 var/）
 ├─ tests/                       # 基础测试与 Provider Fixture
-├─ docs/                        # 项目文档（standards/import/providers/strategy/design/deploy）
+├─ docs/                        # 项目文档（standards/import/providers/strategy/design/deploy/adr）
 ├─ AGENTS.md                    # AI / Agent 协作规范
 └─ CHANGELOG.md                 # 版本演进记录
 ```
@@ -229,7 +229,8 @@ V0.4.2 根据真实 MOODYZ 页面修正标题解析：当前作品页与女优�
 9. [`docs/providers/MOODYZ_PROVIDER.md`](./docs/providers/MOODYZ_PROVIDER.md) — V0.4 首个日文厂商官方 Provider
 10. [`docs/strategy/SOURCE_STRATEGY.md`](./docs/strategy/SOURCE_STRATEGY.md) — 多来源语言与权威性策略
 11. [`docs/strategy/ROADMAP.md`](./docs/strategy/ROADMAP.md) — 项目演进路线
-12. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
+12. [`docs/adr/README.md`](./docs/adr/README.md) — 架构决策记录（ADR）索引与模板
+13. [`AGENTS.md`](./AGENTS.md) — AI / 编码 Agent 工作规范
 
 ## License
 
