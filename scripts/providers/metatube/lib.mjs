@@ -83,6 +83,22 @@ function normalizeCode(value) {
   return match ? `${match[1]}-${match[2]}` : raw;
 }
 
+// 把日期/datetime 规范成 Averia 要求的 YYYY-MM-DD。
+// 兼容 "2021-02-18T00:00:00Z" / "2021-02-18 00:00:00" / "2021/02/18" / 纯日期；
+// 丢弃时间与时区，仅保留日期部分，并做合法性校验。
+function normalizeDate(value) {
+  const s = clean(value);
+  if (!s) return "";
+  const m = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/.exec(s);
+  if (!m) return "";
+  const y = m[1];
+  const mo = String(Number(m[2])).padStart(2, "0");
+  const d = String(Number(m[3])).padStart(2, "0");
+  const dt = new Date(`${y}-${mo}-${d}T00:00:00Z`);
+  if (Number.isNaN(dt.getTime())) return "";
+  return `${y}-${mo}-${d}`;
+}
+
 // genre 等分类的 slug：带 source 前缀 + sha1 短串，保证跨源唯一且不依赖人工填 slug。
 function slug(source, value) {
   return `metatube-${source}-${crypto.createHash("sha1").update(clean(value)).digest("hex").slice(0, 10)}`;
@@ -160,7 +176,7 @@ export function parseMetatubeMovieResponse(payload, fetchedAt = new Date().toISO
     code: number,
     title,
     ...(lang === "ja" && hasJapanese(title) ? { title_ja: title } : {}),
-    release_date: clean(movie.release_date),
+    release_date: normalizeDate(movie.release_date),
     duration_min: Number.isFinite(Number(movie.runtime)) ? Number(movie.runtime) : "",
     ...(makers[0] ? { maker: { name: makers[0], ...nameFields(makers[0], lang) } } : {}),
     ...(clean(movie.label) ? { label: { name: clean(movie.label), ...nameFields(movie.label, lang) } } : {}),
@@ -236,7 +252,7 @@ export function parseMetatubeActorResponse(payload, fetchedAt = new Date().toISO
     primary_name: name,
     ...nameFields(name, lang),
     status: "unknown",
-    ...(clean(actor.birthday) ? { birth_date: clean(actor.birthday) } : {}),
+    ...(normalizeDate(actor.birthday) ? { birth_date: normalizeDate(actor.birthday) } : {}),
     ...(Number.isFinite(Number(actor.height)) && Number(actor.height)
       ? { height_cm: Number(actor.height) }
       : {}),
