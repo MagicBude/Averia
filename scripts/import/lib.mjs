@@ -177,12 +177,16 @@ function emptyAppend() {
   return {
     actresses: [], actress_aliases: [], works: [], work_codes: [], work_cast: [], work_genres: [], work_directors: [],
     makers: [], labels: [], series: [], genres: [], directors: [], source_records: [],
-    observations: [], field_resolutions: [], entity_aliases: [],
+    observations: [], field_resolutions: [], entity_aliases: [], entity_updates: [],
   };
 }
 
 const FIELD_LANGUAGE = {
   primary_name: "ja", name_ja: "ja", kana: "ja", name_en: "en", title_ja: "ja",
+};
+const DATASET_FOR_TYPE = {
+  actress: "actresses", work: "works", maker: "makers", label: "labels",
+  series: "series", genre: "genres", director: "directors",
 };
 const langForField = (field) => FIELD_LANGUAGE[field] ?? "";
 const ACTRESS_OBSERVABLE_FIELDS = [
@@ -274,9 +278,10 @@ export function prepareImport(document, options = {}) {
   // 字段级观察：记录“某来源对某个实体的某个字段观察到了什么值”。
   // append-only 溯源日志，不参与去重或覆盖判断。
   const recordObservation = (entityType, entityId, field, observedValue, observedLanguage, sourceRecordId, notes) => {
-    if (observedValue == null || String(observedValue) === "") return;
+    if (observedValue == null || String(observedValue) === "") return null;
+    const id = nextId("obs");
     append.observations.push(compactRecord(catalog.observations.schema.columns, {
-      id: nextId("obs"),
+      id,
       entity_type: entityType,
       entity_id: entityId,
       source_name: sourceName,
@@ -287,6 +292,57 @@ export function prepareImport(document, options = {}) {
       observed_at: fetchedAt,
       raw_hash: "",
       notes: notes ?? "",
+    }));
+    return id;
+  };
+
+  const DATASET_FOR_TYPE = {
+    actress: "actresses", work: "works", maker: "makers", label: "labels",
+    series: "series", genre: "genres", director: "directors",
+  };
+
+  // 字段级裁决（Phase 4）：对比正式实体既有值与本批次来源值。
+  // - 既有为空、单一来源补全 → auto_fill（写入 entity_updates，可安全 Apply）
+  // - 两者皆非空且不同 → pending_review（阻断该字段 Apply，待人工裁决）
+  // - 同值 → 仅记录 observation，无裁决
+  const resolveField = (entityType, entityId, field, existingValue, incomingValue, sourceRecordId, obsId) => {
+    const existing = String(existingValue ?? "").trim();
+    const incoming = String(incomingValue ?? "").trim();
+    if (!incoming) return;
+    if (!existing) {
+      append.entity_updates.push({ dataset: DATASET_FOR_TYPE[entityType], id: entityId, field, value: incoming });
+      append.field_resolutions.push(compactRecord(catalog.field_resolutions.schema.columns, {
+        id: nextId("res"),
+        entity_type: entityType,
+        entity_id: entityId,
+        field,
+        resolved_value: incoming,
+        resolution_method: "auto_fill",
+        winning_source_name: sourceName,
+        winning_source_record_id: sourceRecordId ?? "",
+        confidence: "high",
+        conflicting_observation_ids: obsId ?? "",
+        status: "auto",
+        resolved_at: createdAt,
+        notes: "字段为空，单一来源补全",
+      }));
+      return;
+    }
+    if (normalizeName(existing) === normalizeName(incoming)) return;
+    append.field_resolutions.push(compactRecord(catalog.field_resolutions.schema.columns, {
+      id: nextId("res"),
+      entity_type: entityType,
+      entity_id: entityId,
+      field,
+      resolved_value: incoming,
+      resolution_method: "rule_priority",
+      winning_source_name: "",
+      winning_source_record_id: "",
+      confidence: "medium",
+      conflicting_observation_ids: obsId ?? "",
+      status: "pending_review",
+      resolved_at: "",
+      notes: `既有值=${existing}；来源值=${incoming}`,
     }));
   };
 
@@ -442,11 +498,9 @@ export function prepareImport(document, options = {}) {
       newSource("actress", id, input);
       const existing = catalog.actresses.records.find((row) => row.id === id);
       if (existing) {
-        for (const field of ["name_ja","name_en","kana","birth_date","debut_date","retirement_date","height_cm","bust_cm","waist_cm","hip_cm","cup","blood_type","birthplace","status","profile_image_url","description"]) {
-          if (!existing[field] && input[field] != null && String(input[field]) !== "") proposals.push({ entity_type: "actress", entity_id: id, field, current: "", proposed: String(input[field]), action: "review-only" });
-        }
         for (const field of ACTRESS_OBSERVABLE_FIELDS) {
-          if (input[field] != null && String(input[field]) !== "") recordObservation("actress", id, field, input[field], langForField(field), sourceRecordId);
+          const obsId = recordObservation("actress", id, field, input[field], langForField(field), sourceRecordId);
+          resolveField("actress", id, field, existing[field], input[field], sourceRecordId, obsId);
         }
       }
     }
@@ -584,11 +638,9 @@ export function prepareImport(document, options = {}) {
       newSource("work", id, input);
       const existing = catalog.works.records.find((row) => row.id === id);
       if (existing) {
-        for (const [field, incomingField] of [["title","title"],["title_ja","title_ja"],["release_date","release_date"],["duration_min","duration_min"],["description","description"],["cover_url","cover_url"]]) {
-          if (!existing[field] && input[incomingField] != null && String(input[incomingField]) !== "") proposals.push({ entity_type: "work", entity_id: id, field, current: "", proposed: String(input[incomingField]), action: "review-only" });
-        }
         for (const field of WORK_OBSERVABLE_FIELDS) {
-          if (input[field] != null && String(input[field]) !== "") recordObservation("work", id, field, input[field], langForField(field), sourceRecordId);
+          const obsId = recordObservation("work", id, field, input[field], langForField(field), sourceRecordId);
+          resolveField("work", id, field, existing[field], input[field], sourceRecordId, obsId);
         }
       }
     }
@@ -603,18 +655,48 @@ export function prepareImport(document, options = {}) {
 
   const errorCount = issues.filter((issue) => issue.severity === "error").length;
   const appendCounts = Object.fromEntries(Object.entries(append).map(([key, rows]) => [key, rows.length]));
+  const pendingReview = (append.field_resolutions ?? []).filter((row) => row.status === "pending_review").length;
   return {
     stage_version: IMPORT_STAGE_VERSION,
     batch_id: options.batchId ?? "",
     prepared_at: createdAt,
     source: document.source,
     catalog_fingerprint: options.fingerprint ?? catalogFingerprint(),
-    summary: { error_count: errorCount, match_count: matches.length, proposal_count: proposals.length, append_counts: appendCounts },
+    summary: { error_count: errorCount, match_count: matches.length, proposal_count: proposals.length, pending_review_count: pendingReview, append_counts: appendCounts },
     issues,
     matches,
     proposals,
     append,
   };
+}
+
+// 统计批次中待人工裁决的字段冲突数（import:apply 据此阻断）。
+export function pendingReviewCount(stage) {
+  return (stage?.append?.field_resolutions ?? []).filter((row) => row.status === "pending_review").length;
+}
+
+// 纯函数：对一条 pending_review 冲突做出裁决，返回新的 stage（不写文件）。
+// decision = "adopt"（采用来源值，追加 entity_update）/ "keep"（保留既有值，不写）。
+export function applyResolutionDecision(stage, { entityType, entityId, field, decision }) {
+  const resolutions = stage?.append?.field_resolutions ?? [];
+  const idx = resolutions.findIndex((row) => row.status === "pending_review" && row.entity_type === entityType && row.entity_id === entityId && row.field === field);
+  if (idx < 0) throw new Error(`找不到待裁决的字段冲突：${entityType} ${entityId}.${field}`);
+  const row = { ...resolutions[idx] };
+  row.status = "manual";
+  row.resolution_method = "manual";
+  row.resolved_at = utcNow();
+  if (decision === "keep") {
+    row.resolved_value = "";
+    row.notes = `人工裁决：保留既有值。${(row.notes ?? "")}`;
+  } else {
+    row.notes = `人工裁决：采用来源值 ${row.resolved_value}。${(row.notes ?? "")}`;
+  }
+  const nextResolutions = [...resolutions.slice(0, idx), row, ...resolutions.slice(idx + 1)];
+  const entityUpdates = stage.append.entity_updates ? [...stage.append.entity_updates] : [];
+  if (decision === "adopt") {
+    entityUpdates.push({ dataset: DATASET_FOR_TYPE[entityType], id: entityId, field, value: row.resolved_value });
+  }
+  return { ...stage, append: { ...stage.append, field_resolutions: nextResolutions, entity_updates: entityUpdates } };
 }
 
 export function renderImportReport(stage) {
@@ -640,6 +722,19 @@ export function renderImportReport(stage) {
   lines.push("", "## 数据观察（字段级溯源，append-only）", "");
   if (!stage.append.observations.length) lines.push("无。", "");
   for (const obs of stage.append.observations) lines.push(`- ${obs.entity_type} ${obs.entity_id}.${obs.field} ← \`${obs.observed_value}\`（${(obs.source_name ?? "")}${obs.observed_language ? ` / ${obs.observed_language}` : ""}）`);
+  lines.push("", "## 字段裁决（field_resolutions）", "");
+  const resolutions = stage.append.field_resolutions ?? [];
+  if (!resolutions.length) lines.push("无。", "");
+  const autoRows = resolutions.filter((r) => r.status === "auto");
+  const pendingRows = resolutions.filter((r) => r.status === "pending_review");
+  if (autoRows.length) {
+    lines.push(`### 自动补全（auto_fill，可安全 Apply）：${autoRows.length}`, "");
+    for (const r of autoRows) lines.push(`- ${r.entity_type} ${r.entity_id}.${r.field} ← \`${r.resolved_value}\`（${r.winning_source_name}）`);
+  }
+  if (pendingRows.length) {
+    lines.push(`### 待人工裁决（pending_review，Apply 将被阻断）：${pendingRows.length}`, "");
+    for (const r of pendingRows) lines.push(`- ${r.entity_type} ${r.entity_id}.${r.field}：${r.notes}`);
+  }
   lines.push("", "> V0.2 默认只自动追加确定的新实体、关系和来源映射；对已有实体的字段更新只生成建议，不自动覆盖。", "");
   return lines.join("\n");
 }

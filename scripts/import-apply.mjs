@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { ROOT, loadCatalog } from "./lib/catalog.mjs";
 import { writeCsv } from "./lib/csv.mjs";
-import { catalogFingerprint, importBatchDir, parseArgs } from "./import/lib.mjs";
+import { catalogFingerprint, importBatchDir, parseArgs, pendingReviewCount } from "./import/lib.mjs";
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.batch) {
@@ -31,6 +31,15 @@ if (currentFingerprint !== stage.catalog_fingerprint) {
   process.exit(3);
 }
 
+// Phase 4：存在待人工裁决的字段冲突时，阻断整个 Apply（对应 AGENTS “冲突不可静默解决”）。
+const pending = pendingReviewCount(stage);
+if (pending > 0) {
+  console.error(`批次存在 ${pending} 个待人工裁决的字段冲突（pending_review），拒绝写入。`);
+  console.error("先运行：pnpm resolution:report -- --batch " + args.batch + "  查看冲突双方值；");
+  console.error("再运行：pnpm resolution:decide -- --batch " + args.batch + " --entity-type <类型> --entity-id <ID> --field <字段> --decision adopt|keep");
+  process.exit(5);
+}
+
 const backupDir = path.join(ROOT, "var", "backups", args.batch);
 fs.rmSync(backupDir, { recursive: true, force: true });
 fs.mkdirSync(path.dirname(backupDir), { recursive: true });
@@ -41,8 +50,27 @@ try {
   for (const [datasetName, rows] of Object.entries(stage.append ?? {})) {
     if (!rows?.length) continue;
     const dataset = catalog[datasetName];
-    if (!dataset) throw new Error(`未知数据集：${datasetName}`);
+    if (!dataset) continue; // 跳过 meta 键（observations / field_resolutions / entity_aliases / entity_updates）
     writeCsv(dataset.filePath, dataset.schema.columns, [...dataset.records, ...rows]);
+  }
+
+  // Phase 4：将字段裁决的 auto_fill（及已裁决 adopt）合并进既有实体记录。
+  const updates = stage.append?.entity_updates ?? [];
+  if (updates.length) {
+    const affected = new Set();
+    for (const u of updates) {
+      const dataset = catalog[u.dataset];
+      if (!dataset) throw new Error(`未知数据集：${u.dataset}`);
+      const rec = dataset.records.find((row) => row.id === u.id);
+      if (!rec) throw new Error(`entity_update 找不到 ${u.dataset} ${u.id}`);
+      rec[u.field] = u.value;
+      affected.add(u.dataset);
+    }
+    for (const ds of affected) {
+      const dataset = catalog[ds];
+      writeCsv(dataset.filePath, dataset.schema.columns, dataset.records);
+    }
+    console.log(`已合并 ${updates.length} 条字段裁决更新到既有实体。`);
   }
 
   const check = spawnSync(process.execPath, [path.join(ROOT, "scripts", "validate-data.mjs")], { cwd: ROOT, encoding: "utf8" });
