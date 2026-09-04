@@ -53,7 +53,7 @@
 - 作品页关系 + 女优页完整资料一次 Prepare
 - 首个 MOODYZ 官方作品与女优正式写入 CSV
 
-## V0.6 — DMM Rental 日文参考源与 XLSX 总览 ✅（当前）
+## V0.6 — DMM Rental 日文参考源与 XLSX 总览 ✅
 
 - FANZA/DMM 宅配单品 Rental 单页 Provider
 - 日文标题 / 出演者 / 監督 / Series / Maker / Label / Genre / 时长 / 封面
@@ -63,23 +63,33 @@
 - `女优总览` / `作品总览` 人类阅读 Sheet
 - 固定规范 Sheet 顺序：女优在女优别名前
 - 修复首次创建非空 Series 时 `seriess` 表名错误
+- 后续补丁见 CHANGELOG V0.6.1–V0.6.3（年龄确认、明文 HTTP 兼容、字段作用域修复）
 
-## V0.7 — 字段级溯源与跨来源 Resolution
+## V0.7.0 — JavInfo API 主采集入口 ✅
 
-- Observation：保存来源对字段的原始观察值
-- Field Resolution：记录最终字段值的选择依据
-- 厂商官方源、DMM/MGS 发行平台、英文补充源的字段冲突报告
-- 跨来源同作品/同女优对齐
-- Provider 版本迁移与 Raw Snapshot 重新解析机制
+- 新增 JavInfo API Provider（`pnpm provider:javinfo`），作为主采集入口
+- API Key 仅从 `JAVINFO_API_KEY` 环境变量读取，不落库 / 不写日志 / 不进 URL
+- Provenance：上游 `source=fanza` 在 Averia 写作 `javinfo-fanza`，明确经中间层获得，不冒充 FANZA 官方直连
+- 已知边界：不做自动翻译或跨语言实体猜测，留待 V0.8 归并层
+- 详见 CHANGELOG V0.7.0 与 `docs/providers/JAVINFO_PROVIDER.md`
 
-## V0.8 — 本地数据库
+## V0.8.0 — 多来源字段级溯源与实体归并（进行中）
+
+- Observation / Field Resolution / entity_aliases 三表（schema + 空 CSV 进入事实源，不进 XLSX）
+- 跨语言 / 跨源实体等同只能经显式 `entity_aliases` 或人工 `resolution` 建立；字符串相似度不自动合并
+- 冲突不得静默 last-write-wins，进入 `field_resolutions(pending_review)` 阻断 Apply 直到人工裁决
+- 已落地：Phase 1（三表 schema 骨架）、Phase 2（`import:prepare` 记录字段级 observations）、Phase 3（`entity_aliases` 精确别名匹配，防跨源重复实体核心修复）
+- 待做：Phase 4（field_resolutions 冲突裁决 + 审核工作台）、Phase 5（JavInfo 多源独立请求）、Phase 6（IPZZ-597 / IPZZ-698 / MDVR-434 三样本回归）、Phase 7（文档收尾）
+- 详见 `docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md` 与 CHANGELOG V0.8.0
+
+## V0.9 — 本地数据库 SQLite
 
 - SQLite 物化
 - 姓名 / 番号搜索索引
 - 从规范 CSV 导入 SQLite
 - CSV 仍保持唯一事实源
 
-## V0.9 — API
+## V1.0 — API
 
 - 女优查询
 - 作品查询
@@ -87,7 +97,7 @@
 - 厂商 / 厂牌 / 系列 / 分类浏览
 - 分页、筛选、排序
 
-## V1.0 — Web 应用
+## V1.1 — Web 应用
 
 - 搜索优先首页
 - 女优资料页
