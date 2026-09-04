@@ -57,6 +57,9 @@
     "series_id",
     "description",
     "cover_url",
+    "thumb_url",
+    "backdrop_url",
+    "score",
     "created_at",
     "updated_at"
   ],
@@ -73,6 +76,9 @@
     "series_id": "系列ID",
     "description": "简介",
     "cover_url": "封面URL",
+    "thumb_url": "缩略图URL",
+    "backdrop_url": "背景图URL",
+    "score": "评分",
     "created_at": "创建时间",
     "updated_at": "更新时间"
   }

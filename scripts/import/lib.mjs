@@ -195,7 +195,7 @@ const ACTRESS_OBSERVABLE_FIELDS = [
   "height_cm", "bust_cm", "waist_cm", "hip_cm", "cup", "blood_type", "birthplace", "status",
   "profile_image_url", "description",
 ];
-const WORK_OBSERVABLE_FIELDS = ["title", "title_ja", "release_date", "duration_min", "description", "cover_url"];
+const WORK_OBSERVABLE_FIELDS = ["title", "title_ja", "release_date", "duration_min", "description", "cover_url", "thumb_url", "backdrop_url", "score"];
 
 function utcNow() {
   return new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
@@ -573,6 +573,9 @@ export function prepareImport(document, options = {}) {
         series_id: seriesId,
         description: input.description ?? "",
         cover_url: input.cover_url ?? "",
+        thumb_url: input.thumb_url ?? "",
+        backdrop_url: input.backdrop_url ?? "",
+        score: input.score ?? "",
         created_at: createdAt,
         updated_at: createdAt,
       }));

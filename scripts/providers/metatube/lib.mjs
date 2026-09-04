@@ -169,6 +169,10 @@ export function parseMetatubeMovieResponse(payload, fetchedAt = new Date().toISO
     directors: directors.map((name, index) => ({ name, ...nameFields(name, lang), position: index + 1 })),
     cast: actressNames.map((name, index) => ({ name, position: index + 1 })),
     cover_url: clean(movie.cover_url || movie.big_cover_url),
+    ...(clean(movie.summary) ? { description: clean(movie.summary) } : {}),
+    thumb_url: clean(movie.thumb_url),
+    backdrop_url: clean(movie.backdrop_url),
+    score: Number.isFinite(Number(movie.score)) ? Number(movie.score) : "",
     codes: [],
     source_notes: sourceNotes,
   };
@@ -192,8 +196,11 @@ export function parseMetatubeMovieResponse(payload, fetchedAt = new Date().toISO
       title,
       maker: makers[0] || "",
       cover_url_present: Boolean(work.cover_url),
+      thumb_url_present: Boolean(work.thumb_url),
+      backdrop_url_present: Boolean(work.backdrop_url),
+      score_present: Boolean(work.score),
       actor_count: actressNames.length,
-      note: "MetaTube 返回的原始 JSON 保留在 raw.json；canonical 只映射 Averia 已有字段，预览图/评分将在后续媒体表建模。",
+      note: "MetaTube 返回的原始 JSON 保留在 raw.json；canonical 已映射 summary→description、thumb_url、backdrop_url、score（ADR-0002 作品富字段）。",
     },
   };
 }
