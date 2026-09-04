@@ -65,6 +65,9 @@
 | `series_id` | 系列ID | 否 | 稳定 ID |
 | `description` | 简介 | 否 | 文本/按业务含义填写 |
 | `cover_url` | 封面URL | 否 | 绝对 URL |
+| `thumb_url` | 缩略图URL | 否 | 绝对 URL |
+| `backdrop_url` | 背景图URL | 否 | 绝对 URL |
+| `score` | 评分 | 否 | 浮点（文本列，保留小数精度） |
 | `created_at` | 创建时间 | 否 | UTC 时间戳 |
 | `updated_at` | 更新时间 | 否 | UTC 时间戳 |
 

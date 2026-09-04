@@ -78,8 +78,9 @@
 - Observation / Field Resolution / entity_aliases 三表（schema + 空 CSV 进入事实源，不进 XLSX）
 - 跨语言 / 跨源实体等同只能经显式 `entity_aliases` 或人工 `resolution` 建立；字符串相似度不自动合并
 - 冲突不得静默 last-write-wins，进入 `field_resolutions(pending_review)` 阻断 Apply 直到人工裁决
-- 已落地：Phase 1（三表 schema 骨架）、Phase 2（`import:prepare` 记录字段级 observations）、Phase 3（`entity_aliases` 精确别名匹配，防跨源重复实体核心修复）
-- 待做：Phase 4（field_resolutions 冲突裁决 + 审核工作台）、Phase 5（JavInfo 多源独立请求）、Phase 6（IPZZ-597 / IPZZ-698 / MDVR-434 三样本回归）、Phase 7（文档收尾）
+- 已落地：Phase 1（三表 schema 骨架）、Phase 2（`import:prepare` 记录字段级 observations）、Phase 3（`entity_aliases` 精确别名匹配，防跨源重复实体核心修复）、Phase 4（field_resolutions 冲突裁决 + 冲突阻断 Apply）
+- 已落地（作品富字段 / ADR-0002）：`works` 新增 `thumb_url` / `backdrop_url` / `score`，`description` 由 metatube `summary` 喂入；metatube adapter 不再静默丢弃高价值字段，新增字段纳入 Phase 4 观察 / 裁决
+- 待做：Phase 5（JavInfo 多源独立请求）、Phase 6（IPZZ-597 / IPZZ-698 / MDVR-434 三样本回归）、Phase 7（文档收尾）
 - 详见 `docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md` 与 CHANGELOG V0.8.0
 
 ## V0.9 — 本地数据库 SQLite（派生只读层）

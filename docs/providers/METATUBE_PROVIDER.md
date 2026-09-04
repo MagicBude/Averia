@@ -81,6 +81,10 @@ metatube-server (34 源)  ──REST JSON──▶  provider-metatube.mjs
 | `director` | `directors[]` |
 | `actors[]` | `cast[]`（并展开为 `actresses[]`） |
 | `cover_url` | `cover_url` |
+| `summary` | `description`（剧情简介） |
+| `thumb_url` | `thumb_url` |
+| `backdrop_url` | `backdrop_url` |
+| `score` | `score`（评分，浮点存文本列） |
 | `provider` | `source.name = metatube-<provider>`，`language`/`role` 按源定 |
 
 | MetaTube ActorInfo | Averia canonical actress |

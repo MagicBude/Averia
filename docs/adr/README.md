@@ -28,3 +28,4 @@
 | ADR | 标题 | 状态 | 日期 |
 | --- | ---: | --- | --- |
 | [0001](./0001-source-of-truth-format.md) | 真相源格式：CSV 为唯一事实源，JSON 为中间表示，SQLite 为派生只读层 | Accepted | 2026-09-04 |
+| [0002](./0002-enrich-works-rich-fields.md) | 作品 schema 富字段补强：落库 MetaTube 的 summary / thumb_url / backdrop_url / score | Accepted | 2026-09-04 |

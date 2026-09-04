@@ -49,6 +49,14 @@ Averia 的逐版本变更记录。每个版本的 **核心变更、新增 Provid
 - `scripts/import/lib.mjs` 导出纯函数 `pendingReviewCount(stage)` 与 `applyResolutionDecision(stage, opts)`，供 CLI 与测试复用。
 - 范围说明：本阶段覆盖 actress / work 标量字段冲突；taxonomy 实体（maker/label 等）的英文名补全为同源机制的自然延伸，留待后续批次接入时补 `resolveSimpleEntity` 的 `entity_updates` 回写。
 
+已落地（作品富字段 / ADR-0002）：metatube adapter 此前静默丢弃的 `MovieInfo` 高价值字段现已落库，详见 `docs/adr/0002-enrich-works-rich-fields.md`。
+
+- `works.schema.json` 新增 `thumb_url` / `backdrop_url` / `score` 三列（插在 `cover_url` 之后）；`description` 列早已存在，本次由 adapter 从 `summary` 喂入。
+- metatube adapter 映射：`summary`→`description`、`thumb_url`→`thumb_url`、`backdrop_url`→`backdrop_url`、`score`→`score`（浮点存文本列）。
+- `WORK_OBSERVABLE_FIELDS` 纳入三新字段，使 Phase 4 字段级观察 / 裁决覆盖评分等；多源评分冲突自然进入 `pending_review`，由人工裁决。
+- 女优 image 图集（`images[1..]`）本期不建模，保持单 `profile_image_url`；媒体 / 图集规范化建模留待 V0.9 / V1.0 的媒体表 ADR。
+- 正式 `data/works/works.csv` 已做列迁移（表头与 schema 一致），既有 2 行数据无损；`pnpm check` 全绿。
+
 详细设计：**`docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md`**。
 
 ---
