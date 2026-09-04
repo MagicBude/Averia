@@ -54,6 +54,15 @@
       "description": null,
       "created_at": "2026-08-31T14:50:24Z",
       "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "genre_000007",
+      "name": "Slender",
+      "name_ja": null,
+      "slug": "slender",
+      "description": null,
+      "created_at": "2026-09-04T06:26:39Z",
+      "updated_at": "2026-09-04T06:26:39Z"
     }
   ]
 }

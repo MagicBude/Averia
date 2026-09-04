@@ -1,4 +1,41 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "ea_000001",
+      "entity_type": "maker",
+      "entity_id": "maker_000002",
+      "alias": "アイデアポケット",
+      "alias_type": "ja",
+      "language": "ja",
+      "source_name": "dmm-rental",
+      "source_record_id": null,
+      "notes": "日文名，与英文名 Idea Pocket 同一厂商",
+      "created_at": "2026-09-04T06:28:18Z"
+    },
+    {
+      "id": "ea_000002",
+      "entity_type": "label",
+      "entity_id": "label_000002",
+      "alias": "ティッシュ",
+      "alias_type": "ja",
+      "language": "ja",
+      "source_name": "dmm-rental",
+      "source_record_id": null,
+      "notes": "日文名，与英文名 Dish 同一厂牌",
+      "created_at": "2026-09-04T06:28:22Z"
+    },
+    {
+      "id": "ea_000003",
+      "entity_type": "genre",
+      "entity_id": "genre_000007",
+      "alias": "スレンダー",
+      "alias_type": "ja",
+      "language": "ja",
+      "source_name": "dmm-rental",
+      "source_record_id": null,
+      "notes": "日文名，与英文名 Slender 同一分类",
+      "created_at": "2026-09-04T06:28:25Z"
+    }
+  ]
 }

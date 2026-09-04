@@ -1,3 +1,5 @@
 id,entity_type,entity_id,source_name,source_record_id,source_url,fetched_at,raw_hash,notes
 source_000001,actress,actress_000001,moodyz-official,actress:855540,https://moodyz.com/actress/detail/855540,2026-08-31T14:36:25.486Z,67b1d54b62410488d86504162e2f850667d6a93d70ef172bcd908fcd1372add9,
 source_000002,work,work_000001,moodyz-official,work:MDVR434,https://moodyz.com/works/detail/MDVR434,2026-08-31T14:18:50.058Z,a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71,
+source_000003,actress,actress_000002,javinfo-fanza,fanza:ipzz00597:actress,,2026-09-01T06:00:00Z,2f144f7959a577622b3d5e613254e27108c9af05d657646b18bb7d7cf91460f6,
+source_000004,work,work_000002,javinfo-fanza,fanza:ipzz00597,,2026-09-01T06:00:00Z,c6eea09a0ca201e4de5842fd46f2add11f3a8a11e7af794492da1c69c784fc08,

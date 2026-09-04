@@ -35,6 +35,28 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "actress_000002",
+        "primary_name": "桃乃木かな",
+        "name_ja": null,
+        "name_en": "Kana Momonogi",
+        "kana": "もものぎ かな",
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": null,
+        "bust_cm": null,
+        "waist_cm": null,
+        "hip_cm": null,
+        "cup": null,
+        "blood_type": null,
+        "birthplace": null,
+        "status": null,
+        "profile_image_url": null,
+        "description": null,
+        "created_at": "2026-09-04T06:26:39Z",
+        "updated_at": "2026-09-04T06:26:39Z"
       }
     ],
     "directors": [
@@ -48,7 +70,44 @@
         "updated_at": "2026-08-31T14:50:24Z"
       }
     ],
-    "entity_aliases": [],
+    "entity_aliases": [
+      {
+        "id": "ea_000001",
+        "entity_type": "maker",
+        "entity_id": "maker_000002",
+        "alias": "アイデアポケット",
+        "alias_type": "ja",
+        "language": "ja",
+        "source_name": "dmm-rental",
+        "source_record_id": null,
+        "notes": "日文名，与英文名 Idea Pocket 同一厂商",
+        "created_at": "2026-09-04T06:28:18Z"
+      },
+      {
+        "id": "ea_000002",
+        "entity_type": "label",
+        "entity_id": "label_000002",
+        "alias": "ティッシュ",
+        "alias_type": "ja",
+        "language": "ja",
+        "source_name": "dmm-rental",
+        "source_record_id": null,
+        "notes": "日文名，与英文名 Dish 同一厂牌",
+        "created_at": "2026-09-04T06:28:22Z"
+      },
+      {
+        "id": "ea_000003",
+        "entity_type": "genre",
+        "entity_id": "genre_000007",
+        "alias": "スレンダー",
+        "alias_type": "ja",
+        "language": "ja",
+        "source_name": "dmm-rental",
+        "source_record_id": null,
+        "notes": "日文名，与英文名 Slender 同一分类",
+        "created_at": "2026-09-04T06:28:25Z"
+      }
+    ],
     "field_resolutions": [],
     "genres": [
       {
@@ -104,6 +163,15 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "genre_000007",
+        "name": "Slender",
+        "name_ja": null,
+        "slug": "slender",
+        "description": null,
+        "created_at": "2026-09-04T06:26:39Z",
+        "updated_at": "2026-09-04T06:26:39Z"
       }
     ],
     "labels": [
@@ -116,6 +184,16 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "label_000002",
+        "maker_id": "maker_000002",
+        "name": "Dish",
+        "name_ja": null,
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T06:26:39Z",
+        "updated_at": "2026-09-04T06:26:39Z"
       }
     ],
     "makers": [
@@ -127,9 +205,149 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "maker_000002",
+        "name": "Idea Pocket",
+        "name_ja": null,
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T06:26:39Z",
+        "updated_at": "2026-09-04T06:26:39Z"
       }
     ],
-    "observations": [],
+    "observations": [
+      {
+        "id": "obs_000001",
+        "entity_type": "actress",
+        "entity_id": "actress_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597:actress",
+        "field": "primary_name",
+        "observed_value": "桃乃木かな",
+        "observed_language": "ja",
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000002",
+        "entity_type": "actress",
+        "entity_id": "actress_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597:actress",
+        "field": "name_en",
+        "observed_value": "Kana Momonogi",
+        "observed_language": "en",
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000003",
+        "entity_type": "actress",
+        "entity_id": "actress_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597:actress",
+        "field": "kana",
+        "observed_value": "もものぎ かな",
+        "observed_language": "ja",
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000004",
+        "entity_type": "maker",
+        "entity_id": "maker_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "Idea Pocket",
+        "observed_language": "en",
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000005",
+        "entity_type": "label",
+        "entity_id": "label_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "Dish",
+        "observed_language": "en",
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000006",
+        "entity_type": "genre",
+        "entity_id": "genre_000007",
+        "source_name": "javinfo-fanza",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "Slender",
+        "observed_language": "en",
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000007",
+        "entity_type": "work",
+        "entity_id": "work_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597",
+        "field": "title",
+        "observed_value": "Grave-bound secret with Kana-chan",
+        "observed_language": null,
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000008",
+        "entity_type": "work",
+        "entity_id": "work_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597",
+        "field": "title_ja",
+        "observed_value": "墓まで持っていく僕とかなちゃん二人だけの秘密",
+        "observed_language": "ja",
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000009",
+        "entity_type": "work",
+        "entity_id": "work_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597",
+        "field": "release_date",
+        "observed_value": "2025-08-08",
+        "observed_language": null,
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000010",
+        "entity_type": "work",
+        "entity_id": "work_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597",
+        "field": "duration_min",
+        "observed_value": "127",
+        "observed_language": null,
+        "observed_at": "2026-09-01T06:00:00Z",
+        "raw_hash": null,
+        "notes": null
+      }
+    ],
     "series": [],
     "source_records": [
       {
@@ -153,12 +371,40 @@
         "fetched_at": "2026-08-31T14:18:50.058Z",
         "raw_hash": "a573fff042a455be7c6c568e130149aef2b5cc4f2a5a7e02680c46839691bc71",
         "notes": null
+      },
+      {
+        "id": "source_000003",
+        "entity_type": "actress",
+        "entity_id": "actress_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597:actress",
+        "source_url": null,
+        "fetched_at": "2026-09-01T06:00:00Z",
+        "raw_hash": "2f144f7959a577622b3d5e613254e27108c9af05d657646b18bb7d7cf91460f6",
+        "notes": null
+      },
+      {
+        "id": "source_000004",
+        "entity_type": "work",
+        "entity_id": "work_000002",
+        "source_name": "javinfo-fanza",
+        "source_record_id": "fanza:ipzz00597",
+        "source_url": null,
+        "fetched_at": "2026-09-01T06:00:00Z",
+        "raw_hash": "c6eea09a0ca201e4de5842fd46f2add11f3a8a11e7af794492da1c69c784fc08",
+        "notes": null
       }
     ],
     "work_cast": [
       {
         "work_id": "work_000001",
         "actress_id": "actress_000001",
+        "role": "actress",
+        "position": 1
+      },
+      {
+        "work_id": "work_000002",
+        "actress_id": "actress_000002",
         "role": "actress",
         "position": 1
       }
@@ -172,6 +418,15 @@
         "code_type": "catalog",
         "is_primary": true,
         "source_id": "source_000002"
+      },
+      {
+        "id": "code_000002",
+        "work_id": "work_000002",
+        "code": "IPZZ-597",
+        "normalized_code": "IPZZ597",
+        "code_type": "catalog",
+        "is_primary": true,
+        "source_id": "source_000004"
       }
     ],
     "work_directors": [
@@ -205,6 +460,10 @@
       {
         "work_id": "work_000001",
         "genre_id": "genre_000006"
+      },
+      {
+        "work_id": "work_000002",
+        "genre_id": "genre_000007"
       }
     ],
     "works": [
@@ -222,6 +481,21 @@
         "cover_url": "https://cdn.up-timely.com/image/30/content/85956/Dfso5IUKMuwfziBdfYsGiA5k9Y8Ukm7rKsayuHbz.jpg",
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "work_000002",
+        "primary_code": "IPZZ-597",
+        "title": "Grave-bound secret with Kana-chan",
+        "title_ja": "墓まで持っていく僕とかなちゃん二人だけの秘密",
+        "release_date": "2025-08-08",
+        "duration_min": 127,
+        "maker_id": "maker_000002",
+        "label_id": "label_000002",
+        "series_id": null,
+        "description": null,
+        "cover_url": null,
+        "created_at": "2026-09-04T06:26:39Z",
+        "updated_at": "2026-09-04T06:26:39Z"
       }
     ]
   }

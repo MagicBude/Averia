@@ -1,1 +1,11 @@
 id,entity_type,entity_id,source_name,source_record_id,field,observed_value,observed_language,observed_at,raw_hash,notes
+obs_000001,actress,actress_000002,javinfo-fanza,fanza:ipzz00597:actress,primary_name,桃乃木かな,ja,2026-09-01T06:00:00Z,,
+obs_000002,actress,actress_000002,javinfo-fanza,fanza:ipzz00597:actress,name_en,Kana Momonogi,en,2026-09-01T06:00:00Z,,
+obs_000003,actress,actress_000002,javinfo-fanza,fanza:ipzz00597:actress,kana,もものぎ かな,ja,2026-09-01T06:00:00Z,,
+obs_000004,maker,maker_000002,javinfo-fanza,,name,Idea Pocket,en,2026-09-01T06:00:00Z,,
+obs_000005,label,label_000002,javinfo-fanza,,name,Dish,en,2026-09-01T06:00:00Z,,
+obs_000006,genre,genre_000007,javinfo-fanza,,name,Slender,en,2026-09-01T06:00:00Z,,
+obs_000007,work,work_000002,javinfo-fanza,fanza:ipzz00597,title,Grave-bound secret with Kana-chan,,2026-09-01T06:00:00Z,,
+obs_000008,work,work_000002,javinfo-fanza,fanza:ipzz00597,title_ja,墓まで持っていく僕とかなちゃん二人だけの秘密,ja,2026-09-01T06:00:00Z,,
+obs_000009,work,work_000002,javinfo-fanza,fanza:ipzz00597,release_date,2025-08-08,,2026-09-01T06:00:00Z,,
+obs_000010,work,work_000002,javinfo-fanza,fanza:ipzz00597,duration_min,127,,2026-09-01T06:00:00Z,,

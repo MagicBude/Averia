@@ -9,6 +9,15 @@
       "code_type": "catalog",
       "is_primary": true,
       "source_id": "source_000002"
+    },
+    {
+      "id": "code_000002",
+      "work_id": "work_000002",
+      "code": "IPZZ-597",
+      "normalized_code": "IPZZ597",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000004"
     }
   ]
 }

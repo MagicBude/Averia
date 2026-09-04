@@ -24,6 +24,10 @@
     {
       "work_id": "work_000001",
       "genre_id": "genre_000006"
+    },
+    {
+      "work_id": "work_000002",
+      "genre_id": "genre_000007"
     }
   ]
 }

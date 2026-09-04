@@ -1,4 +1,135 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "obs_000001",
+      "entity_type": "actress",
+      "entity_id": "actress_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": "fanza:ipzz00597:actress",
+      "field": "primary_name",
+      "observed_value": "桃乃木かな",
+      "observed_language": "ja",
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000002",
+      "entity_type": "actress",
+      "entity_id": "actress_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": "fanza:ipzz00597:actress",
+      "field": "name_en",
+      "observed_value": "Kana Momonogi",
+      "observed_language": "en",
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000003",
+      "entity_type": "actress",
+      "entity_id": "actress_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": "fanza:ipzz00597:actress",
+      "field": "kana",
+      "observed_value": "もものぎ かな",
+      "observed_language": "ja",
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000004",
+      "entity_type": "maker",
+      "entity_id": "maker_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": null,
+      "field": "name",
+      "observed_value": "Idea Pocket",
+      "observed_language": "en",
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000005",
+      "entity_type": "label",
+      "entity_id": "label_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": null,
+      "field": "name",
+      "observed_value": "Dish",
+      "observed_language": "en",
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000006",
+      "entity_type": "genre",
+      "entity_id": "genre_000007",
+      "source_name": "javinfo-fanza",
+      "source_record_id": null,
+      "field": "name",
+      "observed_value": "Slender",
+      "observed_language": "en",
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000007",
+      "entity_type": "work",
+      "entity_id": "work_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": "fanza:ipzz00597",
+      "field": "title",
+      "observed_value": "Grave-bound secret with Kana-chan",
+      "observed_language": null,
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000008",
+      "entity_type": "work",
+      "entity_id": "work_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": "fanza:ipzz00597",
+      "field": "title_ja",
+      "observed_value": "墓まで持っていく僕とかなちゃん二人だけの秘密",
+      "observed_language": "ja",
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000009",
+      "entity_type": "work",
+      "entity_id": "work_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": "fanza:ipzz00597",
+      "field": "release_date",
+      "observed_value": "2025-08-08",
+      "observed_language": null,
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    },
+    {
+      "id": "obs_000010",
+      "entity_type": "work",
+      "entity_id": "work_000002",
+      "source_name": "javinfo-fanza",
+      "source_record_id": "fanza:ipzz00597",
+      "field": "duration_min",
+      "observed_value": "127",
+      "observed_language": null,
+      "observed_at": "2026-09-01T06:00:00Z",
+      "raw_hash": null,
+      "notes": null
+    }
+  ]
 }
