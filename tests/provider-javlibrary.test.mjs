@@ -7,7 +7,7 @@ import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { buildJavlibraryUrl, normalizeJavlibraryUrl, parseJavlibraryWork } from "../scripts/providers/javlibrary/lib.mjs";
-import { loadCatalog } from "../scripts/lib/catalog.mjs";
+import { loadEmptyCatalog } from "./helpers/catalog.mjs";
 import { prepareImport } from "../scripts/import/lib.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -56,7 +56,9 @@ test("JavLibrary 作品页可解析为 Averia 统一导入 JSON（复用 OpenAve
 });
 
 test("JavLibrary 作品进入 Prepare 不报错，且番号写入 work_codes", () => {
-  const catalog = loadCatalog();
+  // 用空目录隔离：正式目录是否会演进（例如 IPZZ-597 已入库）不应影响解析行为的断言，
+  // 否则作品一旦命中既有番号就不再追加 work_codes，测试会假失败。
+  const catalog = loadEmptyCatalog();
   const parsed = parseJavlibraryWork(fixture("work-ipzz-597.html"), SAMPLE_URL, NOW);
   const stage = prepareImport(parsed.canonical, { catalog, batchId: "provider-test", now: NOW, fingerprint: "test" });
   assert.equal(stage.summary.error_count, 0);
