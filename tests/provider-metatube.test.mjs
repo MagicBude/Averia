@@ -49,6 +49,12 @@ test("解析 fanza 电影响应为 Averia canonical（含日文名映射）", ()
   assert.equal(work.cast[0].name, "桃乃木かな");
   assert.equal(work.cover_url, "https://pics.dmm.co.jp/digital/videoa/ipzz00597/ipzz00597pl.jpg");
 
+  // ADR-0002：作品富字段（summary→description / thumb_url / backdrop_url / score）
+  assert.equal(work.description, "ある日、隣に引っ越してきたのは昔の同級生だった。");
+  assert.equal(work.thumb_url, "https://pics.dmm.co.jp/digital/videoa/ipzz00597/ipzz00597pt.jpg");
+  assert.equal(work.backdrop_url, "https://pics.dmm.co.jp/digital/videoa/ipzz00597/ipzz00597bd.jpg");
+  assert.equal(work.score, 4.2);
+
   // 女优被展开到 actresses
   assert.equal(canonical.actresses.length, 1);
   assert.equal(canonical.actresses[0].primary_name, "桃乃木かな");
