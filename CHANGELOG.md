@@ -40,6 +40,15 @@ Averia 的逐版本变更记录。每个版本的 **核心变更、新增 Provid
 - 修复：新建 genre 时 `slug` 为必填但来源未给则留空，导致 `import:apply` 校验失败。现按「来源 slug → 名称转写 → 实体 ID 片段」兜底，保证非空且稳定。
 - 验证：IPZZ-597（javinfo 英文源）入库后，日文源导入同一厂商 / 厂牌 / 分类 —— 登记别名前新建 3 个重复实体，登记后精确命中既有 ID、零新增。
 
+已落地（Phase 4）：字段级裁决与冲突阻断 —— 多来源安全入库的最后一道闸。
+
+- `prepareImport` 对既有实体的每个贡献字段做裁决：既有为空 + 单一来源补全 → `field_resolutions(auto_fill)` 并写入 `entity_updates`（可安全 Apply）；两者皆非空且不同 → `field_resolutions(pending_review)`（阻断该字段，不静默覆盖）；同值 → 仅记 `observations`。
+- `import:apply` 遇任意 `pending_review` **整体阻断**（exit 5），对应 AGENTS「冲突不可静默解决」；否则将 `entity_updates` 合并进既有实体记录并重写受影响数据集 CSV。
+- 新增 `pnpm resolution:report`（列出待裁决冲突与双方值）、`pnpm resolution:decide -- --entity-type <类型> --entity-id <ID> --field <字段> --decision adopt|keep`（翻转 `pending_review` 为 `manual`，adopt 时追加 `entity_update`；改前备份 `stage.json`）。
+- 导入报告新增「字段裁决」小节（auto_fill / pending_review 分列）。
+- `scripts/import/lib.mjs` 导出纯函数 `pendingReviewCount(stage)` 与 `applyResolutionDecision(stage, opts)`，供 CLI 与测试复用。
+- 范围说明：本阶段覆盖 actress / work 标量字段冲突；taxonomy 实体（maker/label 等）的英文名补全为同源机制的自然延伸，留待后续批次接入时补 `resolveSimpleEntity` 的 `entity_updates` 回写。
+
 详细设计：**`docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md`**。
 
 ---
