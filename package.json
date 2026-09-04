@@ -21,6 +21,8 @@
     "import:report": "node scripts/import-report.mjs",
     "import:apply": "node scripts/import-apply.mjs",
     "resolve:link": "node scripts/resolve-link.mjs",
+    "resolution:report": "node scripts/resolution.mjs report",
+    "resolution:decide": "node scripts/resolution.mjs decide",
     "provider:javdatabase": "node scripts/provider-javdatabase.mjs",
     "provider:moodyz": "node scripts/provider-moodyz.mjs",
     "provider:dmm-rental": "node scripts/provider-dmm-rental.mjs",
