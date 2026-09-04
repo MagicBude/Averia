@@ -1,3 +1,7 @@
 id,work_id,code,normalized_code,code_type,is_primary,source_id
 code_000001,work_000001,MDVR-434,MDVR434,catalog,true,source_000002
 code_000002,work_000002,IPZZ-597,IPZZ597,catalog,true,source_000004
+code_000003,work_000003,SSIS-001,SSIS001,catalog,true,source_000005
+code_000004,work_000004,MIDE-345,MIDE345,catalog,true,source_000006
+code_000005,work_000005,IPX-001,IPX001,catalog,true,source_000007
+code_000006,work_000006,WANZ-912,WANZ912,catalog,true,source_000008

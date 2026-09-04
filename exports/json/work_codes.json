@@ -18,6 +18,42 @@
       "code_type": "catalog",
       "is_primary": true,
       "source_id": "source_000004"
+    },
+    {
+      "id": "code_000003",
+      "work_id": "work_000003",
+      "code": "SSIS-001",
+      "normalized_code": "SSIS001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000005"
+    },
+    {
+      "id": "code_000004",
+      "work_id": "work_000004",
+      "code": "MIDE-345",
+      "normalized_code": "MIDE345",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000006"
+    },
+    {
+      "id": "code_000005",
+      "work_id": "work_000005",
+      "code": "IPX-001",
+      "normalized_code": "IPX001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000007"
+    },
+    {
+      "id": "code_000006",
+      "work_id": "work_000006",
+      "code": "WANZ-912",
+      "normalized_code": "WANZ912",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000008"
     }
   ]
 }

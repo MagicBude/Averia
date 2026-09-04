@@ -12,6 +12,36 @@
       "actress_id": "actress_000002",
       "role": "actress",
       "position": 1
+    },
+    {
+      "work_id": "work_000003",
+      "actress_id": "actress_000003",
+      "role": "actress",
+      "position": 1
+    },
+    {
+      "work_id": "work_000003",
+      "actress_id": "actress_000004",
+      "role": "actress",
+      "position": 2
+    },
+    {
+      "work_id": "work_000004",
+      "actress_id": "actress_000005",
+      "role": "actress",
+      "position": 1
+    },
+    {
+      "work_id": "work_000005",
+      "actress_id": "actress_000006",
+      "role": "actress",
+      "position": 1
+    },
+    {
+      "work_id": "work_000006",
+      "actress_id": "actress_000007",
+      "role": "actress",
+      "position": 1
     }
   ]
 }

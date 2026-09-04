@@ -44,6 +44,50 @@
       "fetched_at": "2026-09-01T06:00:00Z",
       "raw_hash": "c6eea09a0ca201e4de5842fd46f2add11f3a8a11e7af794492da1c69c784fc08",
       "notes": null
+    },
+    {
+      "id": "source_000005",
+      "entity_type": "work",
+      "entity_id": "work_000003",
+      "source_name": "metatube-bulk",
+      "source_record_id": "JavBus:SSIS-001",
+      "source_url": "https://www.javbus.com/ja/SSIS-001",
+      "fetched_at": "2026-09-04T08:56:34.680Z",
+      "raw_hash": "649f763a9c840d75e57b0354ad115a2378cd3b8bf31d8ddd6b3dabf340fae324",
+      "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
+    },
+    {
+      "id": "source_000006",
+      "entity_type": "work",
+      "entity_id": "work_000004",
+      "source_name": "metatube-bulk",
+      "source_record_id": "JavBus:MIDE-345",
+      "source_url": "https://www.javbus.com/ja/MIDE-345",
+      "fetched_at": "2026-09-04T08:56:36.689Z",
+      "raw_hash": "eccdb0254fc2dc9f9233374d1dbbda1040131512909cad9a4ef2249c1d41ec7b",
+      "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
+    },
+    {
+      "id": "source_000007",
+      "entity_type": "work",
+      "entity_id": "work_000005",
+      "source_name": "metatube-bulk",
+      "source_record_id": "JavBus:IPX-001",
+      "source_url": "https://www.javbus.com/ja/IPX-001",
+      "fetched_at": "2026-09-04T08:56:38.702Z",
+      "raw_hash": "eea891d314431d5bf7d885593d966a380b273920451f2055aa5d08cfc8e0dca7",
+      "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
+    },
+    {
+      "id": "source_000008",
+      "entity_type": "work",
+      "entity_id": "work_000006",
+      "source_name": "metatube-bulk",
+      "source_record_id": "JavBus:WANZ-912",
+      "source_url": "https://www.javbus.com/ja/WANZ-912",
+      "fetched_at": "2026-09-04T08:56:40.712Z",
+      "raw_hash": "f72c0ba9de8b34a573d01afe61328ec72130c5ca56af151074fe426e1c0aa146",
+      "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
     }
   ]
 }

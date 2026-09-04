@@ -57,6 +57,116 @@
         "description": null,
         "created_at": "2026-09-04T06:26:39Z",
         "updated_at": "2026-09-04T06:26:39Z"
+      },
+      {
+        "id": "actress_000003",
+        "primary_name": "葵つかさ",
+        "name_ja": "葵つかさ",
+        "name_en": null,
+        "kana": null,
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": null,
+        "bust_cm": null,
+        "waist_cm": null,
+        "hip_cm": null,
+        "cup": null,
+        "blood_type": null,
+        "birthplace": null,
+        "status": "unknown",
+        "profile_image_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "actress_000004",
+        "primary_name": "乙白さやか",
+        "name_ja": "乙白さやか",
+        "name_en": null,
+        "kana": null,
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": null,
+        "bust_cm": null,
+        "waist_cm": null,
+        "hip_cm": null,
+        "cup": null,
+        "blood_type": null,
+        "birthplace": null,
+        "status": "unknown",
+        "profile_image_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "actress_000005",
+        "primary_name": "JULIA",
+        "name_ja": null,
+        "name_en": "JULIA",
+        "kana": null,
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": null,
+        "bust_cm": null,
+        "waist_cm": null,
+        "hip_cm": null,
+        "cup": null,
+        "blood_type": null,
+        "birthplace": null,
+        "status": "unknown",
+        "profile_image_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "actress_000006",
+        "primary_name": "妃月るい",
+        "name_ja": "妃月るい",
+        "name_en": null,
+        "kana": null,
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": null,
+        "bust_cm": null,
+        "waist_cm": null,
+        "hip_cm": null,
+        "cup": null,
+        "blood_type": null,
+        "birthplace": null,
+        "status": "unknown",
+        "profile_image_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "actress_000007",
+        "primary_name": "桐谷まつり",
+        "name_ja": "桐谷まつり",
+        "name_en": null,
+        "kana": null,
+        "birth_date": null,
+        "debut_date": null,
+        "retirement_date": null,
+        "height_cm": null,
+        "bust_cm": null,
+        "waist_cm": null,
+        "hip_cm": null,
+        "cup": null,
+        "blood_type": null,
+        "birthplace": null,
+        "status": "unknown",
+        "profile_image_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
       }
     ],
     "directors": [
@@ -68,6 +178,33 @@
         "description": null,
         "created_at": "2026-08-31T14:50:24Z",
         "updated_at": "2026-08-31T14:50:24Z"
+      },
+      {
+        "id": "director_000002",
+        "name": "苺原",
+        "name_ja": "苺原",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "director_000003",
+        "name": "南★波王",
+        "name_ja": "南★波王",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "director_000004",
+        "name": "刃修羅",
+        "name_ja": "刃修羅",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
       }
     ],
     "entity_aliases": [
@@ -172,6 +309,186 @@
         "description": null,
         "created_at": "2026-09-04T06:26:39Z",
         "updated_at": "2026-09-04T06:26:39Z"
+      },
+      {
+        "id": "genre_000008",
+        "name": "3P・4P",
+        "name_ja": "3P・4P",
+        "slug": "metatube-JavBus-3200468f1f",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000009",
+        "name": "美乳",
+        "name_ja": "美乳",
+        "slug": "metatube-JavBus-4464f10587",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000010",
+        "name": "ギリモザ",
+        "name_ja": "ギリモザ",
+        "slug": "metatube-JavBus-f2fa31e270",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000011",
+        "name": "ハイビジョン",
+        "name_ja": "ハイビジョン",
+        "slug": "metatube-JavBus-6a63da99f0",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000012",
+        "name": "寝取り・寝取られ",
+        "name_ja": "寝取り・寝取られ",
+        "slug": "metatube-JavBus-7017909de1",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000013",
+        "name": "ドラマ",
+        "name_ja": "ドラマ",
+        "slug": "metatube-JavBus-77bf3dd73e",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000014",
+        "name": "独占配信",
+        "name_ja": "独占配信",
+        "slug": "metatube-JavBus-772cdec556",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000015",
+        "name": "淫語",
+        "name_ja": "淫語",
+        "slug": "metatube-JavBus-8d3154b878",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000016",
+        "name": "デジモ",
+        "name_ja": "デジモ",
+        "slug": "metatube-JavBus-c39811b970",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000017",
+        "name": "主観",
+        "name_ja": "主観",
+        "slug": "metatube-JavBus-e55126756e",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000018",
+        "name": "顔面騎乗",
+        "name_ja": "顔面騎乗",
+        "slug": "metatube-JavBus-8cdb2c7dc0",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000019",
+        "name": "巨乳",
+        "name_ja": "巨乳",
+        "slug": "metatube-JavBus-f7f4f3529b",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000020",
+        "name": "単体作品",
+        "name_ja": "単体作品",
+        "slug": "metatube-JavBus-2d5a1de18a",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000021",
+        "name": "ハメ撮り",
+        "name_ja": "ハメ撮り",
+        "slug": "metatube-JavBus-b03ff91d92",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000022",
+        "name": "イラマチオ",
+        "name_ja": "イラマチオ",
+        "slug": "metatube-JavBus-426b690eb8",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000023",
+        "name": "女子校生",
+        "name_ja": "女子校生",
+        "slug": "metatube-JavBus-370256efd8",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000024",
+        "name": "痴女",
+        "name_ja": "痴女",
+        "slug": "metatube-JavBus-42b6825023",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000025",
+        "name": "潮吹き",
+        "name_ja": "潮吹き",
+        "slug": "metatube-JavBus-9cdef30322",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000026",
+        "name": "中出し",
+        "name_ja": "中出し",
+        "slug": "metatube-JavBus-3fe20114f3",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "genre_000027",
+        "name": "手コキ",
+        "name_ja": "手コキ",
+        "slug": "metatube-JavBus-ccb8c72421",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
       }
     ],
     "labels": [
@@ -194,6 +511,36 @@
         "description": null,
         "created_at": "2026-09-04T06:26:39Z",
         "updated_at": "2026-09-04T06:26:39Z"
+      },
+      {
+        "id": "label_000003",
+        "maker_id": "maker_000003",
+        "name": "S1 NO.1 STYLE",
+        "name_ja": null,
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "label_000004",
+        "maker_id": "maker_000004",
+        "name": "MOODYZDIVA",
+        "name_ja": null,
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "label_000005",
+        "maker_id": "maker_000005",
+        "name": "WANZ",
+        "name_ja": null,
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
       }
     ],
     "makers": [
@@ -214,6 +561,33 @@
         "description": null,
         "created_at": "2026-09-04T06:26:39Z",
         "updated_at": "2026-09-04T06:26:39Z"
+      },
+      {
+        "id": "maker_000003",
+        "name": "エスワン ナンバーワンスタイル",
+        "name_ja": "エスワン ナンバーワンスタイル",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "maker_000004",
+        "name": "ムーディーズ",
+        "name_ja": "ムーディーズ",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "maker_000005",
+        "name": "ワンズファクトリー",
+        "name_ja": "ワンズファクトリー",
+        "website_url": null,
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
       }
     ],
     "observations": [
@@ -346,9 +720,1320 @@
         "observed_at": "2026-09-01T06:00:00Z",
         "raw_hash": null,
         "notes": null
+      },
+      {
+        "id": "obs_000011",
+        "entity_type": "actress",
+        "entity_id": "actress_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "primary_name",
+        "observed_value": "葵つかさ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000012",
+        "entity_type": "actress",
+        "entity_id": "actress_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "葵つかさ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000013",
+        "entity_type": "actress",
+        "entity_id": "actress_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "status",
+        "observed_value": "unknown",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000014",
+        "entity_type": "actress",
+        "entity_id": "actress_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "primary_name",
+        "observed_value": "乙白さやか",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000015",
+        "entity_type": "actress",
+        "entity_id": "actress_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "乙白さやか",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000016",
+        "entity_type": "actress",
+        "entity_id": "actress_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "status",
+        "observed_value": "unknown",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000017",
+        "entity_type": "actress",
+        "entity_id": "actress_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "primary_name",
+        "observed_value": "JULIA",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000018",
+        "entity_type": "actress",
+        "entity_id": "actress_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_en",
+        "observed_value": "JULIA",
+        "observed_language": "en",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000019",
+        "entity_type": "actress",
+        "entity_id": "actress_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "status",
+        "observed_value": "unknown",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000020",
+        "entity_type": "actress",
+        "entity_id": "actress_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "primary_name",
+        "observed_value": "妃月るい",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000021",
+        "entity_type": "actress",
+        "entity_id": "actress_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "妃月るい",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000022",
+        "entity_type": "actress",
+        "entity_id": "actress_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "status",
+        "observed_value": "unknown",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000023",
+        "entity_type": "actress",
+        "entity_id": "actress_000007",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "primary_name",
+        "observed_value": "桐谷まつり",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000024",
+        "entity_type": "actress",
+        "entity_id": "actress_000007",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "桐谷まつり",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000025",
+        "entity_type": "actress",
+        "entity_id": "actress_000007",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "status",
+        "observed_value": "unknown",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000026",
+        "entity_type": "maker",
+        "entity_id": "maker_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "エスワン ナンバーワンスタイル",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000027",
+        "entity_type": "maker",
+        "entity_id": "maker_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "エスワン ナンバーワンスタイル",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000028",
+        "entity_type": "label",
+        "entity_id": "label_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "S1 NO.1 STYLE",
+        "observed_language": "en",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000029",
+        "entity_type": "genre",
+        "entity_id": "genre_000008",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "3P・4P",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000030",
+        "entity_type": "genre",
+        "entity_id": "genre_000008",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "3P・4P",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000031",
+        "entity_type": "genre",
+        "entity_id": "genre_000009",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "美乳",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000032",
+        "entity_type": "genre",
+        "entity_id": "genre_000009",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "美乳",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000033",
+        "entity_type": "genre",
+        "entity_id": "genre_000010",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "ギリモザ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000034",
+        "entity_type": "genre",
+        "entity_id": "genre_000010",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "ギリモザ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000035",
+        "entity_type": "genre",
+        "entity_id": "genre_000011",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "ハイビジョン",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000036",
+        "entity_type": "genre",
+        "entity_id": "genre_000011",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "ハイビジョン",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000037",
+        "entity_type": "genre",
+        "entity_id": "genre_000012",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "寝取り・寝取られ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000038",
+        "entity_type": "genre",
+        "entity_id": "genre_000012",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "寝取り・寝取られ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000039",
+        "entity_type": "genre",
+        "entity_id": "genre_000013",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "ドラマ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000040",
+        "entity_type": "genre",
+        "entity_id": "genre_000013",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "ドラマ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000041",
+        "entity_type": "genre",
+        "entity_id": "genre_000014",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "独占配信",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000042",
+        "entity_type": "genre",
+        "entity_id": "genre_000014",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "独占配信",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000043",
+        "entity_type": "director",
+        "entity_id": "director_000002",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "苺原",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000044",
+        "entity_type": "director",
+        "entity_id": "director_000002",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "苺原",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000045",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "field": "title",
+        "observed_value": "一ヶ月間の禁欲の果てに彼女のルームメイト2人と浮気SEXだけに没頭した彼女不在の3日間。 葵つかさ 乙白さやか",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000046",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "field": "title_ja",
+        "observed_value": "一ヶ月間の禁欲の果てに彼女のルームメイト2人と浮気SEXだけに没頭した彼女不在の3日間。 葵つかさ 乙白さやか",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000047",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "field": "release_date",
+        "observed_value": "2021-02-18",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000048",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "field": "duration_min",
+        "observed_value": "150",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000049",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "field": "cover_url",
+        "observed_value": "https://www.javbus.com/pics/cover/83ie_b.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000050",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "field": "thumb_url",
+        "observed_value": "https://www.javbus.com/pics/thumb/83ie.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000051",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "field": "score",
+        "observed_value": "0",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000052",
+        "entity_type": "maker",
+        "entity_id": "maker_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "ムーディーズ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000053",
+        "entity_type": "maker",
+        "entity_id": "maker_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "ムーディーズ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000054",
+        "entity_type": "label",
+        "entity_id": "label_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "MOODYZDIVA",
+        "observed_language": "en",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000055",
+        "entity_type": "genre",
+        "entity_id": "genre_000015",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "淫語",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000056",
+        "entity_type": "genre",
+        "entity_id": "genre_000015",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "淫語",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000057",
+        "entity_type": "genre",
+        "entity_id": "genre_000016",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "デジモ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000058",
+        "entity_type": "genre",
+        "entity_id": "genre_000016",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "デジモ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000059",
+        "entity_type": "genre",
+        "entity_id": "genre_000017",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "主観",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000060",
+        "entity_type": "genre",
+        "entity_id": "genre_000017",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "主観",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000061",
+        "entity_type": "genre",
+        "entity_id": "genre_000018",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "顔面騎乗",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000062",
+        "entity_type": "genre",
+        "entity_id": "genre_000018",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "顔面騎乗",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000063",
+        "entity_type": "genre",
+        "entity_id": "genre_000019",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "巨乳",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000064",
+        "entity_type": "genre",
+        "entity_id": "genre_000019",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "巨乳",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000065",
+        "entity_type": "genre",
+        "entity_id": "genre_000020",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "単体作品",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000066",
+        "entity_type": "genre",
+        "entity_id": "genre_000020",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "単体作品",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000067",
+        "entity_type": "director",
+        "entity_id": "director_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "南★波王",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000068",
+        "entity_type": "director",
+        "entity_id": "director_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "南★波王",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000069",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "field": "title",
+        "observed_value": "JULIA 騎乗位SPECIAL",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000070",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "field": "title_ja",
+        "observed_value": "JULIA 騎乗位SPECIAL",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000071",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "field": "release_date",
+        "observed_value": "2016-07-30",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000072",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "field": "duration_min",
+        "observed_value": "150",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000073",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "field": "cover_url",
+        "observed_value": "https://www.javbus.com/pics/cover/5klt_b.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000074",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "field": "thumb_url",
+        "observed_value": "https://www.javbus.com/pics/thumb/5klt.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000075",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "field": "score",
+        "observed_value": "0",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000076",
+        "entity_type": "genre",
+        "entity_id": "genre_000021",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "ハメ撮り",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000077",
+        "entity_type": "genre",
+        "entity_id": "genre_000021",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "ハメ撮り",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000078",
+        "entity_type": "genre",
+        "entity_id": "genre_000022",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "イラマチオ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000079",
+        "entity_type": "genre",
+        "entity_id": "genre_000022",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "イラマチオ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000080",
+        "entity_type": "genre",
+        "entity_id": "genre_000023",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "女子校生",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000081",
+        "entity_type": "genre",
+        "entity_id": "genre_000023",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "女子校生",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000082",
+        "entity_type": "director",
+        "entity_id": "director_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "刃修羅",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000083",
+        "entity_type": "director",
+        "entity_id": "director_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "刃修羅",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000084",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "field": "title",
+        "observed_value": "女子校生便所交際 便所でしか濡れないおじさん好きの変態マゾ美少女と思う存分便所ファック！ 妃月るい",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000085",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "field": "title_ja",
+        "observed_value": "女子校生便所交際 便所でしか濡れないおじさん好きの変態マゾ美少女と思う存分便所ファック！ 妃月るい",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000086",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "field": "release_date",
+        "observed_value": "2017-08-11",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000087",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "field": "duration_min",
+        "observed_value": "160",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000088",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "field": "cover_url",
+        "observed_value": "https://www.javbus.com/pics/cover/649d_b.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000089",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "field": "thumb_url",
+        "observed_value": "https://www.javbus.com/pics/thumb/649d.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000090",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "field": "score",
+        "observed_value": "0",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000091",
+        "entity_type": "maker",
+        "entity_id": "maker_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "ワンズファクトリー",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000092",
+        "entity_type": "maker",
+        "entity_id": "maker_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "ワンズファクトリー",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000093",
+        "entity_type": "label",
+        "entity_id": "label_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "WANZ",
+        "observed_language": "en",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000094",
+        "entity_type": "series",
+        "entity_id": "series_000001",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "男潮吹きそのまま挿入、スプラッシュ中出し！",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000095",
+        "entity_type": "series",
+        "entity_id": "series_000001",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "男潮吹きそのまま挿入、スプラッシュ中出し！",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000096",
+        "entity_type": "genre",
+        "entity_id": "genre_000024",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "痴女",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000097",
+        "entity_type": "genre",
+        "entity_id": "genre_000024",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "痴女",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000098",
+        "entity_type": "genre",
+        "entity_id": "genre_000025",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "潮吹き",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000099",
+        "entity_type": "genre",
+        "entity_id": "genre_000025",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "潮吹き",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000100",
+        "entity_type": "genre",
+        "entity_id": "genre_000026",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "中出し",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000101",
+        "entity_type": "genre",
+        "entity_id": "genre_000026",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "中出し",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000102",
+        "entity_type": "genre",
+        "entity_id": "genre_000027",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name",
+        "observed_value": "手コキ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000103",
+        "entity_type": "genre",
+        "entity_id": "genre_000027",
+        "source_name": "metatube-bulk",
+        "source_record_id": null,
+        "field": "name_ja",
+        "observed_value": "手コキ",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000104",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "field": "title",
+        "observed_value": "男潮吹きそのまま挿入、スプラッシュ中出し！ 桐谷まつり",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000105",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "field": "title_ja",
+        "observed_value": "男潮吹きそのまま挿入、スプラッシュ中出し！ 桐谷まつり",
+        "observed_language": "ja",
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000106",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "field": "release_date",
+        "observed_value": "2019-11-23",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000107",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "field": "duration_min",
+        "observed_value": "119",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000108",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "field": "cover_url",
+        "observed_value": "https://www.javbus.com/pics/cover/7f05_b.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000109",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "field": "thumb_url",
+        "observed_value": "https://www.javbus.com/pics/thumb/7f05.jpg",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
+      },
+      {
+        "id": "obs_000110",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "field": "score",
+        "observed_value": "0",
+        "observed_language": null,
+        "observed_at": "2026-09-04T08:56:34.639Z",
+        "raw_hash": null,
+        "notes": null
       }
     ],
-    "series": [],
+    "series": [
+      {
+        "id": "series_000001",
+        "maker_id": "maker_000005",
+        "label_id": "label_000005",
+        "name": "男潮吹きそのまま挿入、スプラッシュ中出し！",
+        "name_ja": "男潮吹きそのまま挿入、スプラッシュ中出し！",
+        "description": null,
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      }
+    ],
     "source_records": [
       {
         "id": "source_000001",
@@ -393,6 +2078,50 @@
         "fetched_at": "2026-09-01T06:00:00Z",
         "raw_hash": "c6eea09a0ca201e4de5842fd46f2add11f3a8a11e7af794492da1c69c784fc08",
         "notes": null
+      },
+      {
+        "id": "source_000005",
+        "entity_type": "work",
+        "entity_id": "work_000003",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:SSIS-001",
+        "source_url": "https://www.javbus.com/ja/SSIS-001",
+        "fetched_at": "2026-09-04T08:56:34.680Z",
+        "raw_hash": "649f763a9c840d75e57b0354ad115a2378cd3b8bf31d8ddd6b3dabf340fae324",
+        "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
+      },
+      {
+        "id": "source_000006",
+        "entity_type": "work",
+        "entity_id": "work_000004",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:MIDE-345",
+        "source_url": "https://www.javbus.com/ja/MIDE-345",
+        "fetched_at": "2026-09-04T08:56:36.689Z",
+        "raw_hash": "eccdb0254fc2dc9f9233374d1dbbda1040131512909cad9a4ef2249c1d41ec7b",
+        "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
+      },
+      {
+        "id": "source_000007",
+        "entity_type": "work",
+        "entity_id": "work_000005",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:IPX-001",
+        "source_url": "https://www.javbus.com/ja/IPX-001",
+        "fetched_at": "2026-09-04T08:56:38.702Z",
+        "raw_hash": "eea891d314431d5bf7d885593d966a380b273920451f2055aa5d08cfc8e0dca7",
+        "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
+      },
+      {
+        "id": "source_000008",
+        "entity_type": "work",
+        "entity_id": "work_000006",
+        "source_name": "metatube-bulk",
+        "source_record_id": "JavBus:WANZ-912",
+        "source_url": "https://www.javbus.com/ja/WANZ-912",
+        "fetched_at": "2026-09-04T08:56:40.712Z",
+        "raw_hash": "f72c0ba9de8b34a573d01afe61328ec72130c5ca56af151074fe426e1c0aa146",
+        "notes": "通过 MetaTube server 获取；上游 provider=JavBus；MetaTube 聚合多源，本记录仅代表 JavBus 一家；日文源"
       }
     ],
     "work_cast": [
@@ -405,6 +2134,36 @@
       {
         "work_id": "work_000002",
         "actress_id": "actress_000002",
+        "role": "actress",
+        "position": 1
+      },
+      {
+        "work_id": "work_000003",
+        "actress_id": "actress_000003",
+        "role": "actress",
+        "position": 1
+      },
+      {
+        "work_id": "work_000003",
+        "actress_id": "actress_000004",
+        "role": "actress",
+        "position": 2
+      },
+      {
+        "work_id": "work_000004",
+        "actress_id": "actress_000005",
+        "role": "actress",
+        "position": 1
+      },
+      {
+        "work_id": "work_000005",
+        "actress_id": "actress_000006",
+        "role": "actress",
+        "position": 1
+      },
+      {
+        "work_id": "work_000006",
+        "actress_id": "actress_000007",
         "role": "actress",
         "position": 1
       }
@@ -427,12 +2186,63 @@
         "code_type": "catalog",
         "is_primary": true,
         "source_id": "source_000004"
+      },
+      {
+        "id": "code_000003",
+        "work_id": "work_000003",
+        "code": "SSIS-001",
+        "normalized_code": "SSIS001",
+        "code_type": "catalog",
+        "is_primary": true,
+        "source_id": "source_000005"
+      },
+      {
+        "id": "code_000004",
+        "work_id": "work_000004",
+        "code": "MIDE-345",
+        "normalized_code": "MIDE345",
+        "code_type": "catalog",
+        "is_primary": true,
+        "source_id": "source_000006"
+      },
+      {
+        "id": "code_000005",
+        "work_id": "work_000005",
+        "code": "IPX-001",
+        "normalized_code": "IPX001",
+        "code_type": "catalog",
+        "is_primary": true,
+        "source_id": "source_000007"
+      },
+      {
+        "id": "code_000006",
+        "work_id": "work_000006",
+        "code": "WANZ-912",
+        "normalized_code": "WANZ912",
+        "code_type": "catalog",
+        "is_primary": true,
+        "source_id": "source_000008"
       }
     ],
     "work_directors": [
       {
         "work_id": "work_000001",
         "director_id": "director_000001",
+        "position": 1
+      },
+      {
+        "work_id": "work_000003",
+        "director_id": "director_000002",
+        "position": 1
+      },
+      {
+        "work_id": "work_000004",
+        "director_id": "director_000003",
+        "position": 1
+      },
+      {
+        "work_id": "work_000005",
+        "director_id": "director_000004",
         "position": 1
       }
     ],
@@ -464,6 +2274,142 @@
       {
         "work_id": "work_000002",
         "genre_id": "genre_000007"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000008"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000004"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000009"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000010"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000011"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000012"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000013"
+      },
+      {
+        "work_id": "work_000003",
+        "genre_id": "genre_000014"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000015"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000016"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000003"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000017"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000011"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000018"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000019"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000020"
+      },
+      {
+        "work_id": "work_000004",
+        "genre_id": "genre_000014"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000021"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000004"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000016"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000022"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000011"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000023"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000019"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000020"
+      },
+      {
+        "work_id": "work_000005",
+        "genre_id": "genre_000014"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000024"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000025"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000026"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000011"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000019"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000020"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000014"
+      },
+      {
+        "work_id": "work_000006",
+        "genre_id": "genre_000027"
       }
     ],
     "works": [
@@ -502,6 +2448,78 @@
         "score": null,
         "created_at": "2026-09-04T06:26:39Z",
         "updated_at": "2026-09-04T06:26:39Z"
+      },
+      {
+        "id": "work_000003",
+        "primary_code": "SSIS-001",
+        "title": "一ヶ月間の禁欲の果てに彼女のルームメイト2人と浮気SEXだけに没頭した彼女不在の3日間。 葵つかさ 乙白さやか",
+        "title_ja": "一ヶ月間の禁欲の果てに彼女のルームメイト2人と浮気SEXだけに没頭した彼女不在の3日間。 葵つかさ 乙白さやか",
+        "release_date": "2021-02-18",
+        "duration_min": 150,
+        "maker_id": "maker_000003",
+        "label_id": "label_000003",
+        "series_id": null,
+        "description": null,
+        "cover_url": "https://www.javbus.com/pics/cover/83ie_b.jpg",
+        "thumb_url": "https://www.javbus.com/pics/thumb/83ie.jpg",
+        "backdrop_url": null,
+        "score": "0",
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "work_000004",
+        "primary_code": "MIDE-345",
+        "title": "JULIA 騎乗位SPECIAL",
+        "title_ja": "JULIA 騎乗位SPECIAL",
+        "release_date": "2016-07-30",
+        "duration_min": 150,
+        "maker_id": "maker_000004",
+        "label_id": "label_000004",
+        "series_id": null,
+        "description": null,
+        "cover_url": "https://www.javbus.com/pics/cover/5klt_b.jpg",
+        "thumb_url": "https://www.javbus.com/pics/thumb/5klt.jpg",
+        "backdrop_url": null,
+        "score": "0",
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "work_000005",
+        "primary_code": "IPX-001",
+        "title": "女子校生便所交際 便所でしか濡れないおじさん好きの変態マゾ美少女と思う存分便所ファック！ 妃月るい",
+        "title_ja": "女子校生便所交際 便所でしか濡れないおじさん好きの変態マゾ美少女と思う存分便所ファック！ 妃月るい",
+        "release_date": "2017-08-11",
+        "duration_min": 160,
+        "maker_id": "maker_000002",
+        "label_id": "label_000002",
+        "series_id": null,
+        "description": null,
+        "cover_url": "https://www.javbus.com/pics/cover/649d_b.jpg",
+        "thumb_url": "https://www.javbus.com/pics/thumb/649d.jpg",
+        "backdrop_url": null,
+        "score": "0",
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
+      },
+      {
+        "id": "work_000006",
+        "primary_code": "WANZ-912",
+        "title": "男潮吹きそのまま挿入、スプラッシュ中出し！ 桐谷まつり",
+        "title_ja": "男潮吹きそのまま挿入、スプラッシュ中出し！ 桐谷まつり",
+        "release_date": "2019-11-23",
+        "duration_min": 119,
+        "maker_id": "maker_000005",
+        "label_id": "label_000005",
+        "series_id": "series_000001",
+        "description": null,
+        "cover_url": "https://www.javbus.com/pics/cover/7f05_b.jpg",
+        "thumb_url": "https://www.javbus.com/pics/thumb/7f05.jpg",
+        "backdrop_url": null,
+        "score": "0",
+        "created_at": "2026-09-04T08:56:42Z",
+        "updated_at": "2026-09-04T08:56:42Z"
       }
     ]
   }

@@ -28,6 +28,142 @@
     {
       "work_id": "work_000002",
       "genre_id": "genre_000007"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000008"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000004"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000009"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000010"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000011"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000012"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000013"
+    },
+    {
+      "work_id": "work_000003",
+      "genre_id": "genre_000014"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000015"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000016"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000003"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000017"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000011"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000018"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000019"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000020"
+    },
+    {
+      "work_id": "work_000004",
+      "genre_id": "genre_000014"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000021"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000004"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000016"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000022"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000011"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000023"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000019"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000020"
+    },
+    {
+      "work_id": "work_000005",
+      "genre_id": "genre_000014"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000024"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000025"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000026"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000011"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000019"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000020"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000014"
+    },
+    {
+      "work_id": "work_000006",
+      "genre_id": "genre_000027"
     }
   ]
 }

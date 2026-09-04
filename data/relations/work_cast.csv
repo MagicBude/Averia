@@ -1,3 +1,8 @@
 work_id,actress_id,role,position
 work_000001,actress_000001,actress,1
 work_000002,actress_000002,actress,1
+work_000003,actress_000003,actress,1
+work_000003,actress_000004,actress,2
+work_000004,actress_000005,actress,1
+work_000005,actress_000006,actress,1
+work_000006,actress_000007,actress,1

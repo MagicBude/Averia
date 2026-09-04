@@ -9,6 +9,33 @@
       "description": null,
       "created_at": "2026-08-31T14:50:24Z",
       "updated_at": "2026-08-31T14:50:24Z"
+    },
+    {
+      "id": "director_000002",
+      "name": "苺原",
+      "name_ja": "苺原",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-04T08:56:42Z",
+      "updated_at": "2026-09-04T08:56:42Z"
+    },
+    {
+      "id": "director_000003",
+      "name": "南★波王",
+      "name_ja": "南★波王",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-04T08:56:42Z",
+      "updated_at": "2026-09-04T08:56:42Z"
+    },
+    {
+      "id": "director_000004",
+      "name": "刃修羅",
+      "name_ja": "刃修羅",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-04T08:56:42Z",
+      "updated_at": "2026-09-04T08:56:42Z"
     }
   ]
 }

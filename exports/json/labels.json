@@ -20,6 +20,36 @@
       "description": null,
       "created_at": "2026-09-04T06:26:39Z",
       "updated_at": "2026-09-04T06:26:39Z"
+    },
+    {
+      "id": "label_000003",
+      "maker_id": "maker_000003",
+      "name": "S1 NO.1 STYLE",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-04T08:56:42Z",
+      "updated_at": "2026-09-04T08:56:42Z"
+    },
+    {
+      "id": "label_000004",
+      "maker_id": "maker_000004",
+      "name": "MOODYZDIVA",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-04T08:56:42Z",
+      "updated_at": "2026-09-04T08:56:42Z"
+    },
+    {
+      "id": "label_000005",
+      "maker_id": "maker_000005",
+      "name": "WANZ",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-04T08:56:42Z",
+      "updated_at": "2026-09-04T08:56:42Z"
     }
   ]
 }

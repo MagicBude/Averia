@@ -5,6 +5,21 @@
       "work_id": "work_000001",
       "director_id": "director_000001",
       "position": 1
+    },
+    {
+      "work_id": "work_000003",
+      "director_id": "director_000002",
+      "position": 1
+    },
+    {
+      "work_id": "work_000004",
+      "director_id": "director_000003",
+      "position": 1
+    },
+    {
+      "work_id": "work_000005",
+      "director_id": "director_000004",
+      "position": 1
     }
   ]
 }
