@@ -134,6 +134,45 @@ function buildSimpleNameIndex(records) {
   return index;
 }
 
+// 分类 slug 的确定性兜底：slug 是必填字段（供 V0.9 API / V1.0 Web 分类浏览使用），
+// 但多数来源只给名称不给 slug。优先用来源 slug，其次名称转写，最后回落到实体 ID 片段，
+// 保证任何来源都能产出非空且稳定的 slug。
+function slugifyName(value) {
+  return String(value ?? "")
+    .normalize("NFKC")
+    .trim()
+    .toLocaleLowerCase("en")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// entity_aliases 精确别名索引（V0.8 Phase 3）。
+// 与既有精确匹配并列，只接受“规范化后完全相等”，绝不参与任何模糊/相似度匹配。
+// 同时按两种空白规范化登记（去空格 / 折叠空格），以兼容女优与 taxonomy 各自的既有约定：
+// 女优用 normalizeName（去空格），taxonomy 用 normalizeTaxonomyName（折叠为单空格）。
+export function aliasKeys(entityType, alias) {
+  const value = String(alias ?? "").normalize("NFKC").trim();
+  if (!value) return [];
+  const lower = value.toLocaleLowerCase("en");
+  const keys = new Set();
+  const noSpace = lower.replace(/\s+/g, "");
+  const oneSpace = lower.replace(/\s+/g, " ");
+  if (noSpace) keys.add(`${entityType}\u0000${noSpace}`);
+  if (oneSpace) keys.add(`${entityType}\u0000${oneSpace}`);
+  return [...keys];
+}
+
+function buildAliasIndex(catalog) {
+  const index = new Map();
+  for (const row of catalog.entity_aliases.records) {
+    for (const key of aliasKeys(row.entity_type, row.alias)) {
+      if (!index.has(key)) index.set(key, new Set());
+      index.get(key).add(row.entity_id);
+    }
+  }
+  return index;
+}
+
 function emptyAppend() {
   return {
     actresses: [], actress_aliases: [], works: [], work_codes: [], work_cast: [], work_genres: [], work_directors: [],
@@ -200,6 +239,7 @@ export function prepareImport(document, options = {}) {
   const seriesIndex = buildSimpleNameIndex(catalog.series.records);
   const genreIndex = buildSimpleNameIndex(catalog.genres.records);
   const directorIndex = buildSimpleNameIndex(catalog.directors.records);
+  const aliasIndex = buildAliasIndex(catalog);
   const batchActressBySource = new Map();
   const batchActressByName = new Map();
   const batchWorkBySource = new Map();
@@ -263,7 +303,11 @@ export function prepareImport(document, options = {}) {
     let candidates = index.get(key) ?? [];
     if (kind === "label" && parent.maker_id) candidates = candidates.filter((row) => !row.maker_id || row.maker_id === parent.maker_id);
     if (kind === "series") candidates = candidates.filter((row) => (!parent.maker_id || !row.maker_id || row.maker_id === parent.maker_id) && (!parent.label_id || !row.label_id || row.label_id === parent.label_id));
-    const ids = [...new Set(candidates.map((row) => row.id))];
+    const namedIds = [...new Set(candidates.map((row) => row.id))];
+    // Phase 3：entity_aliases 显式别名 / 外部 ID 精确命中（英文、中文译名、罗马字、外部站点 ID）。
+    // 与实体名精确匹配并列，命中集合取并集；结果不唯一时仍按硬规则阻断，不模糊合并。
+    const aliasIds = aliasKeys(kind, obj.name).flatMap((aliasKey) => [...(aliasIndex.get(aliasKey) ?? [])]);
+    const ids = [...new Set([...namedIds, ...aliasIds])];
     if (ids.length === 1) return ids[0];
     if (ids.length > 1) {
       addIssue("error", "ambiguous-taxonomy", `${kind} 名称“${obj.name}”匹配到多个正式实体。`, { value: obj.name });
@@ -297,7 +341,7 @@ export function prepareImport(document, options = {}) {
       values.maker_id = parent.maker_id ?? "";
       values.label_id = parent.label_id ?? "";
     } else if (kind === "genre") {
-      values.slug = obj.slug ?? "";
+      values.slug = obj.slug || slugifyName(obj.name) || `genre-${id.slice(-6)}`;
     } else if (kind === "director") {
       // 导演实体当前只使用通用名称/官网/说明字段。
     }
@@ -328,6 +372,8 @@ export function prepareImport(document, options = {}) {
       for (const candidateName of [input.primary_name, input.name_ja, input.name_en, input.kana, ...(input.aliases ?? []).map((a) => typeof a === "string" ? a : a?.value)]) {
         const key = normalizeName(candidateName);
         for (const candidateId of nameIndex.get(key) ?? []) candidateIds.add(candidateId);
+        // Phase 3：entity_aliases 精确别名（英文名 / 中文译名 / 外部站点 ID）
+        for (const candidateId of aliasIndex.get(`actress\u0000${key}`) ?? []) candidateIds.add(candidateId);
       }
       if (candidateIds.size === 1) {
         id = uniqueSingle(candidateIds);

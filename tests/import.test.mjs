@@ -126,3 +126,123 @@ test("匹配既有实体的来源观察也会写入 observations（不静默丢�
   assert.ok(workObs, "应记录匹配作品的 title_ja 观察");
   assert.equal(workObs.source_name, "moodyz-official");
 });
+
+// ---------- V0.8 Phase 3：entity_aliases 精确别名匹配（防跨源重复实体） ----------
+
+function catalogWith(patch) {
+  const catalog = loadEmptyCatalog();
+  for (const [dataset, records] of Object.entries(patch)) catalog[dataset].records = records;
+  return catalog;
+}
+
+function aliasRow(id, entityType, entityId, alias, aliasType, language) {
+  return {
+    id, entity_type: entityType, entity_id: entityId, alias, alias_type: aliasType,
+    language: language ?? "", source_name: "", source_record_id: "", notes: "", created_at: "2026-09-04T00:00:00Z",
+  };
+}
+
+test("英文别名可精确命中既有厂商，不新建重复实体（V0.8 Phase 3）", () => {
+  const catalog = catalogWith({
+    makers: [{ id: "maker_000002", name: "アイデアポケット", name_ja: "アイデアポケット" }],
+    entity_aliases: [aliasRow("ea_000001", "maker", "maker_000002", "Idea Pocket", "en", "en")],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-1", code: "IPZZ-597", title: "Grave-bound secret", maker: { name: "Idea Pocket" } }],
+  }, { catalog, batchId: "p3-maker", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(stage.append.makers.length, 0, "别名命中既有厂商，不应新建重复实体");
+  assert.equal(stage.append.works[0].maker_id, "maker_000002");
+});
+
+test("中文译名别名可精确命中既有分类，不新建重复实体（V0.8 Phase 3 · 中文层）", () => {
+  const catalog = catalogWith({
+    genres: [{ id: "genre_000007", name: "スレンダー", name_ja: "スレンダー" }],
+    entity_aliases: [aliasRow("ea_000002", "genre", "genre_000007", "苗条", "cn", "zh")],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "manual-cn", fetched_at: "2026-09-04T00:00:00Z" },
+    works: [{ source_record_id: "w-2", code: "TST-100", title: "T", genres: [{ name: "苗条" }] }],
+  }, { catalog, batchId: "p3-cn", now: "2026-09-04T00:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(stage.append.genres.length, 0, "中文译名命中既有分类，不应新建");
+  assert.equal(stage.append.work_genres[0].genre_id, "genre_000007");
+});
+
+test("女优英文别名可精确命中既有女优，不新建重复实体（V0.8 Phase 3）", () => {
+  const catalog = catalogWith({
+    actresses: [{ id: "actress_000002", primary_name: "桃乃木かな", name_ja: "桃乃木かな", name_en: "", kana: "もものぎ かな" }],
+    entity_aliases: [aliasRow("ea_000003", "actress", "actress_000002", "Kana Momonogi", "en", "en")],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    actresses: [{ source_record_id: "a-1", primary_name: "Kana Momonogi" }],
+  }, { catalog, batchId: "p3-actress", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(stage.append.actresses.length, 0, "英文别名命中既有女优，不应新建重复实体");
+  const match = stage.matches.find((m) => m.entity_type === "actress");
+  assert.equal(match.entity_id, "actress_000002");
+  assert.equal(match.reason, "exact-name-or-alias");
+});
+
+test("别名指向多个实体时阻断并报错，绝不自动合并（V0.8 Phase 3）", () => {
+  const catalog = catalogWith({
+    makers: [
+      { id: "maker_000002", name: "アイデアポケット" },
+      { id: "maker_000003", name: "別のメーカー" },
+    ],
+    entity_aliases: [
+      aliasRow("ea_000004", "maker", "maker_000002", "Idea Pocket", "en", "en"),
+      aliasRow("ea_000005", "maker", "maker_000003", "Idea Pocket", "en", "en"),
+    ],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-3", code: "TST-101", title: "T", maker: { name: "Idea Pocket" } }],
+  }, { catalog, batchId: "p3-ambiguous", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 1);
+  assert.equal(stage.issues[0].type, "ambiguous-taxonomy");
+  assert.equal(stage.append.makers.length, 0, "歧义情况下不得新建实体");
+});
+
+test("未登记别名时行为保持不变，仍新建实体（V0.8 Phase 3 回归保护）", () => {
+  const catalog = catalogWith({
+    makers: [{ id: "maker_000002", name: "アイデアポケット" }],
+    entity_aliases: [],
+  });
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-4", code: "TST-102", title: "T", maker: { name: "Idea Pocket" } }],
+  }, { catalog, batchId: "p3-nomatch", now: "2026-09-01T06:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(stage.append.makers.length, 1, "未登记别名时应按既有行为新建");
+  assert.equal(stage.append.makers[0].name, "Idea Pocket");
+});
+
+test("新建分类时 slug 有确定性兜底，来源未给 slug 也能通过校验", () => {
+  // 回归保护：slug 是必填字段，但多数来源只给名称。prepare 阶段不跑校验，
+  // 该缺口只会在 import:apply 暴露，因此必须用测试锁住。
+  const catalog = loadEmptyCatalog();
+  const stage = prepareImport({
+    schema_version: 1,
+    source: { name: "javinfo-fanza", fetched_at: "2026-09-01T06:00:00Z" },
+    works: [{ source_record_id: "w-5", code: "TST-200", title: "T", genres: [{ name: "Slender" }, { name: "スレンダー" }] }],
+  }, { catalog, batchId: "p3-slug", now: "2026-09-04T00:00:00Z", fingerprint: "test" });
+
+  assert.equal(stage.summary.error_count, 0);
+  assert.equal(stage.append.genres.length, 2);
+  assert.equal(stage.append.genres[0].slug, "slender", "英文名应转写为 slug");
+  assert.ok(stage.append.genres[1].slug, "日文名无法转写为 ASCII 时必须回落到非空 slug");
+  assert.match(stage.append.genres[1].slug, /^genre-\d{6}$/);
+});
