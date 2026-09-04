@@ -1,0 +1,18 @@
+# Averia MetaTube 批量灌库种子清单（模板，复制为 var/seeds/metatube.txt 后填写）
+#
+# 格式（每行一条，# 开头为注释）：
+#   provider:番号        指定数据源与番号
+#   番号                  只写番号时，默认 provider=fanza
+#
+# 常用 provider：fanza(=R18.dev) / javbus / madouqu(中文) / jav321 / mgstage / sod / duga …
+# 完整 34 源见 https://github.com/metatube-community/metatube-sdk-go
+#
+# 提示：
+#   - 想灌哪些就列哪些，没有「全站爬取」这回事（MetaTube API 是 by-id 的）。
+#   - 也可写 .json 清单：[{ "provider": "fanza", "code": "IPZZ-597" }, ...]
+#   - 离线复灌缓存：用 --file 模式，每行写本地 JSON 文件路径。
+
+# 示例（Phase 6 三样本回归用）
+fanza:IPZZ-597
+fanza:IPZZ-698
+fanza:MDVR-434
