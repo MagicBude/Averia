@@ -28,9 +28,19 @@ Averia 的逐版本变更记录。每个版本的 **核心变更、新增 Provid
 
 当前已落地（Phase 1）：三表 schema 与空 CSV；`scripts/import/lib.mjs` 的 `nextIdFactory` 已识别 `obs_ / res_ / ea_` 前缀；XLSX 通过 `NON_XLSX_DATASETS` 排除三新表，保持固定 15 关系 Sheet。DMM IPZZ-698 批次已回滚为仅 Stage（正式 `data/` 回到 23 行 MOODYZ 基线，Stage 留 `var/imports`）。
 
-新增源（V0.8 预置能力，跨源安全 Apply 仍待 Phase 3）：**JavLibrary Provider**（`pnpm provider:javlibrary -- --code <番号> | --url <详情页> | --file <本地HTML>`）。解析逻辑移植自 OpenAver 的 `core/scrapers/javlibrary.py`，但**不含其 Cloudflare / 年龄门绕过**（`cf_transport`）；Averia 以合规 `fetch` 抓取，被验证页拦截即 fail closed。输出 Averia 统一导入 canonical（`role=supplemental language=ja`，日文名称记 `name_ja`）。配套：`scripts/providers/javlibrary/lib.mjs`、`scripts/provider-javlibrary.mjs`、`tests/provider-javlibrary.test.mjs`、`tests/fixtures/javlibrary/work-ipzz-597.html`、`docs/providers/JAVLIBRARY_PROVIDER.md`。
+已落地（Phase 2）：`import:prepare` 对每个来源贡献的字段产出 `observations` 记录（append-only 溯源日志），含跨语言标注（`name_en` / 英文 taxonomy 记 `en`，日文名 / 标题记 `ja`，数值与日期留空）。导入报告新增「数据观察」小节。匹配既有实体的来源观察同样写入，不静默丢弃。
 
-详细设计：**`docs/V0.8-MULTI-SOURCE-RESOLUTION.md`**。
+新增源（V0.8 预置能力）：**JavLibrary Provider**（`pnpm provider:javlibrary -- --code <番号> | --url <详情页> | --file <本地HTML>`）。解析逻辑移植自 OpenAver 的 `core/scrapers/javlibrary.py`，但**不含其 Cloudflare / 年龄门绕过**（`cf_transport`）；Averia 以合规 `fetch` 抓取，被验证页拦截即 fail closed。输出 Averia 统一导入 canonical（`role=supplemental language=ja`，日文名称记 `name_ja`）。配套：`scripts/providers/javlibrary/lib.mjs`、`scripts/provider-javlibrary.mjs`、`tests/provider-javlibrary.test.mjs`、`tests/fixtures/javlibrary/work-ipzz-597.html`、`docs/providers/JAVLIBRARY_PROVIDER.md`。
+
+已落地（Phase 3）：`entity_aliases` 精确别名匹配 —— 防跨源重复实体的核心修复。
+
+- `scripts/import/lib.mjs` 新增 `buildAliasIndex()`：按 `(实体类型, 规范化别名)` 建索引，与既有精确匹配并列；为兼容女优（去空格）与 taxonomy（折叠空格）的既有约定，同一别名按两种空白规范化登记。
+- `resolveSimpleEntity`（maker / label / series / genre / director）与女优匹配分支均并入别名精确命中，命中集合取并集；结果不唯一时仍按硬规则阻断为 `ambiguous-*`，绝不模糊合并。
+- 新增 `pnpm resolve:link -- --alias <名称> --entity <实体ID> --type <别名类型>`：显式登记跨源 / 跨语言别名（拒绝新建、改挂别名）。三道守卫：别名已指向其它实体则阻断（会造成 matcher 歧义）、别名与另一同类型实体正式名相同则阻断（等同合并实体，属人工决策）、重复登记幂等跳过。写入前备份 `data/`，写入后跑全量校验，失败自动回滚；支持 `--dry-run`。
+- 修复：新建 genre 时 `slug` 为必填但来源未给则留空，导致 `import:apply` 校验失败。现按「来源 slug → 名称转写 → 实体 ID 片段」兜底，保证非空且稳定。
+- 验证：IPZZ-597（javinfo 英文源）入库后，日文源导入同一厂商 / 厂牌 / 分类 —— 登记别名前新建 3 个重复实体，登记后精确命中既有 ID、零新增。
+
+详细设计：**`docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md`**。
 
 ---
 
