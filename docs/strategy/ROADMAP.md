@@ -83,14 +83,15 @@
 - 待做：Phase 5（JavInfo 多源独立请求）、Phase 6（IPZZ-597 / IPZZ-698 / MDVR-434 三样本回归）、Phase 7（文档收尾）
 - 详见 `docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md` 与 CHANGELOG V0.8.0
 
-## V0.9 — 本地数据库 SQLite（派生只读层）
+## V0.9 — 本地数据库 SQLite（派生只读层）✅
 
 - **定位**：SQLite 是规范 CSV 的**物化 / 查询层**，不是事实源；CSV 仍保持唯一事实源（见 ADR-0001）
 - `pnpm db:sync`：把所有 `data/*.csv` 导入单文件 `data/averia.db`
 - FTS5 全文索引（番号 / 姓名 / 别名 / 标题）+ 常规索引（code / name / entity_id）
 - `pnpm db:query`：只读查询，供 V1.0 API 与 V1.1 Web 直接消费
 - 写入只走 `Prepare → Apply → CSV`；每次 `import:apply` 后自动 `db:sync` 刷新
-- 物化范围：8 个核心实体表 + 关系表 +（V0.8 完成后）observations / field_resolutions / entity_aliases
+- 物化范围：8 个核心实体表 + 关系表 + V0.8 的 observations / field_resolutions / entity_aliases
+- 已落地（V0.9.0）：`scripts/db-sync.mjs`（全量重建 16 表 / 43 索引 / FTS5 trigram 全文索引，支持日文子串与番号搜索）、`scripts/lib/db.mjs`（共享只读查询层，供 API/Web 复用）、`scripts/db-query.mjs`（CLI）、`import:apply` 后自动 `db:sync`；`data/averia.db` 为派生产物已加入 .gitignore；新增 `tests/db.test.mjs` 回归（8 项：行数一致 / FTS 番号与日文 / 短查询回退 LIKE / 详情聚合）
 
 ## V1.0 — API
 

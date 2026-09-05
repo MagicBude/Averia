@@ -123,7 +123,13 @@ exports/xlsx/averia.xlsx
 | `pnpm data:quality` | 生成数据质量报告 |
 | `pnpm import:prepare -- --file <file> --batch <id>` | 准备安全导入批次，不修改正式 CSV |
 | `pnpm import:report -- --batch <id>` | 查看导入审核报告 |
-| `pnpm import:apply -- --batch <id>` | 备份、写入并校验已审核批次 |
+| `pnpm import:apply -- --batch <id>` | 备份、写入并校验已审核批次（成功后自动重建派生库） |
+| `pnpm db:sync` | 全量重建 SQLite 派生库（CSV → data/averia.db，FTS5 trigram 全文索引） |
+| `pnpm db:query search-works "<词>"` | 查询派生库：搜索作品（番号 / 日文标题子串） |
+| `pnpm db:query search-actresses "<词>"` | 查询派生库：搜索女优（主名 / 别名 / 日文名） |
+| `pnpm db:query work <id>` | 查询派生库：作品详情（cast / 分类 / 导演 / 厂牌） |
+| `pnpm db:query actress <id>` | 查询派生库：女优详情（别名 / 参演作品） |
+| `pnpm db:query stats` | 查询派生库：数据集行数统计 |
 | `pnpm provider:javdatabase -- --code <番号>` | 抓取并解析一个 JAVDatabase 作品页，不写正式 CSV |
 | `pnpm provider:javdatabase -- --idol <slug>` | 抓取并解析一个 JAVDatabase 女优页，不写正式 CSV |
 | `pnpm provider:moodyz -- --code <番号>` | 抓取并解析一个 MOODYZ 官方日文作品页，不写正式 CSV |
