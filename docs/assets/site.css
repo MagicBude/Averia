@@ -8,7 +8,36 @@
   --accent-soft: #e9f5f3;
   --dark: #0b1220;
   --dark-soft: #151e2e;
+  /* 浏览器扩展变量（浅色默认） */
+  --browser-elev: #f0f1f3;
+  --bg-elev: #f0f1f3;
+  --bg-elev-2: #e8eaed;
+  --border-soft: #dde0e5;
+  --text: #101828;
+  --text-dim: #667085;
+  --text-faint: #98a2b3;
+  --accent-line: rgba(47,122,115,0.35);
+  --warn: #b8860a;
   --max: 1180px;
+}
+
+/* ---------- 暗色主题 ---------- */
+[data-theme="dark"] {
+  --bg: #0f1419;
+  --surface: #161c24;
+  --ink: #e6e9ef;
+  --muted: #9aa4b2;
+  --line: #283341;
+  --accent-soft: rgba(123,168,155,0.14);
+  --browser-elev: #1a212b;
+  --bg-elev: #161c24;
+  --bg-elev-2: #1d2530;
+  --border-soft: #222b36;
+  --text: #e6e9ef;
+  --text-dim: #9aa4b2;
+  --text-faint: #6b7686;
+  --accent-line: rgba(123,168,155,0.4);
+  --warn: #c9a06a;
 }
 
 * { box-sizing: border-box; }
@@ -104,6 +133,69 @@ h2 { margin: 0; font-size: clamp(32px, 4vw, 50px); line-height: 1.12; letter-spa
 .footer span { color: var(--muted); font-size: 12px; }
 .footer-links { display: flex; gap: 20px; color: #475467; font-size: 13px; }
 .footer p { grid-column: 1 / -1; margin: 4px 0 0; color: #98a2b3; font-size: 12px; }
+
+/* ---------- 暗色主题（落地页区域）---------- */
+[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+[data-theme="dark"] .site-header {
+  background: rgba(15, 20, 25, 0.9);
+  border-bottom-color: var(--line);
+}
+[data-theme="dark"] .nav { color: var(--text-dim); }
+[data-theme="dark"] .nav a:hover { color: var(--text); }
+[data-theme="dark"] .nav-cta {
+  background: var(--bg-elev);
+  color: var(--text);
+}
+[data-theme="dark"] .hero-copy,
+[data-theme="dark"] .section-copy { color: var(--text-dim); }
+[data-theme="dark] .status { color: var(--text-faint); }
+[data-theme="dark"] .data-card {
+  background: linear-gradient(150deg, var(--bg-elev) 0%, var(--bg) 100%);
+  border-color: var(--line);
+  box-shadow: none;
+}
+[data-theme="dark"] .data-card-head { border-bottom-color: var(--line); color: var(--text-dim); }
+[data-theme="dark"] .flow-list li { border-bottom-color: var(--border-soft); }
+[data-theme="dark] .flow-list > li > span { color: var(--text-faint); }
+[data-theme="dark"] .flow-list small { color: var(--text-faint); }
+[data-theme="dark"] .section { background: var(--bg); }
+[data-theme="dark"] .section-muted { background: #0a0f16; }
+[data-theme="dark"] .card {
+  background: var(--bg-elev);
+  border-color: var(--line);
+}
+[data-theme="dark"] .principles { border-top-color: var(--line); }
+[data-theme="dark"] .principle { border-bottom-color: var(--border-soft); }
+[data-theme="dark"] .principle:nth-child(odd),
+[data-theme="dark"] .principle:nth-child(even) { border-left-color: var(--border-soft); }
+[data-theme="dark"] .principle > span { background: var(--accent-soft); }
+[data-theme="dark"] .principle p { color: var(--text-dim); }
+/* section-dark 在暗色模式下不需要反转（本身就是暗的），但可微调 */
+[data-theme="dark"] .section-dark { background: #060a10; }
+[data-theme="dark"] .timeline { border-color: var(--line); background: var(--line); }
+[data-theme="dark"] .timeline-item { background: var(--bg-elev); }
+[data-theme="dark"] .timeline-item.active { background: #142622; }
+[data-theme="dark"] .timeline-item span { color: var(--text-faint); }
+[data-theme="dark"] .timeline-item p { color: var(--text-dim); }
+[data-theme="dark"] .notice-section { background: var(--bg); }
+[data-theme="dark"] .notice p { color: var(--text-dim); }
+[data-theme="dark"] .footer {
+  background: var(--bg-elev);
+  border-top-color: var(--line);
+}
+[data-theme="dark"] .footer strong { color: var(--text); }
+[data-theme="dark"] .footer span { color: var(--text-faint); }
+[data-theme="dark"] .footer-links { color: var(--text-dim); }
+[data-theme="dark"] .footer p { color: var(--text-faint); }
+[data-theme="dark"] .button.primary { background: var(--accent); }
+[data-theme="dark"] .button.secondary {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--text);
+}
 
 @media (max-width: 900px) {
   .nav a:not(.nav-cta) { display: none; }

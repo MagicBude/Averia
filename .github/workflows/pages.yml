@@ -1,10 +1,10 @@
-name: Deploy web to Pages
+name: Deploy docs to Pages
 
 on:
   push:
     branches: [main]
     paths:
-      - "web/**"
+      - "docs/**"
       - "data/**"
       - "scripts/**"
       - "schemas/**"
@@ -42,13 +42,13 @@ jobs:
       - name: Sync SQLite derived layer (CSV → averia.db)
         run: pnpm db:sync
 
-      - name: Export static web data
+      - name: Export static data for browser
         run: pnpm web:export
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: docs
 
   deploy:
     needs: build

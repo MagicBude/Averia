@@ -1,9 +1,9 @@
 // scripts/web-serve.mjs
 //
-// 零依赖静态文件服务器，仅用于本地预览 web/ 目录。
+// 零依赖静态文件服务器，仅用于本地预览 docs/ 目录。
 // 用法：node scripts/web-serve.mjs  （默认 4173，可用 PORT=8080 覆盖）
 //
-// 注意：web/ 下的页面也可直接双击 index.html 用 file:// 打开，
+// 注意：docs/ 下的页面也可直接双击 index.html 用 file:// 打开，
 // 因为数据通过 <script src="data/data.js"> 挂载，不受 fetch 的 CORS 限制。
 
 import http from "node:http";
@@ -12,7 +12,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const WEB_DIR = path.resolve(__dirname, "..", "web");
+const WEB_DIR = path.resolve(__dirname, "..", "docs");
 const PORT = Number(process.env.PORT || 4173);
 
 const TYPES = {

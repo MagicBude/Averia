@@ -3,12 +3,12 @@
 // Averia Web 前置 —— 把 SQLite 派生库（CSV 的只读物化层）导出为静态数据，
 // 供 web/ 下的纯静态网页（无构建步骤、可直接 file:// 打开）消费。
 //
-// 数据流向（与 ADR-0001 一致）：CSV(事实源) → SQLite(物化) → 本脚本 → web/data/*
+// 数据流向（与 ADR-0001 一致）：CSV(事实源) → SQLite(物化) → 本脚本 → docs/data/*
 // 本脚本只读 SQLite，绝不回写 CSV 或 SQLite。
 //
 // 产物：
-//   web/data/averia.json  —— 完整数据包（可被 API / 用户脚本以 CDN 方式消费，对标 JAV_info 的 dist/）
-//   web/data/data.js      —— `window.AVERIA_DATA = {...}`，<script> 引入即挂载（file:// 也能用）
+//   docs/data/averia.json  —— 完整数据包（可被 API / 用户脚本以 CDN 方式消费，对标 JAV_info 的 dist/）
+//   docs/data/data.js      —— `window.AVERIA_DATA = {...}`，<script> 引入即挂载（file:// 也能用）
 
 import fs from "node:fs";
 import path from "node:path";
@@ -23,7 +23,7 @@ import {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const WEB_DIR = path.join(ROOT, "web");
+const WEB_DIR = path.join(ROOT, "docs");
 const DATA_DIR = path.join(WEB_DIR, "data");
 
 function main() {
@@ -161,7 +161,7 @@ function main() {
 
   const sizeKb = (fs.statSync(jsonPath).size / 1024).toFixed(1);
   console.log(
-    `✓ 已导出网页数据 → web/data/averia.json (${sizeKb} KB)\n` +
+    `✓ 已导出网页数据 → docs/data/averia.json (${sizeKb} KB)\n` +
       `  演员 ${bundle.meta.counts.actresses} · 作品 ${bundle.meta.counts.works} · 厂商 ${bundle.meta.counts.makers} · 厂牌 ${bundle.meta.counts.labels} · 系列 ${bundle.meta.counts.series} · 分类 ${bundle.meta.counts.genres}`,
   );
 }
