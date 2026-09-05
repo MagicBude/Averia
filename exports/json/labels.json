@@ -50,6 +50,56 @@
       "description": null,
       "created_at": "2026-09-04T08:56:42Z",
       "updated_at": "2026-09-04T08:56:42Z"
+    },
+    {
+      "id": "label_000006",
+      "maker_id": "maker_000006",
+      "name": "エレガンス",
+      "name_ja": "エレガンス",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "label_000007",
+      "maker_id": "maker_000007",
+      "name": "OPPAI",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "label_000008",
+      "maker_id": "maker_000008",
+      "name": "S1NO.1STYLE",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "label_000009",
+      "maker_id": "maker_000009",
+      "name": "ABSOLUTELYPERFECT",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "label_000010",
+      "maker_id": "maker_000010",
+      "name": "網走映像",
+      "name_ja": "網走映像",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
     }
   ]
 }

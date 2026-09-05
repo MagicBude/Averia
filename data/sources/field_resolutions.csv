@@ -1,1 +1,3 @@
 id,entity_type,entity_id,field,resolved_value,resolution_method,winning_source_name,winning_source_record_id,confidence,conflicting_observation_ids,status,resolved_at,notes
+res_000001,actress,actress_000002,name_ja,桃乃木かな,auto_fill,metatube-bulk,,high,obs_000142,auto,2026-09-05T03:31:50Z,字段为空，单一来源补全
+res_000002,actress,actress_000002,status,unknown,auto_fill,metatube-bulk,,high,obs_000143,auto,2026-09-05T03:31:50Z,字段为空，单一来源补全

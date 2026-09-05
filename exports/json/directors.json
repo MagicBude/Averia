@@ -36,6 +36,159 @@
       "description": null,
       "created_at": "2026-09-04T08:56:42Z",
       "updated_at": "2026-09-04T08:56:42Z"
+    },
+    {
+      "id": "director_000005",
+      "name": "五右衛門",
+      "name_ja": "五右衛門",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000006",
+      "name": "赤井彗星",
+      "name_ja": "赤井彗星",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000007",
+      "name": "きとるね川口",
+      "name_ja": "きとるね川口",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000008",
+      "name": "前田文豪",
+      "name_ja": "前田文豪",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000009",
+      "name": "イナバール",
+      "name_ja": "イナバール",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000010",
+      "name": "三島六三郎",
+      "name_ja": "三島六三郎",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000011",
+      "name": "キョウセイ",
+      "name_ja": "キョウセイ",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000012",
+      "name": "うさぴょん。",
+      "name_ja": "うさぴょん。",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000013",
+      "name": "TAKE-D",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000014",
+      "name": "ドラゴン西川",
+      "name_ja": "ドラゴン西川",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000015",
+      "name": "K.C.武田",
+      "name_ja": "K.C.武田",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000016",
+      "name": "テキラティーノ",
+      "name_ja": "テキラティーノ",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000017",
+      "name": "宇佐美忠則",
+      "name_ja": "宇佐美忠則",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000018",
+      "name": "トレンディ山口",
+      "name_ja": "トレンディ山口",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000019",
+      "name": "サッポロ太郎",
+      "name_ja": "サッポロ太郎",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000020",
+      "name": "秋秀人",
+      "name_ja": "秋秀人",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "director_000021",
+      "name": "紋℃",
+      "name_ja": "紋℃",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
     }
   ]
 }

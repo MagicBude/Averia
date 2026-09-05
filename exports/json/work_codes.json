@@ -54,6 +54,357 @@
       "code_type": "catalog",
       "is_primary": true,
       "source_id": "source_000008"
+    },
+    {
+      "id": "code_000007",
+      "work_id": "work_000007",
+      "code": "SSIS-050",
+      "normalized_code": "SSIS050",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000009"
+    },
+    {
+      "id": "code_000008",
+      "work_id": "work_000008",
+      "code": "SSIS-100",
+      "normalized_code": "SSIS100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000010"
+    },
+    {
+      "id": "code_000009",
+      "work_id": "work_000009",
+      "code": "SSIS-200",
+      "normalized_code": "SSIS200",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000011"
+    },
+    {
+      "id": "code_000010",
+      "work_id": "work_000010",
+      "code": "SSIS-300",
+      "normalized_code": "SSIS300",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000012"
+    },
+    {
+      "id": "code_000011",
+      "work_id": "work_000011",
+      "code": "SSIS-400",
+      "normalized_code": "SSIS400",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000013"
+    },
+    {
+      "id": "code_000012",
+      "work_id": "work_000012",
+      "code": "SSIS-500",
+      "normalized_code": "SSIS500",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000014"
+    },
+    {
+      "id": "code_000013",
+      "work_id": "work_000013",
+      "code": "SSIS-600",
+      "normalized_code": "SSIS600",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000015"
+    },
+    {
+      "id": "code_000014",
+      "work_id": "work_000014",
+      "code": "SSIS-700",
+      "normalized_code": "SSIS700",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000016"
+    },
+    {
+      "id": "code_000015",
+      "work_id": "work_000015",
+      "code": "IPX-100",
+      "normalized_code": "IPX100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000017"
+    },
+    {
+      "id": "code_000016",
+      "work_id": "work_000016",
+      "code": "IPX-200",
+      "normalized_code": "IPX200",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000018"
+    },
+    {
+      "id": "code_000017",
+      "work_id": "work_000017",
+      "code": "IPX-300",
+      "normalized_code": "IPX300",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000019"
+    },
+    {
+      "id": "code_000018",
+      "work_id": "work_000018",
+      "code": "IPX-400",
+      "normalized_code": "IPX400",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000020"
+    },
+    {
+      "id": "code_000019",
+      "work_id": "work_000019",
+      "code": "IPX-500",
+      "normalized_code": "IPX500",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000021"
+    },
+    {
+      "id": "code_000020",
+      "work_id": "work_000020",
+      "code": "IPX-600",
+      "normalized_code": "IPX600",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000022"
+    },
+    {
+      "id": "code_000021",
+      "work_id": "work_000021",
+      "code": "MIDE-100",
+      "normalized_code": "MIDE100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000023"
+    },
+    {
+      "id": "code_000022",
+      "work_id": "work_000022",
+      "code": "MIDE-200",
+      "normalized_code": "MIDE200",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000024"
+    },
+    {
+      "id": "code_000023",
+      "work_id": "work_000023",
+      "code": "MIDE-300",
+      "normalized_code": "MIDE300",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000025"
+    },
+    {
+      "id": "code_000024",
+      "work_id": "work_000024",
+      "code": "MIDE-400",
+      "normalized_code": "MIDE400",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000026"
+    },
+    {
+      "id": "code_000025",
+      "work_id": "work_000025",
+      "code": "MIDE-500",
+      "normalized_code": "MIDE500",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000027"
+    },
+    {
+      "id": "code_000026",
+      "work_id": "work_000026",
+      "code": "WANZ-100",
+      "normalized_code": "WANZ100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000028"
+    },
+    {
+      "id": "code_000027",
+      "work_id": "work_000027",
+      "code": "WANZ-200",
+      "normalized_code": "WANZ200",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000029"
+    },
+    {
+      "id": "code_000028",
+      "work_id": "work_000028",
+      "code": "WANZ-300",
+      "normalized_code": "WANZ300",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000030"
+    },
+    {
+      "id": "code_000029",
+      "work_id": "work_000029",
+      "code": "WANZ-400",
+      "normalized_code": "WANZ400",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000031"
+    },
+    {
+      "id": "code_000030",
+      "work_id": "work_000030",
+      "code": "WANZ-500",
+      "normalized_code": "WANZ500",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000032"
+    },
+    {
+      "id": "code_000031",
+      "work_id": "work_000031",
+      "code": "WANZ-700",
+      "normalized_code": "WANZ700",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000033"
+    },
+    {
+      "id": "code_000032",
+      "work_id": "work_000032",
+      "code": "WANZ-900",
+      "normalized_code": "WANZ900",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000034"
+    },
+    {
+      "id": "code_000033",
+      "work_id": "work_000033",
+      "code": "PRED-100",
+      "normalized_code": "PRED100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000035"
+    },
+    {
+      "id": "code_000034",
+      "work_id": "work_000034",
+      "code": "PRED-200",
+      "normalized_code": "PRED200",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000036"
+    },
+    {
+      "id": "code_000035",
+      "work_id": "work_000035",
+      "code": "PRED-300",
+      "normalized_code": "PRED300",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000037"
+    },
+    {
+      "id": "code_000036",
+      "work_id": "work_000036",
+      "code": "PPPD-100",
+      "normalized_code": "PPPD100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000038"
+    },
+    {
+      "id": "code_000037",
+      "work_id": "work_000037",
+      "code": "IPZZ-100",
+      "normalized_code": "IPZZ100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000039"
+    },
+    {
+      "id": "code_000038",
+      "work_id": "work_000038",
+      "code": "IPZZ-300",
+      "normalized_code": "IPZZ300",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000040"
+    },
+    {
+      "id": "code_000039",
+      "work_id": "work_000039",
+      "code": "SNIS-001",
+      "normalized_code": "SNIS001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000041"
+    },
+    {
+      "id": "code_000040",
+      "work_id": "work_000040",
+      "code": "SNIS-100",
+      "normalized_code": "SNIS100",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000042"
+    },
+    {
+      "id": "code_000041",
+      "work_id": "work_000041",
+      "code": "ABP-001",
+      "normalized_code": "ABP001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000043"
+    },
+    {
+      "id": "code_000042",
+      "work_id": "work_000042",
+      "code": "ABA-001",
+      "normalized_code": "ABA001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000044"
+    },
+    {
+      "id": "code_000043",
+      "work_id": "work_000043",
+      "code": "HEYZO-0001",
+      "normalized_code": "HEYZO0001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000045"
+    },
+    {
+      "id": "code_000044",
+      "work_id": "work_000044",
+      "code": "040420_01",
+      "normalized_code": "04042001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000046"
+    },
+    {
+      "id": "code_000045",
+      "work_id": "work_000045",
+      "code": "040420-001",
+      "normalized_code": "040420001",
+      "code_type": "catalog",
+      "is_primary": true,
+      "source_id": "source_000047"
     }
   ]
 }

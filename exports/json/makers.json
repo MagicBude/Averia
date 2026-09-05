@@ -45,6 +45,78 @@
       "description": null,
       "created_at": "2026-09-04T08:56:42Z",
       "updated_at": "2026-09-04T08:56:42Z"
+    },
+    {
+      "id": "maker_000006",
+      "name": "プレミアム",
+      "name_ja": "プレミアム",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "maker_000007",
+      "name": "OPPAI",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "maker_000008",
+      "name": "エスワンナンバーワンスタイル",
+      "name_ja": "エスワンナンバーワンスタイル",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "maker_000009",
+      "name": "プレステージ",
+      "name_ja": "プレステージ",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "maker_000010",
+      "name": "網走映像",
+      "name_ja": "網走映像",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "maker_000011",
+      "name": "HEYZO",
+      "name_ja": null,
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "maker_000012",
+      "name": "天然むすめ",
+      "name_ja": "天然むすめ",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
+    },
+    {
+      "id": "maker_000013",
+      "name": "カリビアンコム",
+      "name_ja": "カリビアンコム",
+      "website_url": null,
+      "description": null,
+      "created_at": "2026-09-05T03:31:50Z",
+      "updated_at": "2026-09-05T03:31:50Z"
     }
   ]
 }

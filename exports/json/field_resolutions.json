@@ -1,4 +1,35 @@
 {
   "schemaVersion": 1,
-  "data": []
+  "data": [
+    {
+      "id": "res_000001",
+      "entity_type": "actress",
+      "entity_id": "actress_000002",
+      "field": "name_ja",
+      "resolved_value": "桃乃木かな",
+      "resolution_method": "auto_fill",
+      "winning_source_name": "metatube-bulk",
+      "winning_source_record_id": null,
+      "confidence": "high",
+      "conflicting_observation_ids": "obs_000142",
+      "status": "auto",
+      "resolved_at": "2026-09-05T03:31:50Z",
+      "notes": "字段为空，单一来源补全"
+    },
+    {
+      "id": "res_000002",
+      "entity_type": "actress",
+      "entity_id": "actress_000002",
+      "field": "status",
+      "resolved_value": "unknown",
+      "resolution_method": "auto_fill",
+      "winning_source_name": "metatube-bulk",
+      "winning_source_record_id": null,
+      "confidence": "high",
+      "conflicting_observation_ids": "obs_000143",
+      "status": "auto",
+      "resolved_at": "2026-09-05T03:31:50Z",
+      "notes": "字段为空，单一来源补全"
+    }
+  ]
 }

@@ -20,6 +20,131 @@
       "work_id": "work_000005",
       "director_id": "director_000004",
       "position": 1
+    },
+    {
+      "work_id": "work_000007",
+      "director_id": "director_000005",
+      "position": 1
+    },
+    {
+      "work_id": "work_000008",
+      "director_id": "director_000002",
+      "position": 1
+    },
+    {
+      "work_id": "work_000009",
+      "director_id": "director_000006",
+      "position": 1
+    },
+    {
+      "work_id": "work_000010",
+      "director_id": "director_000007",
+      "position": 1
+    },
+    {
+      "work_id": "work_000011",
+      "director_id": "director_000008",
+      "position": 1
+    },
+    {
+      "work_id": "work_000012",
+      "director_id": "director_000009",
+      "position": 1
+    },
+    {
+      "work_id": "work_000013",
+      "director_id": "director_000010",
+      "position": 1
+    },
+    {
+      "work_id": "work_000014",
+      "director_id": "director_000011",
+      "position": 1
+    },
+    {
+      "work_id": "work_000015",
+      "director_id": "director_000012",
+      "position": 1
+    },
+    {
+      "work_id": "work_000016",
+      "director_id": "director_000013",
+      "position": 1
+    },
+    {
+      "work_id": "work_000017",
+      "director_id": "director_000011",
+      "position": 1
+    },
+    {
+      "work_id": "work_000018",
+      "director_id": "director_000012",
+      "position": 1
+    },
+    {
+      "work_id": "work_000019",
+      "director_id": "director_000014",
+      "position": 1
+    },
+    {
+      "work_id": "work_000021",
+      "director_id": "director_000015",
+      "position": 1
+    },
+    {
+      "work_id": "work_000022",
+      "director_id": "director_000016",
+      "position": 1
+    },
+    {
+      "work_id": "work_000023",
+      "director_id": "director_000006",
+      "position": 1
+    },
+    {
+      "work_id": "work_000024",
+      "director_id": "director_000017",
+      "position": 1
+    },
+    {
+      "work_id": "work_000025",
+      "director_id": "director_000013",
+      "position": 1
+    },
+    {
+      "work_id": "work_000033",
+      "director_id": "director_000018",
+      "position": 1
+    },
+    {
+      "work_id": "work_000034",
+      "director_id": "director_000019",
+      "position": 1
+    },
+    {
+      "work_id": "work_000035",
+      "director_id": "director_000018",
+      "position": 1
+    },
+    {
+      "work_id": "work_000037",
+      "director_id": "director_000011",
+      "position": 1
+    },
+    {
+      "work_id": "work_000038",
+      "director_id": "director_000011",
+      "position": 1
+    },
+    {
+      "work_id": "work_000039",
+      "director_id": "director_000020",
+      "position": 1
+    },
+    {
+      "work_id": "work_000040",
+      "director_id": "director_000021",
+      "position": 1
     }
   ]
 }
