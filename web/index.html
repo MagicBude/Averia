@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Averia · JAV 元数据库</title>
+    <meta name="description" content="Averia 是一个数据优先的 JAV 元数据资料库，按演员 / 作品 / 厂商 / 系列组织元数据。" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">A</span>
+        <div class="brand-text">
+          <strong>Averia</strong>
+          <small>JAV 元数据库</small>
+        </div>
+      </div>
+      <nav class="tabs" id="tabs">
+        <button class="tab is-active" data-tab="actresses">女优</button>
+        <button class="tab" data-tab="works">作品</button>
+      </nav>
+      <div class="meta" id="metaLine"></div>
+    </header>
+
+    <main id="app"></main>
+
+    <div class="modal-backdrop" id="modal" hidden>
+      <div class="modal" id="modalBody" role="dialog" aria-modal="true"></div>
+    </div>
+
+    <!-- 数据通过 <script> 挂载到 window.AVERIA_DATA，file:// 直接打开也能用 -->
+    <script src="./data/data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

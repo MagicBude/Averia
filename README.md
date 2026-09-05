@@ -130,6 +130,8 @@ exports/xlsx/averia.xlsx
 | `pnpm db:query work <id>` | 查询派生库：作品详情（cast / 分类 / 导演 / 厂牌） |
 | `pnpm db:query actress <id>` | 查询派生库：女优详情（别名 / 参演作品） |
 | `pnpm db:query stats` | 查询派生库：数据集行数统计 |
+| `pnpm web:export` | 把 SQLite 派生库物化为 `web/data/`（averia.json + data.js），供网页消费 |
+| `pnpm web:serve` | 本地静态预览服务器（默认 http://localhost:4173） |
 | `pnpm provider:javdatabase -- --code <番号>` | 抓取并解析一个 JAVDatabase 作品页，不写正式 CSV |
 | `pnpm provider:javdatabase -- --idol <slug>` | 抓取并解析一个 JAVDatabase 女优页，不写正式 CSV |
 | `pnpm provider:moodyz -- --code <番号>` | 抓取并解析一个 MOODYZ 官方日文作品页，不写正式 CSV |

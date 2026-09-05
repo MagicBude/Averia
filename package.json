@@ -32,7 +32,9 @@
     "provider:metatube": "node scripts/provider-metatube.mjs",
     "ingest:metatube": "node scripts/ingest-metatube.mjs",
     "db:sync": "node scripts/db-sync.mjs",
-    "db:query": "node scripts/db-query.mjs"
+    "db:query": "node scripts/db-query.mjs",
+    "web:export": "node scripts/web-export.mjs",
+    "web:serve": "node scripts/web-serve.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0"
