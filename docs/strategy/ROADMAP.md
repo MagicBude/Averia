@@ -73,14 +73,15 @@
 - 已知边界：不做自动翻译或跨语言实体猜测，留待 V0.8 归并层
 - 详见 CHANGELOG V0.7.0 与 `docs/providers/JAVINFO_PROVIDER.md`
 
-## V0.8.0 — 多来源字段级溯源与实体归并（进行中）
+## V0.8.0 — 多来源字段级溯源与实体归并（✅ 已完成 2026-09-05）
 
 - Observation / Field Resolution / entity_aliases 三表（schema + 空 CSV 进入事实源，不进 XLSX）
 - 跨语言 / 跨源实体等同只能经显式 `entity_aliases` 或人工 `resolution` 建立；字符串相似度不自动合并
 - 冲突不得静默 last-write-wins，进入 `field_resolutions(pending_review)` 阻断 Apply 直到人工裁决
 - 已落地：Phase 1（三表 schema 骨架）、Phase 2（`import:prepare` 记录字段级 observations）、Phase 3（`entity_aliases` 精确别名匹配，防跨源重复实体核心修复）、Phase 4（field_resolutions 冲突裁决 + 冲突阻断 Apply）
 - 已落地（作品富字段 / ADR-0002）：`works` 新增 `thumb_url` / `backdrop_url` / `score`，`description` 由 metatube `summary` 喂入；metatube adapter 不再静默丢弃高价值字段，新增字段纳入 Phase 4 观察 / 裁决
-- 待做：Phase 5（JavInfo 多源独立请求）、Phase 6（IPZZ-597 / IPZZ-698 / MDVR-434 三样本回归）、Phase 7（文档收尾）
+- 已落地（2026-09-05）：Phase 5（`scripts/provider-javinfo-multi.mjs` 对 fanza/dmm/javdatabase 各发独立请求、分目录落盘，复用 `parseJavinfoMovieResponse`，含离线 fixture 测试）、Phase 6（JavInfo IPZZ-597 fixture 走完整 `import:prepare` 的离线回归测试，证明跨语言归并不建重 + 冲突 pending_review 阻断；真实三样本跨源归并 IPZZ-597/JavInfo · IPZZ-698/DMM · MDVR-434/MOODYZ 需在本地配置 `JAVINFO_API_KEY` 后跑 live，见下）、Phase 7（本文档与 `DATA_STANDARD.md` §10.1、`FIELD_RESOLUTION.md`、README 命令表）
+- 真实跨源冲突归并（Phase 6 live）依赖 `JAVINFO_API_KEY`：需在本地环境变量配置后，对三个番号分别 `provider:javinfo:multi` → `import:prepare` → `resolution:report` 人工裁决 → `import:apply`，验证 `桃乃木かな ↔ Kana Momonogi`、`アイデアポケット ↔ Idea Pocket`、`ティッシュ ↔ Dish`、`スレンダー ↔ Slender` 经显式 `entity_aliases` 归并为零重复实体。
 - 详见 `docs/design/V0.8-MULTI-SOURCE-RESOLUTION.md` 与 CHANGELOG V0.8.0
 
 ## V0.9 — 本地数据库 SQLite（派生只读层）✅

@@ -134,6 +134,11 @@ exports/xlsx/averia.xlsx
 | `pnpm provider:javdatabase -- --idol <slug>` | 抓取并解析一个 JAVDatabase 女优页，不写正式 CSV |
 | `pnpm provider:moodyz -- --code <番号>` | 抓取并解析一个 MOODYZ 官方日文作品页，不写正式 CSV |
 | `pnpm provider:moodyz -- --actress-id <ID>` | 抓取并解析一个 MOODYZ 官方女优页，不写正式 CSV |
+| `pnpm provider:javinfo -- --code <番号>` | 抓取并解析一个 JavInfo 作品页，不写正式 CSV |
+| `pnpm provider:javinfo:multi -- --code <番号>` | 对 fanza/dmm/javdatabase 各发独立请求、分目录落盘，不写正式 CSV（支持 `--file-<source>` 离线回放） |
+| `pnpm resolve:link -- --alias <别名> --entity <实体ID> --type <en\|ja\|cn\|kana\|external_id>` | 跨语言/跨源归并：拒绝新建、把别名挂到既有实体 |
+| `pnpm resolution:report -- --batch <id>` | 查看待审字段冲突及双方来源值 |
+| `pnpm resolution:decide -- --resolution <res_id> --value <选定值> [--source <胜出来源>]` | 裁决某条 pending_review，写 status=manual 并落到实体 CSV |
 | `pnpm test` | 运行 Node.js 基础测试 |
 | `pnpm check` | 运行数据校验、质量检查和测试 |
 

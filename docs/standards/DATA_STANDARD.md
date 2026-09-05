@@ -231,14 +231,21 @@ source_records.csv
 - 原始内容 Hash
 - 备注
 
-后续版本会进一步增加：
+### 10.1 字段级溯源三表（V0.8 起）
 
-```text
-observations
-field_resolutions
-```
+除 `source_records`（按实体）外，V0.8 引入三张字段级溯源 / 归并表，均为正式 CSV（CSV 仍为唯一事实源）：
 
-用于字段级多来源观察和冲突裁决。
+| 表 | 作用 | 关键字段 |
+| --- | --- | --- |
+| `observations` | 字段级原始观察日志（append-only，永不覆盖） | `entity_type`/`entity_id`/`field`/`observed_value`/`observed_language`/`source_name`/`raw_hash` |
+| `field_resolutions` | 某实体某字段最终采用哪个值、依据、胜出来源 | `field`/`resolved_value`/`resolution_method`/`winning_source_name`/`status`/`conflicting_observation_ids` |
+| `entity_aliases` | 跨源 / 跨语言别名与外部身份（显式，matcher 当精确键） | `entity_type`/`entity_id`/`alias`/`alias_type`/`language`/`source_name` |
+
+规则（详见 [`FIELD_RESOLUTION.md`](./FIELD_RESOLUTION.md) 与 `AGENTS.md`）：
+
+- 跨语言 / 跨源实体等同**只能**通过显式 `entity_aliases` 或人工 `resolution` 建立；字符串相似度**绝不**自动合并。
+- 两个可靠来源对同一非空字段给出不同值 → 生成 `field_resolutions(status=pending_review)`，**阻断**该字段 Apply，直到人工裁决（`resolution:decide` / `resolve:link`）。
+- `field_resolutions.method=auto_fill` 仅用于「字段为空且单一来源」的安全补全，不产生冲突。
 
 ## 11. 女优状态
 
