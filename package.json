@@ -14,7 +14,7 @@
     "data:export:xlsx": "node scripts/export-xlsx.mjs",
     "data:export": "pnpm data:validate && pnpm data:export:json && pnpm data:export:xlsx",
     "test": "node --test",
-    "check": "pnpm data:validate && pnpm data:quality -- --fail-on-error && pnpm test",
+    "check": "pnpm data:validate && pnpm data:quality -- --fail-on-error && pnpm db:sync && pnpm test",
     "data:quality": "node scripts/quality-report.mjs",
     "canonical:merge": "node scripts/canonical-merge.mjs",
     "import:prepare": "node scripts/import-prepare.mjs",
@@ -29,7 +29,9 @@
     "provider:javinfo": "node scripts/provider-javinfo.mjs",
     "provider:javlibrary": "node scripts/provider-javlibrary.mjs",
     "provider:metatube": "node scripts/provider-metatube.mjs",
-    "ingest:metatube": "node scripts/ingest-metatube.mjs"
+    "ingest:metatube": "node scripts/ingest-metatube.mjs",
+    "db:sync": "node scripts/db-sync.mjs",
+    "db:query": "node scripts/db-query.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0"

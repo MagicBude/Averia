@@ -4,6 +4,7 @@ import path from "node:path";
 import { ROOT, loadCatalog } from "./lib/catalog.mjs";
 import { writeCsv } from "./lib/csv.mjs";
 import { catalogFingerprint, importBatchDir, parseArgs, pendingReviewCount } from "./import/lib.mjs";
+import { syncDatabase } from "./db-sync.mjs";
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.batch) {
@@ -119,6 +120,18 @@ try {
   console.log(`批次 ${args.batch} 已安全写入正式 CSV。`);
   console.log(`备份目录：${path.relative(ROOT, backupDir)}`);
   console.log("建议继续执行：pnpm data:export && git diff");
+
+  // V0.9：CSV 是唯一事实源，派生库是其物化副本。apply 成功后自动重建，
+  // 保证下次查询无需手动 db:sync。派生库失败不影响 CSV 提交结果，仅告警。
+  try {
+    const sync = syncDatabase();
+    console.log(
+      `已自动重建 SQLite 派生库：${sync.tables} 表 / ${sync.totalRows} 行 / 全文索引 作品${sync.worksFts}+女优${sync.actressesFts}。`,
+    );
+  } catch (syncError) {
+    console.error(`\n[警告] 自动重建派生库失败（CSV 已提交，不受影响）：${syncError.message}`);
+    console.error("       可手动运行 `pnpm db:sync` 重建。");
+  }
 } catch (error) {
   fs.rmSync(path.join(ROOT, "data"), { recursive: true, force: true });
   fs.cpSync(backupDir, path.join(ROOT, "data"), { recursive: true });
