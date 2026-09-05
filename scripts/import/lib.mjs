@@ -427,9 +427,15 @@ export function prepareImport(document, options = {}) {
       const candidateIds = new Set();
       for (const candidateName of [input.primary_name, input.name_ja, input.name_en, input.kana, ...(input.aliases ?? []).map((a) => typeof a === "string" ? a : a?.value)]) {
         const key = normalizeName(candidateName);
+        if (!key) continue;
         for (const candidateId of nameIndex.get(key) ?? []) candidateIds.add(candidateId);
         // Phase 3：entity_aliases 精确别名（英文名 / 中文译名 / 外部站点 ID）
         for (const candidateId of aliasIndex.get(`actress\u0000${key}`) ?? []) candidateIds.add(candidateId);
+        // 同批次内已解析过的女优：按规范化姓名精确复用。
+        // 批量灌库时 adapter 按作品产出 actresses，同一女优会在多个作品里各出现一次；
+        // 若只查既有 catalog 索引，就会把她重复建成多个实体。
+        const batchId = batchActressByName.get(key);
+        if (batchId) candidateIds.add(batchId);
       }
       if (candidateIds.size === 1) {
         id = uniqueSingle(candidateIds);
@@ -496,6 +502,11 @@ export function prepareImport(document, options = {}) {
     } else {
       matches.push({ entity_type: "actress", entity_id: id, source_record_id: sourceRecordId, reason: matchReason });
       newSource("actress", id, input);
+      // 命中既有实体后同样登记进批次索引，让后续作品与 cast 解析复用到同一个 ID。
+      for (const name of [input.primary_name, input.name_ja, input.name_en, input.kana]) {
+        const key = normalizeName(name);
+        if (key) batchActressByName.set(key, id);
+      }
       const existing = catalog.actresses.records.find((row) => row.id === id);
       if (existing) {
         for (const field of ACTRESS_OBSERVABLE_FIELDS) {
