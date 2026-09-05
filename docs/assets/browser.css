@@ -1,9 +1,9 @@
 /* ============================================================
- * Averia Browser —— 数据浏览器专用样式（支持明暗主题）
+ * Averia Browser —— 资料库页面（docs/browser.html）专用样式
  *
- * 依赖 docs/assets/site.css 中的 :root / [data-theme="dark"] 变量。
- * 本文件只定义浏览器组件（表格/弹窗/工具栏）的样式，
- * 不覆盖落地页（Hero/About 等）的样式。
+ * 设计变量来自 assets/theme.css；本文件只定义浏览器组件
+ * （表格 / 弹窗 / 工具栏 / 标签）的样式，不覆盖落地页样式。
+ * 明暗切换按钮（.theme-toggle）已移至 theme.css 两页共用。
  * ============================================================ */
 
 /* ---------- 浏览器容器 ---------- */
@@ -18,6 +18,19 @@
   width: min(calc(100% - 40px), 1240px);
   margin: 0 auto;
 }
+
+/* ---------- 独立页面布局（docs/browser.html）----------
+ * 整页不滚动，仅表格区域内部滚动，从根本上避免表头与站点头/筛选行重叠。
+ */
+body.is-browser { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+body.is-browser .site-header { position: static; flex: none; }
+body.is-browser .browser-section { flex: 1 1 auto; min-height: 0; display: flex; padding: 16px 0 0; }
+body.is-browser .browser-inner { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+body.is-browser .browser-head { flex: none; }
+body.is-browser #app { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+body.is-browser .toolbar { flex: none; }
+body.is-browser .count { flex: none; }
+body.is-browser .table-wrap { flex: 1 1 auto; min-height: 0; overflow: auto; }
 
 .browser-head {
   display: flex;
@@ -173,7 +186,7 @@ select:focus {
   border: 1px solid var(--line, #e4e7ec);
   [data-theme="dark"] & { border-color: var(--border, #283341); }
   border-radius: 10px;
-  overflow: hidden;
+  overflow: auto;
   background: var(--surface, #ffffff);
   [data-theme="dark"] & { background: var(--bg-elev, #161c24); }
 }
@@ -564,38 +577,6 @@ tbody tr:last-child td {
   [data-theme="dark"] & { color: var(--text-dim, #9aa4b2); }
   font-size: 13px;
   line-height: 1.7;
-}
-
-/* ---------- 明暗切换按钮 ---------- */
-.theme-toggle {
-  appearance: none;
-  border: 1px solid var(--line, #e4e7ec);
-  [data-theme="dark"] & { border-color: var(--border, #283341); }
-  background: var(--surface, #ffffff);
-  [data-theme="dark"] & { background: var(--bg-elev, #161c24); }
-  border-radius: 10px;
-  cursor: pointer;
-  padding: 6px 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-family: inherit;
-  color: var(--muted, #667085);
-  [data-theme="dark"] & { color: var(--text-dim, #9aa4b2); }
-  transition: all 0.2s;
-  line-height: 1;
-}
-.theme-toggle:hover {
-  color: var(--ink, #101828);
-  [data-theme="dark"] & { color: var(--text, #e6e9ef); }
-  border-color: var(--accent, #2f7a73);
-  [data-theme="dark"] & { border-color: var(--accent-line, rgba(123,168,155,0.4)); }
-}
-.theme-toggle .icon {
-  font-size: 15px;
-  width: 1em;
-  text-align: center;
 }
 
 /* ---------- 响应式 ---------- */

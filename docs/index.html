@@ -6,8 +6,8 @@
   <meta name="description" content="Averia 是一个数据优先的 JAV 元数据资料项目，用于整理女优、作品、厂商、系列、分类与来源信息。" />
   <meta name="theme-color" content="#f7f8fa" id="themeColor" />
   <title>Averia — JAV 元数据资料库</title>
+  <link rel="stylesheet" href="./assets/theme.css" />
   <link rel="stylesheet" href="./assets/site.css" />
-  <link rel="stylesheet" href="./assets/browser.css" />
 </head>
 <body>
   <header class="site-header">
@@ -21,7 +21,7 @@
         <a href="#scope">数据范围</a>
         <a href="#principles">数据原则</a>
         <a href="#roadmap">路线图</a>
-        <a href="#browser">资料库</a>
+        <a href="./browser.html">资料库</a>
         <button class="theme-toggle" id="themeToggle" title="切换明暗主题"><span class="icon">\2600\uFE0F</span> 浅色</button>
         <a class="nav-cta" href="https://github.com/MagicBude/Averia" rel="noreferrer">GitHub</a>
       </nav>
@@ -138,18 +138,12 @@
       </div>
     </section>
 
-    <!-- ==================== 数据浏览器（演员 + 作品）==================== -->
-    <section id="browser" class="browser-section">
-      <div class="browser-inner">
-        <div class="browser-head">
-          <h2>资料库</h2>
-          <div class="browser-tabs" id="tabs">
-            <button class="browser-tab is-active" data-tab="actresses">演员</button>
-            <button class="browser-tab" data-tab="works">作品</button>
-          </div>
-          <span class="meta-line" id="metaLine">加载中…</span>
-        </div>
-        <div id="app"></div>
+    <section class="section" style="text-align:center; background:var(--bg)">
+      <div class="container">
+        <p class="section-kicker">EXPLORE</p>
+        <h2>浏览资料库</h2>
+        <p style="color:var(--muted); margin:14px 0 26px">按女优或作品检索、筛选与查看详情。</p>
+        <a class="button primary" href="./browser.html">进入资料库 →</a>
       </div>
     </section>
   </main>
@@ -164,7 +158,6 @@
       <p>© 2026 Averia Project. Development preview.</p>
     </div>
   </footer>
-  <script src="./data/data.js"></script>
-  <script src="./assets/app.js"></script>
+  <script src="./assets/theme.js"></script>
 </body>
 </html>

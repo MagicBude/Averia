@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Averia 资料库 —— 浏览女优与作品的元数据，支持搜索、筛选与明暗主题切换。" />
+  <meta name="theme-color" content="#f7f8fa" id="themeColor" />
+  <title>资料库 — Averia</title>
+  <link rel="stylesheet" href="./assets/theme.css" />
+  <link rel="stylesheet" href="./assets/site.css" />
+  <link rel="stylesheet" href="./assets/browser.css" />
+</head>
+<body class="is-browser">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="./index.html" aria-label="返回 Averia 首页">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-text">Averia</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="./index.html">首页</a>
+        <a href="./index.html#about">关于</a>
+        <button class="theme-toggle" id="themeToggle" title="切换明暗主题"><span class="icon">\u2600\uFE0F</span> 浅色</button>
+        <a class="nav-cta" href="https://github.com/MagicBude/Averia" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="browser-section">
+    <div class="browser-inner">
+      <div class="browser-head">
+        <h2>资料库</h2>
+        <div class="browser-tabs" id="tabs">
+          <button class="browser-tab is-active" data-tab="actresses">演员</button>
+          <button class="browser-tab" data-tab="works">作品</button>
+        </div>
+        <span class="meta-line" id="metaLine">加载中…</span>
+      </div>
+      <div id="app"></div>
+    </div>
+  </section>
+
+  <script src="./assets/theme.js"></script>
+  <script src="./data/data.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>

@@ -1,10 +1,11 @@
 "use strict";
 
 /* ============================================================
- * Averia Browser —— 数据浏览器（嵌入 docs/index.html 落地页）
+ * Averia Browser —— 独立资料库页面（docs/browser.html）
  *
  * 数据来自 window.AVERIA_DATA（由 scripts/web-export.mjs 生成）。
- * 样式来自 assets/browser.css（支持 [data-theme="light|dark"] 切换）。
+ * 样式来自 assets/theme.css（变量/明暗）+ assets/browser.css（组件）。
+ * 明暗主题切换由 assets/theme.js 统一处理（两个页面共用）。
  * ============================================================ */
 
 const DATA = window.AVERIA_DATA;
@@ -16,38 +17,6 @@ const STATE = {
 };
 
 const DEFAULT_DESC = new Set(["release_date", "score", "workCount", "castCount"]);
-
-/* ---------------- 明暗主题切换 ---------------- */
-(function initTheme() {
-  const toggle = document.getElementById("themeToggle");
-  const root = document.documentElement;
-  const metaTheme = document.getElementById("themeColor");
-
-  // 读取存储或系统偏好，默认浅色
-  const stored = localStorage.getItem("averia-theme");
-  const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
-  const theme = stored || (prefersDark ? "dark" : "light");
-
-  function apply(t) {
-    root.setAttribute("data-theme", t);
-    if (metaTheme) metaTheme.content = t === "dark" ? "#0f1419" : "#f7f8fa";
-    if (toggle) {
-      toggle.innerHTML = t === "dark"
-        ? '<span class="icon">\u2600\uFE0F</span> 浅色'
-        : '<span class="icon">\uD83C\uDF19</span> 深色';
-    }
-  }
-
-  apply(theme);
-
-  if (toggle) {
-    toggle.addEventListener("click", () => {
-      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      localStorage.setItem("averia-theme", next);
-      apply(next);
-    });
-  }
-})();
 
 /* ---------------- 通用工具 ---------------- */
 function esc(s) {
@@ -367,7 +336,7 @@ function openActress(id) {
         <h2>${esc(a.primary_name)}</h2>
         <div class="romaji">${[a.name_ja, a.name_en, a.kana].filter(Boolean).map(esc).join(" \u00B7 ") || "\u2014"}</div>
       </div>
-      <button class="close" data-close">\u00D7</button>
+      <button class="close" data-close="true">\u00D7</button>
     </div>
     <div class="modal-body">
       <div class="section-title">\u57FA\u672C\u4FE1\u606F</div>
@@ -400,7 +369,7 @@ function openWork(id) {
         <div class="romaji">${esc(w.title)}</div>
         ${w.title_ja ? `<div class="romaji">${esc(w.title_ja)}</div>` : ""}
       </div>
-      <button class="close" data-close">\u00D7</button>
+      <button class="close" data-close="true">\u00D7</button>
     </div>
     <div class="modal-body">
       <div class="section-title">\u57FA\u672C\u4FE1\u606F</div>

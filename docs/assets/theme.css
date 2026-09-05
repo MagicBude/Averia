@@ -1,0 +1,90 @@
+/* ============================================================
+ * Averia —— 设计变量与明暗主题（所有页面共用）
+ *
+ * 落地页（index.html）与资料库页（browser.html）都先加载本文件，
+ * 再由各自的组件样式表（site.css / browser.css）消费这些变量。
+ * 切换逻辑见 assets/theme.js（写入 <html data-theme> + localStorage）。
+ * ============================================================ */
+
+:root {
+  /* 基础色板（浅色默认） */
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --ink: #101828;
+  --muted: #667085;
+  --line: #e4e7ec;
+  --accent: #2f7a73;
+  --accent-soft: #e9f5f3;
+  --dark: #0b1220;        /* 仅用于落地页深色区块（Roadmap 等），浅色值即深色 */
+  --dark-soft: #151e2e;
+
+  /* 浏览器 / 组件扩展变量（浅色） */
+  --browser-elev: #f0f1f3;
+  --bg-elev: #f0f1f3;
+  --bg-elev-2: #e8eaed;
+  --border-soft: #dde0e5;
+  --border: #e4e7ec;
+  --text: #101828;
+  --text-dim: #667085;
+  --text-faint: #98a2b3;
+  --accent-line: rgba(47, 122, 115, 0.35);
+  --warn: #b8860a;
+
+  --max: 1180px;
+}
+
+/* ---------- 暗色主题（由 theme.js 切换 <html data-theme="dark">）---------- */
+[data-theme="dark"] {
+  --bg: #0f1419;
+  --surface: #161c24;
+  --ink: #e6e9ef;
+  --muted: #9aa4b2;
+  --line: #283341;
+  --accent-soft: rgba(123, 168, 155, 0.14);
+  --browser-elev: #1a212b;
+  --bg-elev: #161c24;
+  --bg-elev-2: #1d2530;
+  --border-soft: #222b36;
+  --border: #283341;
+  --text: #e6e9ef;
+  --text-dim: #9aa4b2;
+  --text-faint: #6b7686;
+  --accent-line: rgba(123, 168, 155, 0.4);
+  --warn: #c9a06a;
+}
+
+/* ---------- 明暗切换按钮（两页共用，原在 browser.css）---------- */
+.theme-toggle {
+  appearance: none;
+  border: 1px solid var(--line, #e4e7ec);
+  background: var(--surface, #ffffff);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--muted, #667085);
+  transition: all 0.2s;
+  line-height: 1;
+}
+[data-theme="dark"] .theme-toggle {
+  border-color: var(--border, #283341);
+  background: var(--bg-elev, #161c24);
+  color: var(--text-dim, #9aa4b2);
+}
+.theme-toggle:hover {
+  color: var(--ink, #101828);
+  border-color: var(--accent, #2f7a73);
+}
+[data-theme="dark"] .theme-toggle:hover {
+  color: var(--text, #e6e9ef);
+  border-color: var(--accent-line, rgba(123, 168, 155, 0.4));
+}
+.theme-toggle .icon {
+  font-size: 15px;
+  width: 1em;
+  text-align: center;
+}

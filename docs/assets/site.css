@@ -1,44 +1,9 @@
-:root {
-  --bg: #f7f8fa;
-  --surface: #ffffff;
-  --ink: #101828;
-  --muted: #667085;
-  --line: #e4e7ec;
-  --accent: #2f7a73;
-  --accent-soft: #e9f5f3;
-  --dark: #0b1220;
-  --dark-soft: #151e2e;
-  /* 浏览器扩展变量（浅色默认） */
-  --browser-elev: #f0f1f3;
-  --bg-elev: #f0f1f3;
-  --bg-elev-2: #e8eaed;
-  --border-soft: #dde0e5;
-  --text: #101828;
-  --text-dim: #667085;
-  --text-faint: #98a2b3;
-  --accent-line: rgba(47,122,115,0.35);
-  --warn: #b8860a;
-  --max: 1180px;
-}
-
-/* ---------- 暗色主题 ---------- */
-[data-theme="dark"] {
-  --bg: #0f1419;
-  --surface: #161c24;
-  --ink: #e6e9ef;
-  --muted: #9aa4b2;
-  --line: #283341;
-  --accent-soft: rgba(123,168,155,0.14);
-  --browser-elev: #1a212b;
-  --bg-elev: #161c24;
-  --bg-elev-2: #1d2530;
-  --border-soft: #222b36;
-  --text: #e6e9ef;
-  --text-dim: #9aa4b2;
-  --text-faint: #6b7686;
-  --accent-line: rgba(123,168,155,0.4);
-  --warn: #c9a06a;
-}
+/* ============================================================
+ * Averia —— 落地页（docs/index.html）组件样式
+ *
+ * 设计变量（颜色 / 明暗）统一在 assets/theme.css 定义，
+ * 本文件只写落地页专属组件样式（Hero / 卡片 / 时间线 / 页脚等）。
+ * ============================================================ */
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
