@@ -40,37 +40,73 @@ if (pending > 0) {
   process.exit(5);
 }
 
+// 写入前先体检：若正式 CSV 处于非法状态，备份到的也会是坏数据，
+// 一旦本次 apply 失败，回滚只会把坏数据恢复回来（曾因此留下 39 部悬空 work_cast 的作品）。
+// 所以基线不干净时直接拒绝 apply，先让人把 data/ 修回可校验通过的状态。
+const preCheck = spawnSync(process.execPath, [path.join(ROOT, "scripts", "validate-data.mjs")], { cwd: ROOT, encoding: "utf8" });
+if (preCheck.status !== 0) {
+  if (preCheck.stdout) process.stdout.write(preCheck.stdout);
+  if (preCheck.stderr) process.stderr.write(preCheck.stderr);
+  console.error("正式 CSV 在写入前就校验失败，拒绝继续应用：请先把 data/ 修复到可校验通过再重试。");
+  process.exit(6);
+}
+
 const backupDir = path.join(ROOT, "var", "backups", args.batch);
 fs.rmSync(backupDir, { recursive: true, force: true });
 fs.mkdirSync(path.dirname(backupDir), { recursive: true });
 fs.cpSync(path.join(ROOT, "data"), backupDir, { recursive: true });
 
+// 兜底回滚：写入一旦开始，只要进程不是正常收尾（例如输出被 head/管道截断触发 EPIPE、
+// 被信号中断等），catch 里的回滚就执行不到，data/ 会停在写了一半的坏状态。
+// 这里用 exit 钩子兜住：只要没确认写入成功，退出前一律从备份恢复。
+// rmSync/cpSync 是同步的，可以在 exit 钩子里安全执行。
+let writesStarted = false;
+let committed = false;
+process.on("exit", () => {
+  if (!writesStarted || committed) return;
+  try {
+    fs.rmSync(path.join(ROOT, "data"), { recursive: true, force: true });
+    fs.cpSync(backupDir, path.join(ROOT, "data"), { recursive: true });
+    console.error("\n[安全网] 进程异常退出，已自动从备份恢复 data/。");
+  } catch (error) {
+    console.error(`\n[安全网] 恢复备份失败：${error.message}`);
+  }
+});
+
 try {
   const catalog = loadCatalog();
+  // 先算出每个数据集的「最终行集」＝既有记录 + 本批追加行，最后统一落盘。
+  // 关键：不能在这里就写文件、再让下面的 entity_updates 用 dataset.records 覆写——
+  // dataset.records 是本次写入前的旧快照，取它重写会把本批刚追加的行整批抹掉
+  // （曾因此清空 34 位新女优，留下 39 条悬空 work_cast，触发校验失败回滚）。
+  const finalRows = new Map();
   for (const [datasetName, rows] of Object.entries(stage.append ?? {})) {
     if (!rows?.length) continue;
     const dataset = catalog[datasetName];
-    if (!dataset) continue; // 跳过 meta 键（observations / field_resolutions / entity_aliases / entity_updates）
-    writeCsv(dataset.filePath, dataset.schema.columns, [...dataset.records, ...rows]);
+    if (!dataset) continue; // 跳过 meta 键（entity_aliases / entity_updates 等非数据集）
+    finalRows.set(datasetName, [...dataset.records, ...rows]);
   }
 
-  // Phase 4：将字段裁决的 auto_fill（及已裁决 adopt）合并进既有实体记录。
+  // Phase 4：将字段裁决的 auto_fill（及已裁决 adopt）合并进最终行集。
+  // 更新目标可能既有老实体，也可能是本批刚建的新实体，所以统一在最终行集里定位。
   const updates = stage.append?.entity_updates ?? [];
   if (updates.length) {
-    const affected = new Set();
     for (const u of updates) {
       const dataset = catalog[u.dataset];
       if (!dataset) throw new Error(`未知数据集：${u.dataset}`);
-      const rec = dataset.records.find((row) => row.id === u.id);
+      const rows = finalRows.get(u.dataset) ?? [...dataset.records];
+      const rec = rows.find((row) => row.id === u.id);
       if (!rec) throw new Error(`entity_update 找不到 ${u.dataset} ${u.id}`);
       rec[u.field] = u.value;
-      affected.add(u.dataset);
-    }
-    for (const ds of affected) {
-      const dataset = catalog[ds];
-      writeCsv(dataset.filePath, dataset.schema.columns, dataset.records);
+      finalRows.set(u.dataset, rows);
     }
     console.log(`已合并 ${updates.length} 条字段裁决更新到既有实体。`);
+  }
+
+  writesStarted = true;
+  for (const [datasetName, rows] of finalRows) {
+    const dataset = catalog[datasetName];
+    writeCsv(dataset.filePath, dataset.schema.columns, rows);
   }
 
   const check = spawnSync(process.execPath, [path.join(ROOT, "scripts", "validate-data.mjs")], { cwd: ROOT, encoding: "utf8" });
@@ -79,6 +115,7 @@ try {
   if (check.status !== 0) throw new Error("写入后的数据校验失败。 ");
 
   fs.writeFileSync(path.join(dir, "applied.json"), `${JSON.stringify({ batch_id: args.batch, applied_at: new Date().toISOString() }, null, 2)}\n`, "utf8");
+  committed = true; // 走到这里说明校验已通过，解除安全网
   console.log(`批次 ${args.batch} 已安全写入正式 CSV。`);
   console.log(`备份目录：${path.relative(ROOT, backupDir)}`);
   console.log("建议继续执行：pnpm data:export && git diff");
