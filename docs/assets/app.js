@@ -40,6 +40,46 @@ function thumb(url, ph = "\u65E0", cls = "") {
     url ? `<img src="${esc(url)}" loading="lazy" onerror="this.remove()">` : ""
   }</div>`;
 }
+
+/* ---------------- 头像：多级回退，避免破图 ----------------
+ * 数据源（CSV）里存的是 Gfriends 官方 raw 地址，中国网络常直连不稳。
+ * 渲染时按 raw -> GitHub 镜像 -> 首字母彩色占位 三级回退；
+ * 任何一级成功就显示，全失败也只是露出底层首字母占位，绝不出现破图图标。
+ * （镜像只是展示层兜底层，不改 CSV 事实源，符合 AGENTS.md 数据铁律。） */
+const AVATAR_MIRRORS = ["https://ghproxy.net/", "https://raw.gitmirror.com/"];
+
+function initialsOf(name) {
+  const n = (name || "").trim();
+  if (!n) return "?";
+  // 日文（假名 / 汉字）/ 半角片假名：取首字
+  if (/[\u3040-\u30ff\u4e00-\u9fff\uff66-\uff9f]/.test(n)) return n[0];
+  // 罗马字：最多取两个词首字母
+  const parts = n.split(/\s+/).filter(Boolean);
+  return parts.slice(0, 2).map((p) => p[0].toUpperCase()).join("");
+}
+function avatarColor(name) {
+  let h = 0;
+  for (const ch of name || "?") h = (h * 31 + ch.charCodeAt(0)) & 0xffffff;
+  return `hsl(${h % 360} 52% 58%)`;
+}
+function avatarImg(url, name) {
+  const mirrors = AVATAR_MIRRORS.map((m) => m + url).join("|");
+  return `<img class="avatar-img" src="${esc(url)}" loading="lazy" alt="${esc(name || "")}" data-mirrors="${esc(mirrors)}" data-name="${esc(name || "")}" onerror="avatarFallback(this)">`;
+}
+function avatarFallback(img) {
+  const mirrors = (img.dataset.mirrors || "").split("|").filter(Boolean);
+  const tried = Number(img.dataset.tried || 0);
+  if (tried < mirrors.length) {
+    img.dataset.tried = String(tried + 1);
+    img.src = mirrors[tried];
+    return;
+  }
+  img.remove(); // 所有源都失败 -> 露出底层首字母彩色占位
+}
+function avatarThumb(url, name, cls = "") {
+  const ph = `<span class="thumb-ph avatar-initials" style="background:${avatarColor(name)}">${esc(initialsOf(name))}</span>`;
+  return `<div class="thumb ${cls}">${ph}${url ? avatarImg(url, name) : ""}</div>`;
+}
 function statusBadge(status) {
   const s = status || "unknown";
   const map = { active: ["active", "\u73B0\u5F79"], retired: ["retired", "\u5F15\u9000"], unknown: ["unknown", "\u672A\u77E5"] };
@@ -53,7 +93,7 @@ function dash(v) {
 /* ---------------- 列定义 ---------------- */
 const ACTRESS_COLS = [
   { key: "#", sortable: false, render: (a, i) => i + 1 },
-  { key: "avatar", sortable: false, render: (a) => thumb(a.profile_image_url, "\u65E0", "ph-avatar") },
+  { key: "avatar", sortable: false, render: (a) => avatarThumb(a.profile_image_url, a.primary_name, "ph-avatar") },
   {
     key: "primary_name",
     label: "\u540D\u5B57",
@@ -331,7 +371,7 @@ function openActress(id) {
 
   const html = `
     <div class="modal-head">
-      ${thumb(a.profile_image_url, "\u65E0", "avatar")}
+      ${avatarThumb(a.profile_image_url, a.primary_name, "avatar")}
       <div class="modal-title">
         <h2>${esc(a.primary_name)}</h2>
         <div class="romaji">${[a.name_ja, a.name_en, a.kana].filter(Boolean).map(esc).join(" \u00B7 ") || "\u2014"}</div>
@@ -354,7 +394,7 @@ function openWork(id) {
   const cast = (w.cast || [])
     .map(
       (c) =>
-        `<div class="cast-chip" data-open="actress" data-id="${c.actress_id}">${thumb(null, "\u65E0", "sm ph-avatar")}<span>${esc(c.primary_name)}</span></div>`,
+        `<div class="cast-chip" data-open="actress" data-id="${c.actress_id}">${avatarThumb(null, c.primary_name, "sm ph-avatar")}<span>${esc(c.primary_name)}</span></div>`,
     )
     .join("");
   const genres = (w.genres || []).map((g) => `<span class="tag">${esc(g.name)}</span>`).join("");
