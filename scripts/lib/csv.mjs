@@ -50,7 +50,7 @@ export function parseCsv(text) {
 }
 
 export function readCsv(filePath) {
-  const text = fs.readFileSync(filePath, "utf8");
+  const text = fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, "");
   const rows = parseCsv(text);
 
   if (rows.length === 0) {
