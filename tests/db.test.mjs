@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { syncDatabase } from "../scripts/db-sync.mjs";
+import { loadCatalog } from "../scripts/lib/catalog.mjs";
 import {
   openDatabase,
   searchWorks,
@@ -24,6 +25,50 @@ test("db:sync 全量重建产出 16+ 表且行数与 CSV 一致", () => {
   assert.ok(r.totalRows > 1000, `总行数应 >1000，实得 ${r.totalRows}`);
   assert.ok(r.worksFts > 0 && r.actressesFts > 0, "FTS 索引应非空");
   assert.ok(fs.existsSync(DB_PATH), "派生库文件应存在");
+});
+
+test("SQLite 派生库启用外键并拒绝悬空关系", () => {
+  const db = openDatabase({ readonly: false });
+  try {
+    assert.equal(db.prepare("PRAGMA foreign_keys").get().foreign_keys, 1);
+    db.exec("BEGIN");
+    assert.throws(
+      () => db.prepare("INSERT INTO work_cast (work_id, actress_id, role, position) VALUES (?, ?, ?, ?)").run("work_999999", "actress_999999", null, 1),
+      /FOREIGN KEY constraint failed/u,
+    );
+    db.exec("ROLLBACK");
+  } finally { db.close(); }
+});
+
+test("SQLite 事务失败可完整回滚", () => {
+  const db = openDatabase({ readonly: false });
+  const before = db.prepare("SELECT COUNT(*) AS count FROM makers").get().count;
+  try {
+    db.exec("BEGIN");
+    db.prepare("INSERT INTO makers (id, name) VALUES (?, ?)").run("maker_999998", "回滚测试");
+    db.exec("ROLLBACK");
+    assert.equal(db.prepare("SELECT COUNT(*) AS count FROM makers").get().count, before);
+    assert.equal(db.prepare("SELECT id FROM makers WHERE id = ?").get("maker_999998"), undefined);
+  } finally { db.close(); }
+});
+
+test("CSV 导入 SQLite 后所有规范列逐字段无损", () => {
+  syncDatabase();
+  const catalog = loadCatalog();
+  const db = openDatabase();
+  try {
+    for (const [name, dataset] of Object.entries(catalog)) {
+      const order = dataset.schema.primaryKey?.length ? ` ORDER BY ${dataset.schema.primaryKey.map((column) => `"${column}"`).join(", ")}` : "";
+      const rows = db.prepare(`SELECT * FROM "${name}"${order}`).all();
+      const expected = [...dataset.records].sort((left, right) => (dataset.schema.primaryKey ?? []).map((key) => left[key].localeCompare(right[key])).find((value) => value !== 0) ?? 0);
+      assert.equal(rows.length, expected.length, `${name} 行数必须一致`);
+      const integers = new Set(dataset.schema.integerFields ?? []); const booleans = new Set(dataset.schema.booleanFields ?? []);
+      for (const [index, source] of expected.entries()) for (const column of dataset.schema.columns) {
+        const value = source[column] === "" ? null : booleans.has(column) ? (source[column] === "true" ? 1 : 0) : integers.has(column) ? Number.parseInt(source[column], 10) : column === "score" ? Number.parseFloat(source[column]) : source[column];
+        assert.equal(rows[index][column], value, `${name}[${index}].${column} 不得丢失或改变`);
+      }
+    }
+  } finally { db.close(); }
 });
 
 test("作品搜索：番号走 FTS5（SSIS）", () => {

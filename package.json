@@ -9,6 +9,7 @@
   },
   "packageManager": "pnpm@11.21.0",
   "scripts": {
+    "media:serve": "node scripts/media-server.mjs",
     "data:validate": "node scripts/validate-data.mjs",
     "data:export:json": "node scripts/export-json.mjs",
     "data:export:xlsx": "node scripts/export-xlsx.mjs",
@@ -31,6 +32,7 @@
     "provider:javlibrary": "node scripts/provider-javlibrary.mjs",
     "provider:metatube": "node scripts/provider-metatube.mjs",
     "ingest:metatube": "node scripts/ingest-metatube.mjs",
+    "legacy:audit": "node scripts/legacy-audit.mjs",
     "db:sync": "node scripts/db-sync.mjs",
     "db:query": "node scripts/db-query.mjs",
     "web:export": "node scripts/web-export.mjs",

@@ -55,6 +55,11 @@ function createTable(db, name, schema) {
   const pk = (schema.primaryKey ?? []).filter(Boolean);
   // 关系表（work_cast / work_genres / work_directors）是复合主键，单列主键则内联声明
   if (pk.length) columns.push(`PRIMARY KEY (${pk.map(quoteIdent).join(", ")})`);
+  for (const foreignKey of schema.foreignKeys ?? []) {
+    columns.push(
+      `FOREIGN KEY (${quoteIdent(foreignKey.field)}) REFERENCES ${quoteIdent(foreignKey.dataset)} (${quoteIdent(foreignKey.target)})`,
+    );
+  }
 
   db.exec(`DROP TABLE IF EXISTS ${quoteIdent(name)}`);
   db.exec(`CREATE TABLE ${quoteIdent(name)} (\n  ${columns.join(",\n  ")}\n)`);
@@ -206,10 +211,19 @@ export function syncDatabase({ dbPath = DB_PATH } = {}) {
   let indexCount = 0;
 
   try {
+    db.exec("PRAGMA foreign_keys = ON");
     db.exec("BEGIN");
+    // 数据集保持确定性字母顺序；把约束检查延迟到 COMMIT，可在不维护第二套
+    // 手工拓扑顺序的前提下导入互有关联的表，同时仍保证最终库不存在悬空外键。
+    db.exec("PRAGMA defer_foreign_keys = ON");
+    // 必须先创建全部表，再插入任何行：按字母排序时关系表可能早于目标实体表。
+    // SQLite 允许建表时引用稍后创建的表，但开启 foreign_keys 后不能在目标表不存在时插入。
     for (const name of names) {
       const dataset = catalog[name];
       createTable(db, name, dataset.schema);
+    }
+    for (const name of names) {
+      const dataset = catalog[name];
       counts[name] = insertRows(db, name, dataset, dataset.schema);
       indexCount += createIndexes(db, name, dataset.schema);
     }

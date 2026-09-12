@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Averia 媒体库</title><link rel="stylesheet" href="/media.css"></head>
+<body><aside><a class="brand" href="/">Averia</a><p>本地媒体库</p><nav><a href="#library">媒体</a><a href="#folders">目录管理</a></nav><button id="theme">切换深浅主题</button></aside>
+<main><header><h1>我的媒体</h1><label>搜索文件 <input id="search" type="search" placeholder="文件名或番号"></label></header>
+<p id="status" role="status">正在加载…</p><section id="library" class="grid" aria-label="媒体文件"></section>
+<section id="folders"><h2>媒体目录</h2><p>添加目录后，点击扫描建立文件索引。扫描仅读取目录，不会修改视频。</p><form id="add"><label>绝对目录路径 <input id="directory" required placeholder="D:\Media\Movies"></label><button>添加目录</button></form><div id="roots"></div></section>
+</main><dialog id="player"><button id="close">关闭播放器</button><h2 id="title"></h2><video controls playsinline preload="metadata"></video><p id="playError" role="alert"></p><form id="rename"><label>新文件名 <input id="filename" required></label><button>预览改名</button></form><p id="renamePreview" role="status"></p><button id="confirmRename" hidden>确认改名</button></dialog><script type="module" src="/media.js"></script></body></html>

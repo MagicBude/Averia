@@ -114,6 +114,11 @@ exports/xlsx/averia.xlsx
 
 ## 常用命令
 
+本地媒体应用开发入口：`pnpm media:serve`，打开 `http://127.0.0.1:4180`。
+支持目录登记、手动扫描、文件搜索、浏览器直接播放和同目录改名预览/确认。
+媒体索引保存在 `var/media/library.db`；尚未支持转码、跨目录移动、删除或自动关联作品。
+架构与限制见 [`ADR-0004`](docs/adr/0004-local-media-application.md)。
+
 | 命令 | 作用 |
 | --- | --- |
 | `pnpm data:validate` | 校验 CSV 表头、ID、外键、布尔值、日期及部分业务约束 |
