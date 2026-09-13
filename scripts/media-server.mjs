@@ -4,11 +4,14 @@ import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
 import { randomUUID } from 'node:crypto';
-import { ROOT } from './lib/catalog.mjs';
-import { openLibrary, addRoot, scanRoot, resolveMedia, byteRange, previewRename, applyRename } from './media/library.mjs';
+import { ROOT, loadCatalog } from './lib/catalog.mjs';
+import { openLibrary, addRoot, scanRoot, resolveMedia, byteRange, previewRename, applyRename, buildWorkCodeIndex, savePlayback, pickDirectory } from './media/library.mjs';
 
 fs.mkdirSync(path.join(ROOT, 'var', 'media'), { recursive: true });
 const db = openLibrary(path.join(ROOT, 'var', 'media', 'library.db'));
+const catalog = loadCatalog();
+const codeIndex = buildWorkCodeIndex(catalog);
+const worksById = new Map(catalog.works.records.map((work) => [work.id, work]));
 const token = randomUUID();
 const port = Number(process.env.PORT || 4180);
 const origin = `http://127.0.0.1:${port}`;
@@ -27,6 +30,9 @@ http.createServer(async (req, res) => {
       if (req.headers.origin !== origin || req.headers['x-averia-token'] !== token) return json(res, { error: '请求验证失败' }, 403);
       let body = ''; for await (const chunk of req) { body += chunk; if (body.length > 16384) throw new Error('请求过大'); }
       const input = JSON.parse(body || '{}');
+      if (url.pathname === '/api/pick-directory') return json(res, {
+        path: await pickDirectory({ scriptPath: path.join(ROOT, 'scripts', 'media', 'pick-folder.ps1') }),
+      });
       if (url.pathname === '/api/roots') return json(res, await addRoot(db, input.path));
       if (url.pathname === '/api/rename/preview') {
         const plan = await previewRename(db, input.id, input.name);
@@ -45,14 +51,19 @@ http.createServer(async (req, res) => {
       if (url.pathname === '/api/scan') {
         if (scanning) return json(res, { error: '已有扫描正在运行' }, 409);
         scanning = true;
-        try { return json(res, await scanRoot(db, input.id)); } finally { scanning = false; }
+        try { return json(res, await scanRoot(db, input.id, { codeIndex })); } finally { scanning = false; }
       }
+      if (url.pathname === '/api/playback') return json(res, savePlayback(db, input.id, Number(input.position), Number(input.duration)));
       return json(res, { error: '操作不存在' }, 404);
     }
     if (!['GET', 'HEAD'].includes(req.method)) return json(res, { error: '方法不支持' }, 405);
     if (url.pathname === '/api/library') return json(res, {
       token, roots: db.prepare('SELECT * FROM media_roots ORDER BY path').all(),
-      files: db.prepare('SELECT * FROM media_files ORDER BY relative_path,id').all(),
+      files: db.prepare(`SELECT f.*, p.position_seconds, p.duration_seconds, p.completed
+        FROM media_files f LEFT JOIN playback_state p ON p.media_file_id=f.id ORDER BY f.relative_path,f.id`).all().map((file) => ({
+          ...file,
+          work: file.work_id ? worksById.get(file.work_id) ?? null : null,
+        })),
     });
     if (url.pathname.startsWith('/stream/')) {
       const file = await resolveMedia(db, url.pathname.slice(8));
