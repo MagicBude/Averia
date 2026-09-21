@@ -1,21 +1,12 @@
 node_modules/
-.pnpm-store/
-.DS_Store
-Thumbs.db
-*.log
-.env
-.env.*
-!.env.example
+.next/
+out/
 coverage/
-.tmp/
-
-# Averia 导入 Pipeline 的本地暂存、备份和质量报告
-var/
-
-# WorkBuddy 本地代理记忆（不入库）
-.workbuddy/
-
-# V0.9 SQLite 派生库（CSV 的物化副本，由 `pnpm db:sync` 生成，非事实源）
-data/averia.db
-data/averia.db-wal
-data/averia.db-shm
+.env
+.env.local
+!.env.example
+*.log
+*.tsbuildinfo
+.playwright-cli/
+output/
+drizzle/meta/

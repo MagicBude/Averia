@@ -1,300 +1,37 @@
-# AGENTS.md
+# Averia 协作规则
 
-本文档定义 AI Agent、编码助手以及贡献者在 Averia 仓库中工作时必须遵守的规则。
+## 当前阶段
 
-## 项目定位
+Averia 正在进行 0.1 全量重构。PostgreSQL 是唯一事实源；公开预览只允许虚构数据。旧实现可从 Git 标签 `legacy-v0.7` 查阅，但不得未经审查复制旧数据或 Provider。
 
-Averia 是一个**数据优先的结构化元数据资料库**。
+## 工程原则
 
-V1 阶段不是“网站优先”，也不是“数据库优先”。必须遵循：
+1. TypeScript 使用严格模式，不以 `any` 绕过领域建模。
+2. 页面不得直接拼写 SQL；数据访问必须经过明确的 Repository/Query 边界。
+3. 数据库变更必须提交 Schema、迁移、测试和对应文档。
+4. 稳定 ID 不依赖姓名、标题、番号或译名。
+5. 外部数据先形成 Observation，再经人工审核进入已发布实体；禁止 last-write-wins。
+6. 模糊匹配只用于检索排序，禁止自动建立人物同一关系。
+7. 注释解释原因、边界和陷阱，不逐行翻译语法。
+8. 用户可见文案和项目文档默认使用简体中文；代码标识符使用英文。
 
-1. `data/` 下的 CSV 是唯一事实源。
-2. JSON 和 XLSX 都属于自动生成产物。
-3. 所有数据转换必须尽量确定性、可审查、可复现。
-4. 数据模型必须保持未来迁移到关系型数据库的可行性。
-5. 中文用于文档、说明和人类可读界面；程序字段、ID、代码标识符优先保留英文。
+## 安全与内容
 
-## 不可违反的规则
+- 禁止提交真实人物或作品数据、成人图片、Cookie、Token、API Key、举报材料和生产数据库。
+- 禁止实现绕过登录、验证码、付费墙、地域限制或其他访问控制的功能。
+- 新访客默认安全模式；完整模式必须由用户主动开启。
+- 高风险举报对象应先隐藏再复核，内部只保留处理所需的最少信息。
 
-### 1. 禁止使用显示名称作为主键
+## 完成定义
 
-必须使用稳定的 Averia 内部 ID，例如：
+提交前运行 `pnpm check`。自动检查通过只证明工程门槛，不代表界面已由用户实际验收；交付状态必须区分“自动验证通过”和“待用户验收”。
 
-```text
-actress_000001
-work_000001
-maker_000001
-label_000001
-series_000001
-genre_000001
-alias_000001
-code_000001
-source_000001
-```
+<!-- BEGIN:nextjs-agent-rules -->
 
-姓名、别名、标题、番号等都属于可变化的元数据，不能承担主键职责。
+# This is NOT the Next.js you know
 
-### 2. CSV 是权威数据
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
-禁止为了修复数据而直接修改自动生成的 JSON / XLSX。
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
-正确流程始终是：
-
-```text
-修改 CSV → 校验 → 重新导出
-```
-
-### 3. 必须保留数据来源
-
-当数据来自外部网站、接口、人工资料或其他来源时，应尽可能在：
-
-```text
-data/sources/source_records.csv
-```
-
-中创建或更新对应来源记录。
-
-对于存在冲突或不确定的数据，不得无痕覆盖。必须保留足够的信息，以便后续追查为什么选择了当前值。
-
-### 4. 禁止凭模糊相似度擅自合并实体
-
-不得仅凭：
-
-- 姓名相似
-- 标题相似
-- 拼写相似
-- AI 推测
-
-就自动合并女优或作品。
-
-优先依据：
-
-- 明确别名关系
-- 番号
-- 来源站点 ID
-- 多来源一致证据
-- 人工确认
-
-### 5. 自动生成结果必须稳定
-
-导出文件必须保持确定性排序。
-
-除非某个时间本身就是业务数据，否则不要在自动生成文件中加入每次运行都会变化的时间戳、随机 ID 或随机排序。
-
-### 6. 修改 CSV 字段必须慎重
-
-真实数据积累以后，CSV 字段名就是数据协议的一部分。
-
-任何字段新增、删除或重命名，都必须同时检查：
-
-- 对应 Schema
-- 数据校验脚本
-- JSON 导出
-- XLSX 导出
-- 测试
-- 文档
-- 旧数据迁移影响
-
-不得因为“名字看起来更好”而随意重命名字段。
-
-## 数据修改流程
-
-新增或修改数据时：
-
-1. 修改 `data/` 下的 CSV。
-2. 执行 `pnpm data:validate`。
-3. 修复全部校验错误。
-4. 执行 `pnpm data:export`。
-5. 执行 `pnpm test`。
-6. 查看 Git diff，确认没有意外修改。
-7. CSV 与对应生成文件按仓库约定一起提交。
-
-## 代码规范
-
-- 优先使用清晰、规模较小的 ESM 模块。
-- 能用 Node.js 内置能力解决时，不要无意义增加依赖。
-- 命名优先清晰明确，不追求炫技式抽象。
-- 注释重点解释“为什么这样做”和领域规则，不解释显而易见的语法。
-- 面向用户的日志、报错和文档优先使用中文。
-- 数据校验错误应尽量指出：数据集、行号、字段名、错误原因和非法值。
-- 脚本必须兼容 Windows 路径和 Git 常见工作流。
-
-## CSV / JSON / XLSX 语言规则
-
-### CSV / JSON
-
-程序字段名保持英文，例如：
-
-```text
-primary_name
-release_date
-maker_id
-```
-
-不要把底层字段改成中文，否则未来 TypeScript、数据库和 API 会增加不必要的转换成本。
-
-### XLSX
-
-XLSX 面向人工浏览，应优先：
-
-- 中文工作表名
-- 中文表头
-- 可读的列宽
-- 冻结首行
-- 开启筛选
-
-### 文档
-
-仓库内部说明文档默认使用简体中文；必要的英文术语第一次出现时可附英文原文。
-
-## 数据采集边界
-
-Averia 用于保存和整理元数据。
-
-不要添加主要用于绕过以下限制的工具：
-
-- 登录认证
-- 访问控制
-- 付费墙
-- 验证码
-- 反爬机制
-- 其他明确技术限制
-
-数据导入器应尊重适用的网站规则、访问策略和合理速率限制。
-
-禁止提交：
-
-- 密码
-- Cookie
-- Session Token
-- API Secret
-- 私有凭据
-
-## 未来架构方向
-
-Averia 预计逐步演进为：
-
-```text
-CSV 主数据
-   ↓
-数据导入 / Pipeline
-   ↓
-统一规范化模型
-   ↓
-SQLite / PostgreSQL
-   ↓
-API / 搜索服务
-   ↓
-Averia Web
-```
-
-未来数据库是规范数据模型的一种高性能物化形式，而不是让原始数据变得不可读、不可追踪的理由。
-
-
-## V0.2 导入 Pipeline 规则
-
-1. 外部 Provider **不得直接修改 `data/` 下正式 CSV**。
-2. Provider 首先转换为 `docs/import/IMPORT_FORMAT.md` 定义的统一 JSON。
-3. 正式写入前必须经过 `prepare → report/review → apply`。
-4. 女优身份自动匹配只允许来源稳定 ID 或规范化后的精确唯一姓名/别名。
-5. 作品自动匹配只允许来源稳定 ID 或标准化番号精确唯一匹配。
-6. 匹配出现多个候选时必须阻断，禁止“挑一个最像的”。
-7. V0.2 不自动覆盖已有实体非空字段；字段补全和冲突只生成审核建议。
-8. Apply 前必须验证正式 CSV 指纹；数据变化后必须重新 Prepare。
-9. Apply 必须先备份，并在全量校验失败时恢复正式数据。
-10. `var/` 为本地运行产物，不作为权威数据提交。
-
-
-## V0.3 Provider 规则
-
-1. Provider 只负责 Fetch / Raw Snapshot / Parse / Canonical Import JSON，不得直接写 `data/`。
-2. 首个 Provider `javdatabase` 当前只允许 HTTPS 且只允许 `javdatabase.com` / `www.javdatabase.com`。
-3. 默认一次命令只抓一个作品页或女优页；增加批量能力前必须先设计请求间隔、失败重试和缓存策略。
-4. 每次网络抓取必须保存原始 HTML、最终 URL、抓取时间、Provider 版本和原始内容 SHA-256，保证 Parser 问题可复现。
-5. Parser 不得伪造精度：例如来源只有 `2002-??-??` 时，`birth_date` 必须留空，不能猜成 `2002-01-01`。
-6. 来源页发现的关联链接可以记录到 Provider 元数据，但 V0.3 不允许自动递归抓取。
-7. Provider Fixture 应保持精简，仅保留验证解析规则所需的 HTML 结构，不提交整页网页副本。
-8. 网络不可用、返回非 HTML、HTTP 错误或页面结构无法解析时必须失败退出，不得生成可 Apply 的假数据。
-
-## 数据源语言与权威性（V0.3.2 起）
-
-- 核心元数据优先采用日文官方/原生来源；FANZA / DMM Web API 是下一阶段首选广覆盖结构化主源。
-- JAVDatabase 定位为英文补充与交叉验证源，不得用英文标题覆盖 `title_ja`，不得用英文名覆盖 `name_ja`。
-- 厂商官方站在该厂商自己的作品/女优字段上具有高优先级，但因结构分散不作为唯一全库入口。
-- 不同来源的 genre / maker / series 名称不可仅凭翻译文本直接自动合并；先保留来源，再通过后续裁决机制统一。
-- API 密钥、Affiliate ID、代理凭据等秘密禁止写入仓库、日志、`meta.json` 或测试 fixture。
-- 详细规则见 `docs/strategy/SOURCE_STRATEGY.md`。
-
-
-## V0.4 日文官方 Provider 规则
-
-1. 对厂商自己的作品，厂商官方日文页面属于高优先级来源；`title_ja`、`name_ja`、品番、発売日等核心字段优先保留原始日文值。
-2. V0.4 首个官方 Provider 为 `moodyz-official`，canonical source 必须标记 `language: ja`、`role: authoritative`。
-3. “权威来源”不等于允许无审核覆盖：对已有正式实体的非空字段仍然只生成 proposal，必须人工处理冲突。
-4. 官方女优页里的罗马字姓名可以作为 `name_en` / alias 保存，但不得反向覆盖日文 `primary_name` / `name_ja`。
-5. 女优页发现的作品链接只记录，不允许自动递归抓取；批量能力必须另行设计节流、缓存、失败重试和恢复机制。
-6. 不因为多个厂商官网页面“看起来很像”就未经验证共用 Parser；每新增站点必须用真实页面结构确认并增加独立 Fixture / 回归测试。
-7. DMM/FANZA API 资格若需要当前无法满足的合法注册条件，应延期接入，不得通过虚假、借名或不符合服务规则的账户绕过。
-
-
-## V0.4.1 Provider 网络传输规则
-
-1. 代理发现与网络传输是两个独立层次：代理地址继续由 `--proxy → 环境变量 → Windows 系统代理 → 直连` 决定。
-2. Provider 不得把本机代理端口写死在源码、Fixture 或文档示例的默认配置中。
-3. MOODYZ 默认使用 `auto` 传输：Windows + 代理时允许优先调用系统 `curl`；其他环境优先 Node `fetch()`，只在连接重置、超时或 TLS 类兼容错误时回退 `curl`。
-4. `curl` 必须通过参数数组启动，禁止 `shell: true` 或字符串拼接执行；目标 URL 仍必须先经过 Provider 主机白名单校验。
-5. 自动回退不得绕过登录、验证码、付费墙或访问控制，只用于正常公开 HTTPS 页面在不同 HTTP/TLS 客户端之间的兼容。
-6. `meta.json` 可以记录 `network_transport` 和回退原因，但不得记录完整代理 URL、用户名、密码或其他代理凭据。
-
-
-## V0.4.3 导演建模规则
-
-- 来源站提供的 `監督 / director` 不得只塞进备注。
-- 使用 `directors.csv` 保存导演实体，使用 `work_directors.csv` 保存作品关系。
-- 不使用导演名称作为主键，不做模糊自动合并。
-
-
-## V0.4.4 图片字段规则
-
-- 不得因为存在 `og:image` 就直接把它作为作品封面或女优头像。
-- 厂商站点的 Logo、`site_design` 等 UI 资源不能进入业务图片字段。
-- Provider 应优先选择与业务实体路径/容器匹配的图片，并记录图片选择来源。
-- Averia 当前只保存图片 URL，不在 Provider 阶段下载图片文件。
-
-## V0.4.5 临时 HTTP 错误重试规则
-
-1. `408 / 429 / 500 / 502 / 503 / 504` 视为可能的临时上游/限流错误，允许有限重试。
-2. 默认最多 3 次网络尝试，并采用指数退避；不得无限重试或高频打来源站。
-3. `404`、解析错误、Schema 错误等确定性失败不得通过网络重试掩盖。
-4. 重试成功后仍按一次 Provider 运行保存最终 `raw.html`；`meta.json.network_attempts` 必须记录实际尝试次数。
-
-
-## V0.4.7 网络稳定性
-
-MOODYZ Provider 对 TLS 握手失败、ECONNRESET、连接超时等瞬时网络错误与 408/429/5xx 一样执行有限次数指数退避重试；不得通过写死本机代理端口规避网络问题。
-
-## Canonical Merge 规则（V0.5.0）
-
-- 同一来源的多个单页 Provider 产物需要组合时，优先执行 `pnpm canonical:merge`，不要分别 Apply。
-- V0.5.0 只允许合并相同 `source.name`；跨来源冲突裁决不属于本阶段。
-- `source_record_id` 是跨页面合并的首选稳定键。
-- 仅允许“空值 <- 非空值”的自动补全；两个非空值冲突必须阻断并人工检查。
-- Merge 结果仍只是 canonical 输入，必须继续经过 Prepare / Report / Apply 安全链路。
-
-## V0.6 补充规则
-
-- DMM/FANZA HTML Provider 只允许公开单页按需抓取，来源角色为 `reference`；厂商官方 `authoritative` 字段优先。
-- `貸出開始日` 与作品 `release_date` 语义不同，禁止自动等同。
-- XLSX 规范 Sheet 顺序必须显式维护，`女优` 必须位于 `女优别名` 之前；总览 Sheet 只能作为派生视图，不能反向成为事实源。
-- DMM/FANZA 年龄确认页不得静默自动通过。只有用户显式传入 `--adult-confirmed` 时，Provider 才可访问页面自身提供的 `declared=yes` URL，并且 Cookie 只能保存在临时会话中，不得写入日志、meta、CSV 或 Git。
-- DMM `declared=yes` 若返回明文 `http://` 重定向，不得放宽 HTTPS 安全策略直接跟随；应只接收年龄声明响应中的 Cookie，然后主动以经过白名单校验的原始 HTTPS 详情页 URL 继续请求。
-- DMM 页面字段解析必须限定在有序作品详情字段簇中；不得因侧栏或导航出现同名「シリーズ / ジャンル」就使用整页第一次命中。详情区品番与请求 CID 不一致、或无法定位详情字段簇时必须失败关闭（fail closed）。
-- `--adult-confirmed` 仅适用于公开年龄确认，不得扩展为验证码、登录、地区限制或付费访问控制的绕过机制。
-
-## V0.7 JavInfo API 规则
-
-- JavInfo API 是主采集入口之一，但它是聚合/标准化中间层；`source=fanza` 必须记录为 `javinfo-fanza`，不能伪装成直接 FANZA 官方抓取。
-- API Key 只允许从 `JAVINFO_API_KEY` 环境变量读取；禁止写入代码、命令行参数、日志、meta、fixture、README 或提交。
-- FANZA/DMM 经 JavInfo 返回的日文标题与英文人名/分类属于混合语言参考数据，默认 `role=reference`；厂商官方 Provider 的 `authoritative` 日文字段仍优先。
-- `raw.json` 必须保留完整 API 响应。当前 schema 未建模的 gallery/sample 等字段不得丢弃，只是不进入正式 CSV。
-- Provider 仍遵守 Prepare → Report → Apply，不得让 API 响应直接修改正式 CSV。
+<!-- END:nextjs-agent-rules -->
