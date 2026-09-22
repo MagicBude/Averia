@@ -16,6 +16,8 @@ export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
   const [maker, setMaker] = useState("全部");
   const [tag, setTag] = useState("全部");
   const [castMember, setCastMember] = useState("全部");
+  const [excludeTag, setExcludeTag] = useState("全部");
+  const [excludeCastMember, setExcludeCastMember] = useState("全部");
   const [sort, setSort] = useState<WorkSort>("relevance");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const { library, toggleFavorite } = useLocalLibrary();
@@ -26,6 +28,8 @@ export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
       const nextMaker = params.get("maker");
       const nextTag = params.get("tag");
       const nextCast = params.get("cast");
+      const nextExcludeTag = params.get("excludeTag");
+      const nextExcludeCast = params.get("excludeCast");
       const nextSort = params.get("sort");
       setQuery(params.get("q") ?? "");
       if (allWorks.some((work) => String(work.releaseYear) === nextYear))
@@ -34,6 +38,12 @@ export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
       if (allWorks.some((work) => work.tags.includes(nextTag ?? ""))) setTag(nextTag ?? "全部");
       if (allWorks.some((work) => work.cast.includes(nextCast ?? ""))) {
         setCastMember(nextCast ?? "全部");
+      }
+      if (allWorks.some((work) => work.tags.includes(nextExcludeTag ?? ""))) {
+        setExcludeTag(nextExcludeTag ?? "全部");
+      }
+      if (allWorks.some((work) => work.cast.includes(nextExcludeCast ?? ""))) {
+        setExcludeCastMember(nextExcludeCast ?? "全部");
       }
       if (["release-newest", "release-oldest", "name", "code"].includes(nextSort ?? "")) {
         setSort(nextSort as WorkSort);
@@ -48,6 +58,8 @@ export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
       maker: maker === "全部" ? "" : maker,
       tag: tag === "全部" ? "" : tag,
       cast: castMember === "全部" ? "" : castMember,
+      excludeTag: excludeTag === "全部" ? "" : excludeTag,
+      excludeCast: excludeCastMember === "全部" ? "" : excludeCastMember,
       sort: sort === "relevance" ? "" : sort,
     },
     applyInitialFilters,
@@ -74,6 +86,8 @@ export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
       if (maker !== "全部" && work.maker !== maker) return [];
       if (tag !== "全部" && !work.tags.includes(tag)) return [];
       if (castMember !== "全部" && !work.cast.includes(castMember)) return [];
+      if (excludeTag !== "全部" && work.tags.includes(excludeTag)) return [];
+      if (excludeCastMember !== "全部" && work.cast.includes(excludeCastMember)) return [];
       if (favoritesOnly && !favoriteIds.includes(work.id)) return [];
 
       const values = [
@@ -107,7 +121,19 @@ export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
         right.work.releaseDate.localeCompare(left.work.releaseDate)
       );
     });
-  }, [allWorks, castMember, favoriteIds, favoritesOnly, maker, query, sort, tag, year]);
+  }, [
+    allWorks,
+    castMember,
+    excludeCastMember,
+    excludeTag,
+    favoriteIds,
+    favoritesOnly,
+    maker,
+    query,
+    sort,
+    tag,
+    year,
+  ]);
 
   return (
     <>
@@ -174,6 +200,37 @@ export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
             <option value="code">作品编号</option>
           </select>
         </div>
+        <details className="advanced-filters">
+          <summary>高级筛选</summary>
+          <div className="advanced-filter-fields">
+            <label>
+              <span>排除标签</span>
+              <select
+                aria-label="排除标签"
+                value={excludeTag}
+                onChange={(event) => setExcludeTag(event.target.value)}
+              >
+                <option>全部</option>
+                {filterOptions.tags.map((value) => (
+                  <option key={value}>{value}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <span>排除出演者</span>
+              <select
+                aria-label="排除出演者"
+                value={excludeCastMember}
+                onChange={(event) => setExcludeCastMember(event.target.value)}
+              >
+                <option>全部</option>
+                {filterOptions.cast.map((value) => (
+                  <option key={value}>{value}</option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </details>
         <button
           className={favoritesOnly ? "filter-toggle is-active" : "filter-toggle"}
           type="button"

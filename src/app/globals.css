@@ -938,6 +938,50 @@ kbd {
   border-color: var(--accent);
   outline: none;
 }
+.advanced-filters {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 12px;
+}
+.advanced-filters summary {
+  width: max-content;
+  padding: 4px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.advanced-filters summary::-webkit-details-marker {
+  display: none;
+}
+.advanced-filters summary::before {
+  content: "+";
+  display: inline-block;
+  width: 16px;
+  color: var(--accent);
+}
+.advanced-filters[open] summary::before {
+  content: "−";
+}
+.advanced-filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 0 2px 16px;
+}
+.advanced-filter-fields label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.advanced-filter-fields select {
+  height: 34px;
+  min-width: 132px;
+  padding: 0 28px 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--ink);
+  background: var(--panel);
+  font-size: 12px;
+}
 .directory-toolbar > span {
   justify-self: end;
   color: var(--faint);
@@ -1694,6 +1738,17 @@ footer nav {
   }
   .directory-filters select:last-child {
     grid-column: 1 / -1;
+  }
+  .advanced-filter-fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-left: 0;
+  }
+  .advanced-filter-fields label {
+    justify-content: space-between;
+  }
+  .advanced-filter-fields select {
+    flex: 1;
   }
   .directory-toolbar > span {
     grid-column: 1 / -1;
