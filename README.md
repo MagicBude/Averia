@@ -23,14 +23,14 @@ pnpm dev
 pnpm install
 Copy-Item .env.example .env.local
 docker compose -f compose.dev.yml up -d
-# 将 AVERIA_DATA_SOURCE 改为 postgres，并使用 compose.dev.yml 中的本地连接信息。
 pnpm db:migrate
 pnpm db:seed
+# 将 .env.local 中的 AVERIA_DATA_SOURCE 改为 postgres。
 pnpm dev
 ```
 
 `postgres` 模式连接或查询失败时会明确报错，不会静默回退到 Demo 数据。
-详细的启动、停止和数据保留说明见 [`docs/operations/deployment.md`](docs/operations/deployment.md)。
+详细的首次安装、日常启停、数据源切换和故障处理见 [`docs/operations/local-development.md`](docs/operations/local-development.md)。
 
 ## 常用命令
 

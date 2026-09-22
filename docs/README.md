@@ -12,7 +12,8 @@
 8. [本地资料库格式](data/local-library.md)
 9. [审核与发布流程](data/editorial-workflow.md)
 10. [内容安全、权利与隐私](safety/content-and-rights.md)
-11. [部署策略](operations/deployment.md)
+11. [本地开发手册](operations/local-development.md)
+12. [部署策略](operations/deployment.md)
 
 这些文档以 2026-09-21 的产品访谈为基线。实现与文档冲突时，应先暂停并更新对应 ADR，而不是静默改变产品边界。
 
