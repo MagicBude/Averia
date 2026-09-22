@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@next/env':
+        specifier: 16.3.5
+        version: 16.3.5
       '@paralleldrive/cuid2':
         specifier: latest
         version: 3.3.0

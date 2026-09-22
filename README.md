@@ -17,18 +17,20 @@ pnpm dev
 
 打开 <http://localhost:3000>。
 
-需要验证 PostgreSQL 链路时，准备独立数据库账户并修改 `.env.local`：
+需要验证 PostgreSQL 链路时，推荐只把数据库放进 Docker。网站仍直接运行在本机，便于学习和调试：
 
 ```powershell
 pnpm install
 Copy-Item .env.example .env.local
-# 将 AVERIA_DATA_SOURCE 改为 postgres，并填写真实 DATABASE_URL。
+docker compose -f compose.dev.yml up -d
+# 将 AVERIA_DATA_SOURCE 改为 postgres，并使用 compose.dev.yml 中的本地连接信息。
 pnpm db:migrate
 pnpm db:seed
 pnpm dev
 ```
 
 `postgres` 模式连接或查询失败时会明确报错，不会静默回退到 Demo 数据。
+详细的启动、停止和数据保留说明见 [`docs/operations/deployment.md`](docs/operations/deployment.md)。
 
 ## 常用命令
 

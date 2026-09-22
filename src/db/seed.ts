@@ -1,4 +1,4 @@
-import "dotenv/config";
+import { loadDatabaseEnvironment } from "./load-env";
 
 import { inArray } from "drizzle-orm";
 
@@ -13,6 +13,8 @@ import {
   releases,
   works,
 } from "./schema";
+
+loadDatabaseEnvironment();
 
 function seedId(namespace: "8000" | "8100" | "8200" | "8300", index: number) {
   return `00000000-0000-4000-${namespace}-${String(index + 1).padStart(12, "0")}`;

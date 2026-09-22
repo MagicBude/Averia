@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: averia-postgres-dev
+    restart: unless-stopped
+    environment:
+      # 仅供本机隔离开发使用；生产环境不得沿用这些公开默认值。
+      POSTGRES_DB: averia
+      POSTGRES_USER: averia
+      POSTGRES_PASSWORD: averia_dev_only
+    ports:
+      # 避开系统 PostgreSQL 的默认 5432 端口。
+      - "55432:5432"
+    volumes:
+      # PostgreSQL 18 起应挂载父目录，由镜像创建版本化的数据子目录。
+      - averia-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U averia -d averia"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  averia-postgres-data:
