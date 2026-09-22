@@ -893,19 +893,27 @@ kbd {
   background: transparent;
 }
 .directory-toolbar > button {
-  height: 44px;
-  padding: 0 16px;
+  height: 36px;
+  width: max-content;
+  padding: 0 12px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid var(--ink);
-  background: var(--ink);
-  color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 12px;
   cursor: pointer;
+}
+.directory-toolbar > button:hover {
+  border-color: var(--muted);
+  color: var(--ink);
 }
 .directory-toolbar > button.is-active {
   border-color: var(--accent);
-  background: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 .directory-filters {
   grid-column: 1 / -1;
@@ -914,15 +922,21 @@ kbd {
   gap: 8px;
 }
 .directory-filters select {
-  height: 44px;
+  height: 38px;
   min-width: 132px;
   max-width: 220px;
   padding: 0 36px 0 14px;
-  border: 1px solid var(--ink);
-  border-radius: 0;
-  color: var(--paper);
-  background: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--ink);
+  background: var(--panel);
+  font-size: 12px;
   cursor: pointer;
+}
+.directory-filters select:hover,
+.directory-filters select:focus-visible {
+  border-color: var(--accent);
+  outline: none;
 }
 .directory-toolbar > span {
   justify-self: end;
@@ -1678,9 +1692,8 @@ footer nav {
     min-width: 0;
     max-width: none;
   }
-  .directory-toolbar > .filter-toggle {
+  .directory-filters select:last-child {
     grid-column: 1 / -1;
-    justify-content: center;
   }
   .directory-toolbar > span {
     grid-column: 1 / -1;
