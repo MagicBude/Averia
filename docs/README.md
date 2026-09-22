@@ -2,16 +2,24 @@
 
 建议按以下顺序阅读：
 
-1. [产品定义](product.md)
-2. [现状审计与重构决定](audit-2026-09-21.md)
-3. [目标架构](architecture.md)
-4. [数据与检索模型](data-model.md)
-5. [UI 设计系统](ui-system.md)
-6. [内容安全、权利与隐私](safety-and-rights.md)
-7. [本地收藏格式](local-library.md)
-8. [审核与发布流程](editorial-workflow.md)
-9. [部署策略](deployment.md)
-10. [版本路线](roadmap.md)
-11. [架构决策记录](adr/README.md)
+1. [产品定义](product/overview.md)
+2. [现状审计与重构决定](product/audit-2026-09-21.md)
+3. [版本路线](product/roadmap.md)
+4. [UI 设计系统](product/ui-system.md)
+5. [目标架构](architecture/overview.md)
+6. [架构决策记录](architecture/adr/README.md)
+7. [数据与检索模型](data/model.md)
+8. [本地资料库格式](data/local-library.md)
+9. [审核与发布流程](data/editorial-workflow.md)
+10. [内容安全、权利与隐私](safety/content-and-rights.md)
+11. [部署策略](operations/deployment.md)
 
 这些文档以 2026-09-21 的产品访谈为基线。实现与文档冲突时，应先暂停并更新对应 ADR，而不是静默改变产品边界。
+
+## 分类规则
+
+- `product/` 只记录用户价值、交互规范、路线和产品审计。
+- `architecture/` 记录系统边界与不可轻易逆转的技术决策。
+- `data/` 记录领域模型、采集审核流程和本地数据交换格式。
+- `safety/` 记录内容安全、权利、隐私与下架规则。
+- `operations/` 记录部署、环境和运行维护。
