@@ -869,9 +869,10 @@ kbd {
 .directory-toolbar {
   min-height: 78px;
   display: grid;
-  grid-template-columns: minmax(240px, 460px) auto auto 1fr;
+  grid-template-columns: minmax(240px, 1fr) auto auto;
   gap: 10px;
   align-items: center;
+  padding: 16px 0;
   margin-bottom: 28px;
   border-bottom: 1px solid var(--line);
 }
@@ -906,9 +907,16 @@ kbd {
   border-color: var(--accent);
   background: var(--accent);
 }
-.directory-toolbar > select {
+.directory-filters {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.directory-filters select {
   height: 44px;
   min-width: 132px;
+  max-width: 220px;
   padding: 0 36px 0 14px;
   border: 1px solid var(--ink);
   border-radius: 0;
@@ -920,6 +928,11 @@ kbd {
   justify-self: end;
   color: var(--faint);
   font-size: 11px;
+}
+.search-match {
+  margin: 7px 0 0 !important;
+  color: var(--accent) !important;
+  font-size: 11px !important;
 }
 .directory-grid {
   display: grid;
@@ -1654,6 +1667,16 @@ footer nav {
   .directory-toolbar {
     grid-template-columns: 1fr auto;
     padding: 16px 0;
+  }
+  .directory-filters {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .directory-filters select {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
   }
   .directory-toolbar > .filter-toggle {
     grid-column: 1 / -1;

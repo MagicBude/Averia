@@ -28,6 +28,12 @@ function initials(name: string) {
   );
 }
 
+function mediumLabel(medium: string | null): string {
+  if (medium === "digital") return "数字发行";
+  if (medium === "physical") return "实体发行";
+  return "介质待确认";
+}
+
 async function loadCatalog() {
   const connection = createDatabase();
   try {
@@ -99,7 +105,7 @@ async function loadCatalog() {
           cast,
           tone: workTones[index % workTones.length] ?? "moon",
           runtimeMinutes: release.runtimeMinutes ?? 0,
-          tags: [release.medium ?? "介质待确认"],
+          tags: [mediumLabel(release.medium)],
           synopsis: work.synopsis ?? "暂无公开简介。",
         },
       ];

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { matchesSearch, normalizeSearchText } from "./search";
+import { findSearchMatch, matchesSearch, normalizeSearchText } from "./search";
 
 describe("normalizeSearchText", () => {
   it("归一化全角字符、大小写和多余空格", () => {
@@ -19,5 +19,19 @@ describe("matchesSearch", () => {
 
   it("空查询返回全部候选", () => {
     expect(matchesSearch(" ", ["任意值"])).toBe(true);
+  });
+
+  it("允许轻微拼写错误，但只返回排序和展示信息", () => {
+    expect(findSearchMatch("Haruka Amam", ["天海遥", "Haruka Amami"])).toEqual({
+      index: 1,
+      kind: "prefix",
+      score: 80,
+      value: "Haruka Amami",
+    });
+    expect(findSearchMatch("Haruka Amqmi", ["Haruka Amami"])?.kind).toBe("fuzzy");
+  });
+
+  it("返回实际命中的别名而不是规范名", () => {
+    expect(findSearchMatch("水原りん", ["水原凛", "水原りん", "Rin Mizuhara"])?.index).toBe(1);
   });
 });
