@@ -170,6 +170,75 @@ button {
 .icon-button:hover {
   border-color: var(--ink);
 }
+.mode-dialog {
+  width: min(520px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 28px 90px rgb(20 19 17 / 22%);
+}
+.mode-dialog::backdrop {
+  background: rgb(20 19 17 / 54%);
+  backdrop-filter: blur(3px);
+}
+.mode-dialog form {
+  padding: clamp(28px, 6vw, 48px);
+}
+.mode-dialog h2 {
+  margin: 10px 0 16px;
+  font:
+    500 clamp(28px, 5vw, 42px) var(--font-serif),
+    serif;
+}
+.mode-dialog p {
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+.mode-check {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  align-items: start;
+  margin: 14px 0;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.mode-check input {
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--ink);
+}
+.mode-remember {
+  color: var(--muted);
+}
+.mode-dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 30px;
+}
+.mode-dialog-actions button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.mode-dialog-actions button:last-child {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.mode-dialog-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
 
 .hero {
   position: relative;
