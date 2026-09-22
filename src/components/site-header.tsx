@@ -9,6 +9,7 @@ const navigation = [
   { href: "/people", label: "人物" },
   { href: "/works", label: "作品" },
   { href: "/graph", label: "影格图谱" },
+  { href: "/library", label: "收藏" },
   { href: "/about", label: "关于" },
 ] as const;
 

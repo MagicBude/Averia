@@ -160,8 +160,16 @@ export function HomePrototype() {
             </div>
             <ArrowIcon />
           </Link>
-          <Link href="/about">
+          <Link href="/library">
             <span>04</span>
+            <div>
+              <h3>本地资料库</h3>
+              <p>收藏、私有标签、备注与本地迁移。</p>
+            </div>
+            <ArrowIcon />
+          </Link>
+          <Link href="/about">
+            <span>05</span>
             <div>
               <h3>关于 Averia</h3>
               <p>收录原则、来源证据与权利处理。</p>

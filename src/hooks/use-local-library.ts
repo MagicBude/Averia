@@ -1,36 +1,25 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-
-type FavoriteKind = "people" | "works";
-
-export type LocalLibraryV1 = {
-  version: 1;
-  favorites: Record<FavoriteKind, string[]>;
-};
+import {
+  EMPTY_LIBRARY,
+  entityKey,
+  mergeLibraryExport,
+  normalizeStoredLibrary,
+  type EntityType,
+  type FavoriteKind,
+  type LibraryExportV1,
+  type LocalLibraryV1,
+} from "@/lib/local-library";
 
 const STORAGE_KEY = "averia:local-library:v1";
 const LIBRARY_EVENT = "averia:local-library-change";
-const EMPTY_LIBRARY: LocalLibraryV1 = {
-  version: 1,
-  favorites: { people: [], works: [] },
-};
-
 function readLibrary(): LocalLibraryV1 {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return EMPTY_LIBRARY;
 
   try {
-    const value = JSON.parse(raw) as Partial<LocalLibraryV1>;
-    if (value.version !== 1 || !value.favorites) return EMPTY_LIBRARY;
-
-    return {
-      version: 1,
-      favorites: {
-        people: Array.isArray(value.favorites.people) ? value.favorites.people : [],
-        works: Array.isArray(value.favorites.works) ? value.favorites.works : [],
-      },
-    };
+    return normalizeStoredLibrary(JSON.parse(raw));
   } catch {
     // 损坏的本地数据不能阻断页面；导入功能会提供显式错误反馈。
     return EMPTY_LIBRARY;
@@ -66,5 +55,20 @@ export function useLocalLibrary() {
     });
   }, []);
 
-  return { library, toggleFavorite };
+  const updateAnnotation = useCallback(
+    (entityType: EntityType, entityId: string, annotation: { tags: string[]; note: string }) => {
+      const current = readLibrary();
+      writeLibrary({
+        ...current,
+        annotations: { ...current.annotations, [entityKey(entityType, entityId)]: annotation },
+      });
+    },
+    [],
+  );
+
+  const mergeImport = useCallback((value: LibraryExportV1) => {
+    writeLibrary(mergeLibraryExport(readLibrary(), value));
+  }, []);
+
+  return { library, toggleFavorite, updateAnnotation, mergeImport };
 }

@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <main className="route-page about-page">
       <header className="page-intro">
-        <span className="section-number">04 / ABOUT</span>
+        <span className="section-number">05 / ABOUT</span>
         <div>
           <h1>关于 Averia</h1>
           <p>档案不是答案，而是可以回到来源重新判断的记录。</p>

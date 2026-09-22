@@ -1334,6 +1334,181 @@ kbd {
     16px var(--font-serif),
     serif;
 }
+.local-notes {
+  margin-top: 10px;
+  padding: 48px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.local-notes-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.local-notes h2,
+.library-section h2,
+.import-preview h2 {
+  margin: 9px 0 0;
+  font:
+    500 30px var(--font-serif),
+    serif;
+}
+.local-notes > p,
+.import-preview p {
+  margin: 14px 0 28px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.local-favorite,
+.library-actions button,
+.import-preview button {
+  min-height: 42px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  font-size: 12px;
+}
+.local-favorite.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.local-favorite.is-active svg {
+  fill: currentColor;
+}
+.local-notes-fields {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 20px;
+}
+.local-notes-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.local-notes-fields input,
+.local-notes-fields textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font:
+    12px/1.7 var(--font-sans),
+    sans-serif;
+}
+.local-notes-fields input {
+  min-height: 44px;
+  padding: 0 13px;
+}
+.local-notes-fields textarea {
+  min-height: 100px;
+  padding: 12px 13px;
+  resize: vertical;
+}
+.library-actions {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--line);
+}
+.library-actions > div {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+.library-actions strong {
+  font:
+    500 36px var(--font-serif),
+    serif;
+}
+.library-actions span {
+  color: var(--faint);
+  font-size: 11px;
+}
+.import-file {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--faint);
+  font-size: 10px;
+}
+.import-file input {
+  max-width: 220px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.import-file input::file-selector-button {
+  min-height: 42px;
+  margin-right: 9px;
+  padding: 0 14px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+}
+.import-preview {
+  margin-top: 28px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 30px;
+  align-items: center;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+}
+.import-preview p {
+  margin-bottom: 0;
+}
+.library-message {
+  padding: 14px 0;
+  color: var(--sage);
+  font-size: 12px;
+}
+.library-section {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--line);
+}
+.library-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.library-list > a,
+.library-list > p {
+  min-height: 96px;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.library-list strong {
+  font:
+    500 18px var(--font-serif),
+    serif;
+}
+.library-list span,
+.library-list p {
+  color: var(--faint);
+  font-size: 10px;
+}
 
 footer {
   padding: 42px clamp(24px, 6vw, 100px);
@@ -1560,6 +1735,28 @@ footer nav {
   }
   .release-panel dl {
     grid-template-columns: 1fr;
+  }
+  .local-notes {
+    padding: 28px 20px;
+  }
+  .local-notes-heading,
+  .import-preview {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+  .local-notes-heading {
+    flex-direction: column;
+  }
+  .local-favorite {
+    width: 100%;
+  }
+  .local-notes-fields,
+  .library-actions,
+  .library-list {
+    grid-template-columns: 1fr;
+  }
+  .library-actions > div {
+    margin-bottom: 8px;
   }
   .content-section,
   .search-results {

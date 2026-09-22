@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { LocalEntityNotes } from "@/components/local-entity-notes";
 import { demoPeople, demoWorks } from "@/data/demo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -92,6 +93,7 @@ export default async function WorkDetailPage({ params }: Props) {
           </div>
         </dl>
       </section>
+      <LocalEntityNotes entityType="work" entityId={work.id} name={work.title} />
     </main>
   );
 }
