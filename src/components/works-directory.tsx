@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
-import { demoWorks } from "@/data/demo";
 import { useDirectoryUrl } from "@/hooks/use-directory-url";
 import { useLocalLibrary } from "@/hooks/use-local-library";
 import { matchesSearch } from "@/lib/search";
+import type { CatalogWork } from "@/server/catalog/types";
 import { BookmarkIcon, SearchIcon } from "./icons";
 
-export function WorksDirectory() {
+export function WorksDirectory({ works: allWorks }: { works: CatalogWork[] }) {
   const [query, setQuery] = useState("");
   const [year, setYear] = useState("全部");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
@@ -22,7 +22,7 @@ export function WorksDirectory() {
   useDirectoryUrl({ q: query.trim(), year: year === "全部" ? "" : year }, applyInitialFilters);
   const works = useMemo(
     () =>
-      demoWorks.filter(
+      allWorks.filter(
         (work) =>
           (year === "全部" || String(work.releaseYear) === year) &&
           (!favoritesOnly || favoriteIds.includes(work.id)) &&
@@ -34,7 +34,7 @@ export function WorksDirectory() {
             ...work.cast,
           ]),
       ),
-    [favoriteIds, favoritesOnly, query, year],
+    [allWorks, favoriteIds, favoritesOnly, query, year],
   );
 
   return (

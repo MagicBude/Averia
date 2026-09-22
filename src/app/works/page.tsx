@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { WorksDirectory } from "@/components/works-directory";
+import { getCatalogRepository } from "@/server/catalog/repository";
 
 export const metadata: Metadata = { title: "作品索引 · Averia" };
 
-export default function WorksPage() {
+export default async function WorksPage() {
+  const repository = await getCatalogRepository();
+  const works = await repository.listWorks();
   return (
     <main className="route-page">
       <header className="page-intro">
@@ -13,7 +16,7 @@ export default function WorksPage() {
           <p>按编号、发行年份、厂牌、系列和出演关系组合筛选。</p>
         </div>
       </header>
-      <WorksDirectory />
+      <WorksDirectory works={works} />
     </main>
   );
 }

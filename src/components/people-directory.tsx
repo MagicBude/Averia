@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
-import { demoPeople } from "@/data/demo";
 import { useDirectoryUrl } from "@/hooks/use-directory-url";
 import { useLocalLibrary } from "@/hooks/use-local-library";
 import { matchesSearch } from "@/lib/search";
+import type { CatalogPerson } from "@/server/catalog/types";
 import { BookmarkIcon, SearchIcon } from "./icons";
 
 type StatusFilter = "全部" | "活跃" | "引退" | "资料待确认";
 
-export function PeopleDirectory() {
+export function PeopleDirectory({ people: allPeople }: { people: CatalogPerson[] }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<StatusFilter>("全部");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
@@ -29,7 +29,7 @@ export function PeopleDirectory() {
   );
   const people = useMemo(
     () =>
-      demoPeople.filter(
+      allPeople.filter(
         (person) =>
           (status === "全部" || person.status === status) &&
           (!favoritesOnly || favoriteIds.includes(person.id)) &&
@@ -40,7 +40,7 @@ export function PeopleDirectory() {
             ...person.aliases,
           ]),
       ),
-    [favoriteIds, favoritesOnly, query, status],
+    [allPeople, favoriteIds, favoritesOnly, query, status],
   );
 
   return (

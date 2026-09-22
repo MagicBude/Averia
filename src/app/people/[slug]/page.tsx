@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RelatedWorks } from "@/components/related-works";
 import { LocalEntityNotes } from "@/components/local-entity-notes";
-import { demoPeople, demoWorks } from "@/data/demo";
+import { demoPeople } from "@/data/demo";
+import { getCatalogRepository } from "@/server/catalog/repository";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -12,15 +13,17 @@ export function generateStaticParams() {
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const person = demoPeople.find((item) => item.slug === slug);
-  return { title: person ? `${person.name} · Averia` : "人物不存在 · Averia" };
+  const repository = await getCatalogRepository();
+  const record = await repository.findPersonBySlug(slug);
+  return { title: record ? `${record.person.name} · Averia` : "人物不存在 · Averia" };
 }
 
 export default async function PersonDetailPage({ params }: Props) {
   const { slug } = await params;
-  const person = demoPeople.find((item) => item.slug === slug);
-  if (!person) notFound();
-  const relatedWorks = demoWorks.filter((work) => work.cast.includes(person.name));
+  const repository = await getCatalogRepository();
+  const record = await repository.findPersonBySlug(slug);
+  if (!record) notFound();
+  const { person, relatedWorks } = record;
   return (
     <main className="route-page detail-page">
       <Link className="back-link" href="/people">

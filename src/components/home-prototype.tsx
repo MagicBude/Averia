@@ -3,24 +3,30 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-import { demoPeople, demoWorks } from "@/data/demo";
 import { matchesSearch, normalizeSearchText } from "@/lib/search";
+import type { CatalogPerson, CatalogWork } from "@/server/catalog/types";
 
 import { ArrowIcon, SearchIcon, SlidersIcon } from "./icons";
 
-export function HomePrototype() {
+export function HomePrototype({
+  people,
+  works,
+}: {
+  people: CatalogPerson[];
+  works: CatalogWork[];
+}) {
   const [query, setQuery] = useState("");
   const normalizedQuery = normalizeSearchText(query);
   const matchingPeople = useMemo(
     () =>
-      demoPeople.filter((person) =>
+      people.filter((person) =>
         matchesSearch(normalizedQuery, [person.name, person.originalName, person.romanizedName]),
       ),
-    [normalizedQuery],
+    [normalizedQuery, people],
   );
   const matchingWorks = useMemo(
     () =>
-      demoWorks.filter((work) =>
+      works.filter((work) =>
         matchesSearch(normalizedQuery, [
           work.code,
           work.title,
@@ -29,7 +35,7 @@ export function HomePrototype() {
           ...work.cast,
         ]),
       ),
-    [normalizedQuery],
+    [normalizedQuery, works],
   );
 
   return (

@@ -8,17 +8,7 @@ Averia 是一个中文优先、保留日文原名和罗马字的成人影视元�
 
 ## 快速开始
 
-要求 Node.js 22+、pnpm 11.21.0，以及 PostgreSQL。
-
-```powershell
-pnpm install
-Copy-Item .env.example .env.local
-pnpm db:migrate
-pnpm db:seed
-pnpm dev
-```
-
-仅查看 0.1 UI 原型时，可以暂不连接数据库：
+要求 Node.js 22+、pnpm 11.21.0。默认使用经过审查的虚构 Demo 数据，不要求数据库：
 
 ```powershell
 pnpm install
@@ -26,6 +16,19 @@ pnpm dev
 ```
 
 打开 <http://localhost:3000>。
+
+需要验证 PostgreSQL 链路时，准备独立数据库账户并修改 `.env.local`：
+
+```powershell
+pnpm install
+Copy-Item .env.example .env.local
+# 将 AVERIA_DATA_SOURCE 改为 postgres，并填写真实 DATABASE_URL。
+pnpm db:migrate
+pnpm db:seed
+pnpm dev
+```
+
+`postgres` 模式连接或查询失败时会明确报错，不会静默回退到 Demo 数据。
 
 ## 常用命令
 
@@ -45,8 +48,9 @@ src/app/          Next.js 页面和全局设计系统
 src/components/   可复用交互组件
 src/data/         仅供公开预览的虚构数据
 src/db/           PostgreSQL Schema、迁移和种子入口
+src/server/       Repository 与仅服务端的数据访问实现
 drizzle/          版本化数据库迁移
-docs/             产品、架构、数据、安全、UI 和路线文档
+docs/             按产品、架构、数据、安全和运维分类的文档
 ```
 
 ## 关键边界

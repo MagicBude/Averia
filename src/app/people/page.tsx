@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { PeopleDirectory } from "@/components/people-directory";
+import { getCatalogRepository } from "@/server/catalog/repository";
 
 export const metadata: Metadata = { title: "人物档案 · Averia" };
 
-export default function PeoplePage() {
+export default async function PeoplePage() {
+  const repository = await getCatalogRepository();
+  const people = await repository.listPeople();
   return (
     <main className="route-page">
       <header className="page-intro">
@@ -13,7 +16,7 @@ export default function PeoplePage() {
           <p>通过姓名、艺名、活跃年份和出演关系查找人物。</p>
         </div>
       </header>
-      <PeopleDirectory />
+      <PeopleDirectory people={people} />
     </main>
   );
 }

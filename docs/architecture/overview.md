@@ -29,6 +29,10 @@ PostgreSQL 唯一事实源
 - 第一阶段使用 PostgreSQL 原生索引和搜索能力；只有量级与查询证据证明必要时才引入独立搜索服务。
 - 数据访问逐步收敛到 Repository/Query Service；UI 不直接访问数据库。
 
+## 数据源边界
+
+页面只依赖 `CatalogRepository`，不直接导入 Drizzle Schema。`AVERIA_DATA_SOURCE=demo` 用于虚构公开预览；`AVERIA_DATA_SOURCE=postgres` 用于本机和生产数据库。PostgreSQL 模式缺少连接信息或查询失败时必须明确报错，不允许静默回退到 Demo，以免管理员误把过期示例当成线上数据。
+
 ## 教学策略
 
 每个版本只引入少量新概念，并同时提供 README、ADR、自动测试和可运行验收路径。注释解释设计原因；通用语言教程只做精简说明并链接权威资料。
