@@ -4,16 +4,17 @@
 
 1. [产品定义](product/overview.md)
 2. [现状审计与重构决定](product/audit-2026-09-21.md)
-3. [版本路线](product/roadmap.md)
-4. [UI 设计系统](product/ui-system.md)
-5. [目标架构](architecture/overview.md)
-6. [架构决策记录](architecture/adr/README.md)
-7. [数据与检索模型](data/model.md)
-8. [本地资料库格式](data/local-library.md)
-9. [审核与发布流程](data/editorial-workflow.md)
-10. [内容安全、权利与隐私](safety/content-and-rights.md)
-11. [本地开发手册](operations/local-development.md)
-12. [部署策略](operations/deployment.md)
+3. [Grilling 决策台账](product/decision-ledger.md)
+4. [版本路线](product/roadmap.md)
+5. [UI 设计系统](product/ui-system.md)
+6. [目标架构](architecture/overview.md)
+7. [架构决策记录](architecture/adr/README.md)
+8. [数据与检索模型](data/model.md)
+9. [本地资料库格式](data/local-library.md)
+10. [审核与发布流程](data/editorial-workflow.md)
+11. [内容安全、权利与隐私](safety/content-and-rights.md)
+12. [本地开发手册](operations/local-development.md)
+13. [部署策略](operations/deployment.md)
 
 这些文档以 2026-09-21 的产品访谈为基线。实现与文档冲突时，应先暂停并更新对应 ADR，而不是静默改变产品边界。
 
