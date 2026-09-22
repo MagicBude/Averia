@@ -20,6 +20,7 @@ export type DemoWork = {
   code: string;
   title: string;
   originalTitle: string;
+  releaseDate: string;
   releaseYear: number;
   maker: string;
   cast: string[];
@@ -109,6 +110,7 @@ export const demoWorks: DemoWork[] = [
     code: "DEMO-001",
     title: "纸月的记录",
     originalTitle: "紙月の記録",
+    releaseDate: "2026-06-12",
     releaseYear: 2026,
     maker: "月光映画",
     cast: ["天海遥"],
@@ -123,6 +125,7 @@ export const demoWorks: DemoWork[] = [
     code: "DEMO-014",
     title: "午后三点",
     originalTitle: "午後三時",
+    releaseDate: "2025-09-19",
     releaseYear: 2025,
     maker: "白昼制作",
     cast: ["白石澪", "水原凛"],
@@ -137,6 +140,7 @@ export const demoWorks: DemoWork[] = [
     code: "DEMO-028",
     title: "沿海列车",
     originalTitle: "海沿いの列車",
+    releaseDate: "2026-02-06",
     releaseYear: 2026,
     maker: "青波社",
     cast: ["星乃叶月"],
@@ -151,6 +155,7 @@ export const demoWorks: DemoWork[] = [
     code: "DEMO-036",
     title: "无声花园",
     originalTitle: "静かな庭",
+    releaseDate: "2024-11-22",
     releaseYear: 2024,
     maker: "庭园企画",
     cast: ["天海遥", "白石澪"],

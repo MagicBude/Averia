@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { RelatedWorks } from "@/components/related-works";
 import { demoPeople, demoWorks } from "@/data/demo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -79,21 +80,7 @@ export default async function PersonDetailPage({ params }: Props) {
           </ol>
         </article>
       </section>
-      <section className="related-section">
-        <span className="section-number">WORKS</span>
-        <h2>关联作品</h2>
-        <div className="related-links">
-          {relatedWorks.map((work) => (
-            <Link href={`/works/${work.slug}`} key={work.id}>
-              <small>{work.code}</small>
-              <strong>{work.title}</strong>
-              <span>
-                {work.releaseYear} · {work.maker}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <RelatedWorks works={relatedWorks} />
     </main>
   );
 }
