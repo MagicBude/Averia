@@ -869,7 +869,7 @@ kbd {
 .directory-toolbar {
   min-height: 78px;
   display: grid;
-  grid-template-columns: minmax(240px, 460px) auto 1fr;
+  grid-template-columns: minmax(240px, 460px) auto auto 1fr;
   gap: 10px;
   align-items: center;
   margin-bottom: 28px;
@@ -900,6 +900,11 @@ kbd {
   border: 1px solid var(--ink);
   background: var(--ink);
   color: var(--paper);
+  cursor: pointer;
+}
+.directory-toolbar > button.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
 }
 .directory-toolbar > select {
   height: 44px;
@@ -953,8 +958,39 @@ kbd {
   width: 14px;
   height: 14px;
 }
+.bookmark.is-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.bookmark.is-active svg {
+  fill: currentColor;
+}
 .directory-works {
   padding-top: 2px;
+}
+.work-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.work-heading-row .bookmark {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+.work-heading-row .bookmark svg {
+  width: 14px;
+  height: 14px;
 }
 .work-copy h2 {
   margin: 11px 0 4px;
@@ -1443,6 +1479,10 @@ footer nav {
   .directory-toolbar {
     grid-template-columns: 1fr auto;
     padding: 16px 0;
+  }
+  .directory-toolbar > .filter-toggle {
+    grid-column: 1 / -1;
+    justify-content: center;
   }
   .directory-toolbar > span {
     grid-column: 1 / -1;

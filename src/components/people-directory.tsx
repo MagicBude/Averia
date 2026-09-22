@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { demoPeople } from "@/data/demo";
+import { useDirectoryUrl } from "@/hooks/use-directory-url";
+import { useLocalLibrary } from "@/hooks/use-local-library";
 import { matchesSearch } from "@/lib/search";
 import { BookmarkIcon, SearchIcon } from "./icons";
 
@@ -11,11 +13,26 @@ type StatusFilter = "全部" | "活跃" | "引退" | "资料待确认";
 export function PeopleDirectory() {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<StatusFilter>("全部");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const { library, toggleFavorite } = useLocalLibrary();
+  const favoriteIds = library.favorites.people;
+  const applyInitialFilters = useCallback((params: URLSearchParams) => {
+    const nextStatus = params.get("status");
+    setQuery(params.get("q") ?? "");
+    if (["活跃", "引退", "资料待确认"].includes(nextStatus ?? "")) {
+      setStatus(nextStatus as StatusFilter);
+    }
+  }, []);
+  useDirectoryUrl(
+    { q: query.trim(), status: status === "全部" ? "" : status },
+    applyInitialFilters,
+  );
   const people = useMemo(
     () =>
       demoPeople.filter(
         (person) =>
           (status === "全部" || person.status === status) &&
+          (!favoritesOnly || favoriteIds.includes(person.id)) &&
           matchesSearch(query, [
             person.name,
             person.originalName,
@@ -23,7 +40,7 @@ export function PeopleDirectory() {
             ...person.aliases,
           ]),
       ),
-    [query, status],
+    [favoriteIds, favoritesOnly, query, status],
   );
 
   return (
@@ -48,6 +65,15 @@ export function PeopleDirectory() {
           <option>引退</option>
           <option>资料待确认</option>
         </select>
+        <button
+          className={favoritesOnly ? "filter-toggle is-active" : "filter-toggle"}
+          type="button"
+          aria-pressed={favoritesOnly}
+          onClick={() => setFavoritesOnly((value) => !value)}
+        >
+          <BookmarkIcon />
+          只看收藏
+        </button>
         <span>{people.length} 位虚构人物</span>
       </section>
       <section className="directory-grid" aria-label="人物列表">
@@ -62,7 +88,13 @@ export function PeopleDirectory() {
                 <span className={`status status-${person.status === "活跃" ? "active" : "quiet"}`}>
                   {person.status}
                 </span>
-                <button type="button" aria-label={`收藏 ${person.name}`}>
+                <button
+                  className={favoriteIds.includes(person.id) ? "bookmark is-active" : "bookmark"}
+                  type="button"
+                  aria-label={`${favoriteIds.includes(person.id) ? "取消收藏" : "收藏"} ${person.name}`}
+                  aria-pressed={favoriteIds.includes(person.id)}
+                  onClick={() => toggleFavorite("people", person.id)}
+                >
                   <BookmarkIcon />
                 </button>
               </div>

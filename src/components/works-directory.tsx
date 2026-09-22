@@ -1,19 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { demoWorks } from "@/data/demo";
+import { useDirectoryUrl } from "@/hooks/use-directory-url";
+import { useLocalLibrary } from "@/hooks/use-local-library";
 import { matchesSearch } from "@/lib/search";
-import { SearchIcon } from "./icons";
+import { BookmarkIcon, SearchIcon } from "./icons";
 
 export function WorksDirectory() {
   const [query, setQuery] = useState("");
   const [year, setYear] = useState("全部");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const { library, toggleFavorite } = useLocalLibrary();
+  const favoriteIds = library.favorites.works;
+  const applyInitialFilters = useCallback((params: URLSearchParams) => {
+    const nextYear = params.get("year");
+    setQuery(params.get("q") ?? "");
+    if (["2026", "2025", "2024"].includes(nextYear ?? "")) setYear(nextYear as string);
+  }, []);
+  useDirectoryUrl({ q: query.trim(), year: year === "全部" ? "" : year }, applyInitialFilters);
   const works = useMemo(
     () =>
       demoWorks.filter(
         (work) =>
           (year === "全部" || String(work.releaseYear) === year) &&
+          (!favoritesOnly || favoriteIds.includes(work.id)) &&
           matchesSearch(query, [
             work.code,
             work.title,
@@ -22,7 +34,7 @@ export function WorksDirectory() {
             ...work.cast,
           ]),
       ),
-    [query, year],
+    [favoriteIds, favoritesOnly, query, year],
   );
 
   return (
@@ -47,6 +59,15 @@ export function WorksDirectory() {
           <option>2025</option>
           <option>2024</option>
         </select>
+        <button
+          className={favoritesOnly ? "filter-toggle is-active" : "filter-toggle"}
+          type="button"
+          aria-pressed={favoritesOnly}
+          onClick={() => setFavoritesOnly((value) => !value)}
+        >
+          <BookmarkIcon />
+          只看收藏
+        </button>
         <span>{works.length} 部虚构作品</span>
       </section>
       <section className="work-grid directory-works" aria-label="作品列表">
@@ -61,7 +82,18 @@ export function WorksDirectory() {
               <small>{work.code}</small>
             </Link>
             <div className="work-copy">
-              <span className="work-code">{work.code}</span>
+              <div className="work-heading-row">
+                <span className="work-code">{work.code}</span>
+                <button
+                  className={favoriteIds.includes(work.id) ? "bookmark is-active" : "bookmark"}
+                  type="button"
+                  aria-label={`${favoriteIds.includes(work.id) ? "取消收藏" : "收藏"} ${work.title}`}
+                  aria-pressed={favoriteIds.includes(work.id)}
+                  onClick={() => toggleFavorite("works", work.id)}
+                >
+                  <BookmarkIcon />
+                </button>
+              </div>
               <Link href={`/works/${work.slug}`}>
                 <h2>{work.title}</h2>
               </Link>
