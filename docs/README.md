@@ -4,7 +4,7 @@
 
 1. [产品定义](product/overview.md)
 2. [现状审计与重构决定](product/audit-2026-09-21.md)
-3. [Grilling 决策台账](product/decision-ledger.md)
+3. [产品与系统设计基线](product/design-baseline.md)
 4. [版本路线](product/roadmap.md)
 5. [UI 设计系统](product/ui-system.md)
 6. [目标架构](architecture/overview.md)
